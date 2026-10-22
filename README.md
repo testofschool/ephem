@@ -101,6 +101,21 @@ sudo curl --silent --show-error \
 
 The expected body is `hello from ephem`. This exercises a synthetic fixture, not an application-security guarantee. The fixture root also contains an intentionally readable synthetic canary for testing the limits of output confidentiality.
 
+Make the lifetime boundary visible from that second terminal:
+
+```sh
+for command in DIRTY CLEAN CRASH CLEAN READSECRET; do
+  printf '\n%s → ' "$command"
+  sudo curl --silent --show-error --unix-socket /run/ephem-demo/gate.sock \
+    --data-binary "$command" http://localhost/run
+done
+```
+
+`DIRTY` writes a marker in private scratch space; the next `CLEAN` reports
+`absent`. `CRASH` prints a canary and faults, but the caller receives only
+`execution rejected`. `READSECRET` deliberately returns the readable synthetic
+canary successfully: an allowed response is still an information channel.
+
 Press Ctrl+C in the gate terminal to stop admission and drain active work. See the [runbook](docs/OPERATIONS.md) for cleanup, test execution, CGI setup and the stricter packaging entrypoint. Do not install the launcher setuid.
 
 ## What this protects — and what it does not
@@ -130,13 +145,16 @@ Current commands, environment details, outcomes and raw report paths are recorde
 
 | Verification area | Record |
 | --- | --- |
-| Worker lifecycle and private temporary state | [Results and raw reports](evidence/RESULTS.md) |
-| Crash, syscall denial, timeout and output overflow | [Results and raw reports](evidence/RESULTS.md) |
-| Cgroup resources, host preflight and cleanup | [Results and raw reports](evidence/RESULTS.md) |
+| Worker lifecycle and private temporary state | **12/12** tests on ARM64 and x86-64; **50/50** fresh workers in each run |
+| Crash, syscall denial, timeout, output overflow and OOM | Staged output withheld in the named fixture cases on both architectures |
+| Cgroup resources, host preflight and cleanup | Actual worker OOM and disposal; **6/6** startup controls on both architectures |
+| Existing PHP-CGI source | **4/4** tiny uploads on ARM64, unchanged **963-byte** receiver |
 | Successful response carrying readable data | [Limits and positive controls](evidence/RESULTS.md) |
 | External independent security audit / production qualification | Outstanding |
 
 Run the unit checks with `cargo test --locked --workspace`. Privileged integration checks require the dedicated-VM procedure in [OPERATIONS.md](docs/OPERATIONS.md). A missing prerequisite or skipped test is not a pass.
+Exact commands, retained failures, measurements and source/binary hashes are in
+[the evidence record](evidence/RESULTS.md).
 
 ## Prior art
 

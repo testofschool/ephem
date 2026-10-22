@@ -22,7 +22,7 @@ The later reproduction helper [`tests/ephem/build-patched-php.sh`](../tests/ephe
 
 ## Final v2 records reconciled
 
-The environment record names Linux **6.8.0-146-generic, AArch64**, Rust/Cargo **1.99.1**, GCC **13.3.0** and a `/proc/swaps` header with no active entries. These results do not establish execution on x86-64 or other kernels.
+The environment record names Linux **6.8.0-146-generic, AArch64**, Rust/Cargo **1.99.1**, GCC **13.3.0** and a `/proc/swaps` header with no active entries. These ARM64 records alone do not establish execution on x86-64 or other kernels; the separately checked x86-64 CI run is recorded in the dated addendum below.
 
 | Area | Verified observation | Record |
 | --- | --- | --- |
@@ -69,10 +69,26 @@ The same receipt records `core_pattern_restored=true`, `active_swap_entries=0` a
 ## Material limits and unresolved evidence
 
 1. **Build identity remains bounded.** The downloaded binaries independently hash to the final v2 identities, and all 24 frozen sources match. The historical v1 gate differs from v2; source equivalence must not be described as binary equivalence. A third-party reproducible build or signed build attestation was not performed.
-2. **Host policy is narrow.** No active-swap refusal trial, hibernation/crash-dump audit, physical-memory-erasure test or continuous host attestation was executed. Core/swap admission and the restored-policy receipt must not be extended to those claims.
+2. **Host policy is narrow.** In the ARM64 lab, active-swap refusal was source-reviewed without enabling swap. The later Azure CI startup failure supplies an actual observed refusal, preserved in the addendum below. Hibernation/crash-dump audits, physical-memory-erasure tests and continuous host attestation remain unexecuted. Core/swap admission and the restored-policy receipt must not be extended to those claims.
 3. **Resource qualification is partial.** Actual worker-group OOM and disposal were observed. This does not measure supervisor/whole-host memory, aggregate-pressure survival, CPU throttling, PID saturation, production throughput, arbitrary cancellation or every setup-failure cleanup path. Limits are configured/read back in source; do not relabel unmeasured behavior as a passed live test.
 4. **No general data-loss-prevention claim.** The final lifecycle probe `READSECRET` returns the synthetic readable canary in an HTTP **200** response. This is an explicit successful-output confidentiality counterexample, as required by the documented threat model. Disposal cannot undo a response already authorized for release.
 5. **No external security or broad compatibility qualification.** These are benign, source-controlled probes in one VM. Shared-kernel escape resistance, compromised-host resistance, arbitrary applications, PHP-FPM, stateful frameworks, sessions, remote services and database rollback remain unestablished. The root gate's protocol-facing privilege is still a documented material risk.
 6. **Post-freeze helper is unqualified.** The new PHP build helper is clearly separate from the executed 24-file source freeze. It needs a new frozen execution record before claiming that its complete build procedure was reproduced.
 
 The counts, OOM values, binary hashes, PHP observations and nearest-rank timing values in the reviewed `RESULTS.md` agree with the final v2 records. It now distinguishes unchanged frozen source from the separately identified rebuilt gate binary; no remaining count or quantile discrepancy was found. The current README, threat model, operations guide and roadmap retain experimental status, production HOLD, a shared host kernel, a trusted root gate/launcher, real host setup cost, current-request output leakage, continued patch requirements and no world-first or comparative-ranking claim.
+
+## CI addendum — 23 October 2026 KST
+
+The public [GitHub Actions run 39825411168](https://github.com/testofschool/ephem/actions/runs/39825411168) was independently queried through GitHub CLI: `status=completed`, `conclusion=success`, head commit `2620c8a25b260945525c6fca6085b432924c8ec6`. Downloaded final records under [ci-x86-v2/ci](ci-x86-v2/ci/) identify **Linux 6.17.0-1022-azure, x86_64, glibc 2.39**.
+
+- [Lifecycle](ci-x86-v2/ci/lifecycle.json): **12 tests passed**, **0 failures/errors/skips**, exit **0**; raw stderr lists all 12 `ok`. The **158 HTTP observations** comprise **135 HTTP 200**, **16 HTTP 500**, **7 HTTP 400**. There are **151 unique disposed scopes**, all `disposed:true`, matching the gate log exactly; the initial freshness check has **50 distinct host PIDs**.
+- Its OOM record again captures **134,217,728 bytes** peak, `oom=1`, `oom_kill=3`, and disposal. This is a kernel counter record, not evidence of three workers.
+- [Boundary controls](ci-x86-v2/ci/boundaries.json): **7 PASS**; [seccomp probes](ci-x86-v2/ci/seccomp.json): **5 PASS**; [negative startup controls](ci-x86-v2/ci/preflight.json): **6 PASS**; [pre-main orphan control](ci-x86-v2/ci/parent-race.json): **PASS**, launcher exit **125**. Boundary/seccomp preregistration hashes recompute correctly, and their recorded source hashes match the corresponding local frozen files.
+- The lifecycle report and preregistration contain the same **three test-source hashes**, all matching their entries in the original 24-file source freeze. Rehashing the current checkout still gives **24/24 frozen files unchanged**. The CI report's three-file check is not a full source-to-binary build attestation.
+- The x86-64 gate hash recorded consistently by lifecycle and boundary registrations is `e6e614055d67b7317d6d26bc9b94e956d8b8d6b7111ac0cca089765afcff6bc1`; jail is `9c53bd1fd1d87c89b6535b2ad0524ef4afaae9ec300e8b1678d1c53353536730`. These are architecture-specific recorded identities; the locally rehashed distributable binaries discussed earlier are AArch64.
+
+The first [ci-x86-v1 lifecycle attempt](ci-x86-v1/lifecycle.json) is preserved as **FAIL: 0 tests run, 1 setup error, 0 HTTP observations**, exit **1**. The exact startup error is `active host swap is unsupported; use a dedicated no-swap host`. Do not count this failed setup as passing lifecycle execution despite the report's general `empirical_status=EXECUTED` field.
+
+The final CI [before profile](ci-x86-v2/ci-host-profile/swaps-before.txt) shows an active `/swapfile` entry, even though its used value is zero. The [during profile](ci-x86-v2/ci-host-profile/swaps-during.txt) contains only the header, with no active entries. Together with the retained first refusal, this adds an actual fail-closed swap-policy observation to the earlier ARM64 source-only check; the successful final run used the compatible no-swap CI profile.
+
+The x86-64 artifacts contain no actual PHP-CGI smoke report or separate piped-core refusal report. The four PHP observations and separate core-refusal evidence above remain ARM64 evidence. This CI result expands observed platform coverage to the named Azure x86-64 kernel; it does not supply external security certification, production qualification or a general cross-platform performance claim.

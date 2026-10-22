@@ -46,6 +46,20 @@ core policy, zero active swap entries and no leftover owned test cgroups.
 ARM64 execution does not establish x86-64 support; the public CI runs that
 architecture separately and its actual job status is authoritative.
 
+## Separate x86-64 CI reproduction
+
+[GitHub run 39825411168](https://github.com/testofschool/ephem/actions/runs/39825411168)
+passed on a separate Ubuntu 24.04 x86-64 runner, Linux 6.17.0-1022-azure,
+using the same frozen runtime/test sources. Build, formatter, strict Clippy and
+five Rust unit checks passed. The real-kernel integration passed **12 lifecycle
+tests**, **7 boundary probes**, **5 seccomp probes**, **6 preflight controls** and
+the pre-main parent-death regression. There were zero lifecycle errors, failures
+or skips. [Downloaded reports](ci-x86-v2/) preserve the evidence and the explicit
+CI host swap profile. PHP integration remains ARM64-only.
+
+This is execution on another architecture/environment with the same test
+harness, not an independent security audit or comparative benchmark.
+
 ## Final experiment
 
 Run [the documented dedicated-VM procedure](../docs/OPERATIONS.md), which invokes
@@ -117,8 +131,9 @@ The ARM64 VM's piped `core_pattern` was deliberately
 replaced with `core` only for owned fixture runs, then restored. No production
 host policy changed. There were no leftover `ephem-*` test cgroups after cleanup.
 
-The review and Linux probes used the same VM/kernel and artifacts. They are
-**verified in this lab**, not externally independently reproduced or certified.
+The ARM64 review and probes used the same VM/kernel and artifacts. The separate
+x86-64 CI reproduced the named tests with the same harness. These observations
+are **verified for those environments**, not an external security audit or certification.
 The source review found and the release corrected expected-parent startup,
 piped-core retention and missing worker-resource-accounting issues. These
 controls do not establish physical memory erasure or semantic safety.

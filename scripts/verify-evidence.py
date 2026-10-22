@@ -13,6 +13,8 @@ def main():
         if not condition:
             errors.append(message)
     freeze = read('evidence/source-freeze.json')['sha256']
+    check(len(freeze) == 24 and 'crates/ephem-gate/src/resources.rs' in freeze,
+          'executed source freeze must contain the expected 24 files')
     for path, expected in freeze.items():
         check(hashlib.sha256((root / path).read_bytes()).hexdigest() == expected,
               'source changed: ' + path)
@@ -24,7 +26,8 @@ def main():
           and len(set(lifecycle['fifty_host_worker_pids'])) == 50, 'worker count mismatch')
     check(lifecycle['cgroup_oom_and_disposal_verified'] is True, 'missing OOM/disposal proof')
     rows = lifecycle['resource_disposals']
-    check(len(rows) == 151 and all(r['disposed'] is True for r in rows), 'disposal count mismatch')
+    check(len(rows) == len({r['resource_scope'] for r in rows}) == 151
+          and all(r['disposed'] is True for r in rows), 'disposal count mismatch')
     check(any(r['oom_kill'] > 0 and r['memory_peak_bytes'] == 134217728 for r in rows),
           'actual memory OOM observation absent')
     for observation in lifecycle['observations']:

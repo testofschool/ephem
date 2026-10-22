@@ -1,0 +1,246 @@
+{
+  "commands": [
+    [
+      "sh",
+      "/home/runner/work/ephem/ephem/tests/ephem/build-rootfs.sh",
+      "/root/.ephem-audit-hv_9ls02/rootfs"
+    ],
+    {
+      "argv": [
+        "/usr/sbin/chroot",
+        "/root/.ephem-audit-hv_9ls02/rootfs",
+        "/worker"
+      ],
+      "stdin_hex": "4449525459"
+    },
+    {
+      "argv": [
+        "/usr/sbin/chroot",
+        "/root/.ephem-audit-hv_9ls02/rootfs",
+        "/worker"
+      ],
+      "stdin_hex": "434c45414e"
+    },
+    [
+      "/home/runner/work/ephem/ephem/target/release/ephem-gate",
+      "--socket",
+      "/root/.ephem-audit-hv_9ls02/plain.sock",
+      "--jail",
+      "/home/runner/work/ephem/ephem/target/ephem-jail",
+      "--root",
+      "/root/.ephem-audit-hv_9ls02/rootfs",
+      "--worker",
+      "/worker",
+      "--deadline-ms",
+      "1000",
+      "--max-input",
+      "1048576",
+      "--max-output",
+      "1048576",
+      "--max-inflight",
+      "4",
+      "--cgroup-root",
+      "/sys/fs/cgroup/ephem-test-4070"
+    ],
+    [
+      "/home/runner/work/ephem/ephem/target/release/ephem-gate",
+      "--socket",
+      "/root/.ephem-audit-hv_9ls02/cgi.sock",
+      "--jail",
+      "/home/runner/work/ephem/ephem/target/ephem-jail",
+      "--root",
+      "/root/.ephem-audit-hv_9ls02/rootfs",
+      "--worker",
+      "/worker",
+      "--deadline-ms",
+      "1000",
+      "--max-input",
+      "1048576",
+      "--max-output",
+      "1048576",
+      "--max-inflight",
+      "4",
+      "--cgroup-root",
+      "/sys/fs/cgroup/ephem-test-4070",
+      "--cgi-script",
+      "/app/static.php"
+    ],
+    {
+      "argv": [
+        "/home/runner/work/ephem/ephem/target/ephem-jail",
+        "--root",
+        "/root/.ephem-audit-hv_9ls02/rootfs",
+        "--worker",
+        "/worker",
+        "--"
+      ],
+      "stdin_hex": "48414e47"
+    }
+  ],
+  "responses": [
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "8",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4486",
+        "x-ephem-output-sha256": "d9ed84a15ec3aa6e344981cb5b92da385361d08a8b6e579c73ce716e55cdecab",
+        "x-ephem-elapsed-ms": "6.511416"
+      },
+      "body_hex": "7772697474656e0a",
+      "body_sha256": "d9ed84a15ec3aa6e344981cb5b92da385361d08a8b6e579c73ce716e55cdecab"
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "7",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4488",
+        "x-ephem-output-sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4",
+        "x-ephem-elapsed-ms": "2.841745"
+      },
+      "body_hex": "616273656e740a",
+      "body_sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4"
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "81",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4490",
+        "x-ephem-output-sha256": "9a56916fb7765860f681da4869fda4ff2d50c70853eda9f26ad42e9e006ba974",
+        "x-ephem-elapsed-ms": "2.796441"
+      },
+      "body_hex": "7b22657068656d5f6a61696c223a312c22776f726b65725f706964223a39393939393939392c22657869745f636f6465223a302c227369676e616c223a302c226c616e646c6f636b5f616269223a39397d",
+      "body_sha256": "9a56916fb7765860f681da4869fda4ff2d50c70853eda9f26ad42e9e006ba974"
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "8",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4497",
+        "x-ephem-output-sha256": "aa2c5101e767893ed5b2d96cbaae38d94483d4c449beef1f96a1e859c0be48f8",
+        "x-ephem-elapsed-ms": "7.200964"
+      },
+      "body_hex": "6367692d626f6479",
+      "body_sha256": "aa2c5101e767893ed5b2d96cbaae38d94483d4c449beef1f96a1e859c0be48f8"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 400,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "17",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "726571756573742072656a65637465640a",
+      "body_sha256": "aa4a8cd77b3c7af904dfb62b4f76c0552466c6c491faa0a44c6358f5e6c07ddb"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    },
+    {
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910"
+    }
+  ],
+  "owned_identities": [
+    {
+      "pid": 4501,
+      "state": "S",
+      "ppid": 4461,
+      "start_ticks": 11080,
+      "exe": "/home/runner/work/ephem/ephem/target/ephem-jail"
+    },
+    {
+      "pid": 4502,
+      "state": "R",
+      "ppid": 4501,
+      "start_ticks": 11081,
+      "exe": "/root/.ephem-audit-hv_9ls02/rootfs/worker"
+    }
+  ],
+  "gate_logs": [
+    "{\"profile\":\"read-only-fresh-exec-v1\",\"ready\":true}\n{\"disposed\":true,\"memory_peak_bytes\":954368,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-1\"}\n{\"accepted\":true,\"bytes\":8,\"elapsed_ms\":6.511416,\"request\":1,\"worker_pid\":4486}\n{\"disposed\":true,\"memory_peak_bytes\":786432,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-2\"}\n{\"accepted\":true,\"bytes\":7,\"elapsed_ms\":2.841745,\"request\":2,\"worker_pid\":4488}\n{\"disposed\":true,\"memory_peak_bytes\":974848,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-3\"}\n{\"accepted\":true,\"bytes\":81,\"elapsed_ms\":2.796441,\"request\":3,\"worker_pid\":4490}\n{\"disposed\":true,\"memory_peak_bytes\":786432,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-4\"}\n{\"accepted\":false,\"request\":5}\n{\"disposed\":true,\"memory_peak_bytes\":1024000,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-5\"}\n{\"accepted\":false,\"request\":6}\n{\"disposed\":true,\"memory_peak_bytes\":1089536,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-6\"}\n{\"accepted\":false,\"request\":7}\n{\"disposed\":true,\"memory_peak_bytes\":1028096,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-7\"}\n{\"accepted\":false,\"request\":8}\n{\"disposed\":true,\"memory_peak_bytes\":888832,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-8\"}\n{\"accepted\":false,\"request\":9}\n{\"disposed\":true,\"memory_peak_bytes\":786432,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4480-9\"}\n{\"accepted\":false,\"request\":10}\n",
+    "{\"profile\":\"read-only-fresh-exec-v1\",\"ready\":true}\n{\"disposed\":true,\"memory_peak_bytes\":786432,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4491-1\"}\n{\"accepted\":true,\"bytes\":8,\"elapsed_ms\":7.200964,\"request\":1,\"worker_pid\":4497}\n{\"disposed\":true,\"memory_peak_bytes\":1048576,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4491-2\"}\n{\"accepted\":false,\"request\":2}\n"
+  ]
+}

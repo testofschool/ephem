@@ -1,0 +1,5 @@
+Linux lima-ephem 6.8.0-146-generic #146-Ubuntu SMP PREEMPT_DYNAMIC Thu Sep  3 16:20:48 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+cargo 1.99.1 (5f94df478 2026-08-27)
+cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Filename				Type		Size		Used		Priority

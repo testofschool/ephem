@@ -1,0 +1,7 @@
+Use case: ads-marketing
+Asset type: wide GitHub repository hero and social card for an open-source security runtime named EPHEM.
+Primary request: Create a polished original editorial 3D illustration showing a tiny isolated execution chamber that dissolves completely after a single request. A small luminous silver translucent cube at center-right contains a few amber particles, then breaks into fine disappearing particles to the far right. An intact thin boundary surrounds the active cube. Nothing accumulates behind it. Architectural, precise, memorable, premium open-source engineering identity.
+Scene/backdrop: deep near-black navy, subtle fine grid, very restrained cyan-white edge light and amber internal state.
+Composition/framing: very wide 2:1 landscape, generous dark negative space on left for legible title; central-right sculpture; uncluttered.
+Text (verbatim): "EPHEM" large white sober sans serif in left upper area; below, "One request. One sandbox." and below that smaller "Experimental Linux isolation runtime". No other words.
+Constraints: truthful visual metaphor only, no shield/lock/hacker/hoodie, no vendor logos, no security certifications, no claims of invulnerability, no fake charts, no watermark. Excellent precise readable typography.

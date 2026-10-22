@@ -1,0 +1,46 @@
+{
+  "source_sha256": {
+    "/home/felix.guest/ephem-release/tests/ephem/seccomp_policy_probes.py": "8587730c0ed4d02eaf4beced5106a2c255a4cdb9d243ee70feb64d2f57afec6f",
+    "/home/felix.guest/ephem-release/tests/ephem/seccomp_probe.c": "1c98a67064c2db87ded16f6adbeee663d412212f6a1877c0e7079ce3d74436ce",
+    "/home/felix.guest/ephem-release/bpf/worker_containment.bpf.c": "691cbe6d14293d419866059b379edfda3859cbc81984a150287f62c985a26b95",
+    "/home/felix.guest/ephem-release/bpf/worker_containment.h": "1b71e93b63fec69beeaf64f31fcb6276f22efd3e61fe71c7a8217a58a0bca7c8"
+  },
+  "binary_sha256": "d84d1f8c1081836966c8358fa3c07a0e5edb5f53bf4ea5aa056acdeb24529e68",
+  "compile_command": [
+    "cc",
+    "-std=c11",
+    "-O2",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-static",
+    "-I/home/felix.guest/ephem-release/bpf",
+    "/home/felix.guest/ephem-release/tests/ephem/seccomp_probe.c",
+    "/home/felix.guest/ephem-release/bpf/worker_containment.bpf.c",
+    "-o",
+    "/root/.ephem-policy-kd4gm1hs/seccomp-probe"
+  ],
+  "expected": {
+    "peer0": {
+      "returncode": 0,
+      "meaning": "ENOTSOCK"
+    },
+    "peer1": {
+      "returncode": -31,
+      "meaning": "SIGSYS"
+    },
+    "vma0": {
+      "returncode": 0,
+      "meaning": "EINVAL"
+    },
+    "vma-high": {
+      "returncode": -31,
+      "meaning": "SIGSYS"
+    },
+    "dumpable": {
+      "returncode": -31,
+      "meaning": "SIGSYS"
+    }
+  },
+  "scope": "same-VM direct seccomp kernel probes; no external audit or generic correctness claim"
+}

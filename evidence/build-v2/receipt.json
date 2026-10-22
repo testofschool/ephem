@@ -1,0 +1,65 @@
+{
+  "commands": [
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--",
+        "--check"
+      ],
+      "cwd": "/home/felix.guest/ephem-release",
+      "returncode": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--workspace",
+        "--all-targets",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "cwd": "/home/felix.guest/ephem-release",
+      "returncode": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--locked",
+        "--workspace"
+      ],
+      "cwd": "/home/felix.guest/ephem-release",
+      "returncode": 0
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--locked",
+        "--release"
+      ],
+      "cwd": "/home/felix.guest/ephem-release",
+      "returncode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "packaging/build-jail.sh"
+      ],
+      "cwd": "/home/felix.guest/ephem-release",
+      "returncode": 0
+    }
+  ],
+  "all_pass": true,
+  "artifact_sha256": {
+    "target/release/ephem-gate": "4eaf7d844cf8791cbce87e359d2c5dba54ad08cfb3622a7af429134950aff2ab",
+    "target/ephem-jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894"
+  },
+  "core_pattern_restored": true,
+  "active_swap_entries": 0,
+  "remaining_ephem_cgroups": []
+}

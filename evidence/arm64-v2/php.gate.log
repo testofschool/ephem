@@ -1,0 +1,9 @@
+{"profile":"read-only-fresh-exec-v1","ready":true}
+{"disposed":true,"memory_peak_bytes":2924544,"oom":0,"oom_kill":0,"resource_scope":"request-5845-1"}
+{"accepted":true,"bytes":204,"elapsed_ms":9.963484999999999,"request":1,"worker_pid":5851}
+{"disposed":true,"memory_peak_bytes":2879488,"oom":0,"oom_kill":0,"resource_scope":"request-5845-2"}
+{"accepted":true,"bytes":204,"elapsed_ms":3.4282890000000004,"request":2,"worker_pid":5853}
+{"disposed":true,"memory_peak_bytes":3096576,"oom":0,"oom_kill":0,"resource_scope":"request-5845-4"}
+{"accepted":true,"bytes":204,"elapsed_ms":3.7546720000000002,"request":3,"worker_pid":5858}
+{"disposed":true,"memory_peak_bytes":2703360,"oom":0,"oom_kill":0,"resource_scope":"request-5845-3"}
+{"accepted":true,"bytes":204,"elapsed_ms":3.807964,"request":4,"worker_pid":5859}

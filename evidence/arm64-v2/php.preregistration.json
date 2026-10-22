@@ -1,0 +1,80 @@
+{
+  "contract": "two sequential plus two concurrent benign uploads; no policy relaxation",
+  "actual_sapi": "cgi-fcgi",
+  "receiver_literal_is_historical": "patched-php-fpm",
+  "php_version_output": "PHP 8.3.36 (cgi-fcgi) (built: Oct 22 2026 17:14:18)\nCopyright (c) The PHP Group\nZend Engine v4.3.36, Copyright (c) Zend Technologies\n",
+  "worker_args": [
+    "-n",
+    "-d",
+    "expose_php=0",
+    "-d",
+    "error_log=/tmp/php.log",
+    "-d",
+    "max_execution_time=0"
+  ],
+  "gate_deadline_ms": 1000,
+  "application_bytes": 963,
+  "application_sha256": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+  "source_tar_sha256": "c93f3441f87f6ab156bef4432db215d7e61ca2c0183bb3a2aa28d9886ab59f53",
+  "official_release": "https://www.php.net/releases/index.php?json&version=8.3.36",
+  "request_sha256": "5abd59b6fd48158133a0ee835ca2cbc609c810c6ad68cd6aecf7624018b14aa4",
+  "request_bytes": 406,
+  "upload_bytes": 24,
+  "upload_sha256": "633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4",
+  "expected_response_json": {
+    "receiver": "patched-php-fpm",
+    "php_version": "8.3.36",
+    "id": "",
+    "pid": 1,
+    "files": [
+      {
+        "name": "upload",
+        "size": 24,
+        "error": 0,
+        "sha256": "633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4"
+      }
+    ],
+    "fields": 1
+  },
+  "expected_response_sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+  "binary_sha256": {
+    "gate": "4eaf7d844cf8791cbce87e359d2c5dba54ad08cfb3622a7af429134950aff2ab",
+    "jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894",
+    "php-cgi": "4abed218d4fb8355c4c7bd61ca98c7a02bf3486b683fda2e5ad51f90ba43182a"
+  },
+  "rootfs_manifest": {
+    "php_version": "PHP 8.3.36 (cgi-fcgi) (built: Oct 22 2026 17:14:18)\nCopyright (c) The PHP Group\nZend Engine v4.3.36, Copyright (c) Zend Technologies",
+    "ldd": "\tlinux-vdso.so.1 (0x0000f13edc230000)\n\tlibm.so.6 => /lib/aarch64-linux-gnu/libm.so.6 (0x0000f13edbb50000)\n\tlibc.so.6 => /lib/aarch64-linux-gnu/libc.so.6 (0x0000f13edb990000)\n\t/lib/ld-linux-aarch64.so.1 (0x0000f13edc1e0000)\n",
+    "application_source_sha256": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+    "files": [
+      {
+        "path": "/usr/bin/php-cgi",
+        "bytes": 26967912,
+        "sha256": "4abed218d4fb8355c4c7bd61ca98c7a02bf3486b683fda2e5ad51f90ba43182a"
+      },
+      {
+        "path": "/app/receiver.php",
+        "bytes": 963,
+        "sha256": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681"
+      },
+      {
+        "path": "/lib/aarch64-linux-gnu/libc.so.6",
+        "bytes": 1722920,
+        "sha256": "0f1905dc27dbc6715875c70527bc8da846a10084c9c483e9d8ff76dce8d69d0e"
+      },
+      {
+        "path": "/lib/aarch64-linux-gnu/libm.so.6",
+        "bytes": 591800,
+        "sha256": "5e0391562de36de323fb9cb0f2c1b6bd6d034c840b1dac018499f5fe4ded1b4a"
+      },
+      {
+        "path": "/lib/ld-linux-aarch64.so.1",
+        "bytes": 203968,
+        "sha256": "390027e5f45f236bd1838bc54bf464c5ff01d260ab9f8b415ea8276641bce505"
+      }
+    ]
+  },
+  "source_sha256": {
+    "php_cgi_smoke.py": "b14ef001415d059b9aa09a9f92a76b039596e3fcba352104a41cfb39c57becd3"
+  }
+}

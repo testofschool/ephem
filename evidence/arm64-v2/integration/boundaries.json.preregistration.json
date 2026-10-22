@@ -1,0 +1,24 @@
+{
+  "source_sha256": {
+    "/home/felix.guest/ephem-release/tests/ephem/audit_probes.py": "da8f1146df4a3fcfb714b837f0414216bfba07a6a248cfc1fcafd98a02a30b1b",
+    "/home/felix.guest/ephem-release/tests/ephem/fixture.c": "37eaf606cd8e5bbdf4b2b5f5590bf2f00d3f53f99dd09a583ec276b3cd872b14",
+    "/home/felix.guest/ephem-release/tests/ephem/build-rootfs.sh": "649221249ee0850d2a438da3876b1131a15f7d5beb8d0d87bc290a152161db69"
+  },
+  "artifact_sha256": {
+    "/home/felix.guest/ephem-release/target/release/ephem-gate": "4eaf7d844cf8791cbce87e359d2c5dba54ad08cfb3622a7af429134950aff2ab",
+    "/home/felix.guest/ephem-release/target/ephem-jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894",
+    "/root/.ephem-audit-1670px2x/rootfs/worker": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3"
+  },
+  "planned_probes": [
+    "chroot persistence control",
+    "fresh tmp isolation",
+    "owned launcher death",
+    "stdout receipt forgery",
+    "CGI hash and header rejection",
+    "partial request deadline",
+    "exact-rootfs process cleanup"
+  ],
+  "deadline_ms": 1000,
+  "cleanup_grace_seconds": 5,
+  "scope": "benign static fixture only; CGI framing emulator, not PHP integration"
+}

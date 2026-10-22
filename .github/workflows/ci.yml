@@ -1,0 +1,39 @@
+name: Linux boundary checks
+
+on: [push, pull_request, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install pinned toolchain
+        run: rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy
+      - name: Build, lint, and unit checks
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy --locked --workspace --all-targets -- -D warnings
+          cargo test --locked --workspace
+          cargo build --locked --release
+          sh packaging/build-jail.sh
+      - name: Real Linux integration on the disposable runner
+        run: |
+          sudo bash -c '
+            set -euo pipefail
+            ephem_saved_core=$(cat /proc/sys/kernel/core_pattern)
+            trap '\''printf "%s\n" "$ephem_saved_core" > /proc/sys/kernel/core_pattern'\'' EXIT
+            printf "core\n" > /proc/sys/kernel/core_pattern
+            printf "+cpu +memory +pids\n" > /sys/fs/cgroup/cgroup.subtree_control
+            sh scripts/validate-linux.sh "$PWD/evidence/ci"
+          '
+      - name: Preserve reports, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-x86-64-evidence
+          path: evidence/ci/
+          if-no-files-found: warn

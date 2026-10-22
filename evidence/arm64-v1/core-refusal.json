@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "command": [
+    "target/release/ephem-gate",
+    "--socket",
+    "/root/ephem-unused.sock",
+    "--jail",
+    "/not-used",
+    "--root",
+    "/not-used",
+    "--worker",
+    "/worker",
+    "--cgroup-root",
+    "/not-used"
+  ],
+  "returncode": 1,
+  "stderr": "Error: piped host core handlers are unsupported\n",
+  "original_core_pattern": "|/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -F%F -- %E\n"
+}

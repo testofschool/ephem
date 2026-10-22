@@ -1,0 +1,14 @@
+[package]
+name = "ephem-gate"
+version = "0.2.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+nix = { version = "0.30", features = ["fs", "signal", "process"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tokio = { version = "1", features = ["full"] }

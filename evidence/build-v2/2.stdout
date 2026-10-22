@@ -1,0 +1,10 @@
+
+running 5 tests
+test resources::tests::counters_are_strict_and_required ... ok
+test resources::tests::regular_filesystem_and_relative_roots_fail_closed ... ok
+test tests::cgi_preserves_binary_body_and_status ... ok
+test tests::cgi_rejects_unapproved_and_ambiguous_headers ... ok
+test tests::cgroup_root_is_mandatory_and_limits_have_bounded_defaults ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

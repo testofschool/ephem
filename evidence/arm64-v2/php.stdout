@@ -1,0 +1,126 @@
+{
+  "verdict": "PASS",
+  "preregistration_sha256": "4bede94447f43de1f451799bb38ed7e0204491316c825c63c7b69bebb192ba8a",
+  "observations": [
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "content-length": "204",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "5851",
+        "x-ephem-output-sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+        "x-ephem-elapsed-ms": "9.963485"
+      },
+      "client_elapsed_ms": 10.20474,
+      "body_utf8": "{\"receiver\":\"patched-php-fpm\",\"php_version\":\"8.3.36\",\"id\":\"\",\"pid\":1,\"files\":[{\"name\":\"upload\",\"size\":24,\"error\":0,\"sha256\":\"633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4\"}],\"fields\":1}",
+      "body_sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+      "probe": "sequential-1",
+      "checks": {
+        "status_200": true,
+        "literal_response_bytes": true,
+        "trusted_response_digest": true,
+        "namespace_pid_one": true
+      }
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "content-length": "204",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "5853",
+        "x-ephem-output-sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+        "x-ephem-elapsed-ms": "3.428289"
+      },
+      "client_elapsed_ms": 3.612293,
+      "body_utf8": "{\"receiver\":\"patched-php-fpm\",\"php_version\":\"8.3.36\",\"id\":\"\",\"pid\":1,\"files\":[{\"name\":\"upload\",\"size\":24,\"error\":0,\"sha256\":\"633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4\"}],\"fields\":1}",
+      "body_sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+      "probe": "sequential-2",
+      "checks": {
+        "status_200": true,
+        "literal_response_bytes": true,
+        "trusted_response_digest": true,
+        "namespace_pid_one": true
+      }
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "content-length": "204",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "5858",
+        "x-ephem-output-sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+        "x-ephem-elapsed-ms": "3.754672"
+      },
+      "client_elapsed_ms": 3.953135,
+      "body_utf8": "{\"receiver\":\"patched-php-fpm\",\"php_version\":\"8.3.36\",\"id\":\"\",\"pid\":1,\"files\":[{\"name\":\"upload\",\"size\":24,\"error\":0,\"sha256\":\"633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4\"}],\"fields\":1}",
+      "body_sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+      "probe": "concurrent-1",
+      "checks": {
+        "status_200": true,
+        "literal_response_bytes": true,
+        "trusted_response_digest": true,
+        "namespace_pid_one": true
+      }
+    },
+    {
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "content-length": "204",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "5859",
+        "x-ephem-output-sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+        "x-ephem-elapsed-ms": "3.807964"
+      },
+      "client_elapsed_ms": 3.95901,
+      "body_utf8": "{\"receiver\":\"patched-php-fpm\",\"php_version\":\"8.3.36\",\"id\":\"\",\"pid\":1,\"files\":[{\"name\":\"upload\",\"size\":24,\"error\":0,\"sha256\":\"633a053ab4619efc4d22eb567c4a08e634ee966d13cd77626db80aa825c879c4\"}],\"fields\":1}",
+      "body_sha256": "9f82c8f5ed1f2b1ea09815f90138d1a2d5ae894f474f552024fa1960eae9e0b2",
+      "probe": "concurrent-2",
+      "checks": {
+        "status_200": true,
+        "literal_response_bytes": true,
+        "trusted_response_digest": true,
+        "namespace_pid_one": true
+      }
+    }
+  ],
+  "application_sha256_before": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+  "gate_command": [
+    "/home/felix.guest/ephem-release/target/release/ephem-gate",
+    "--socket",
+    "/run/ephem-php-smoke-k5rprtgt/gate.sock",
+    "--jail",
+    "/home/felix.guest/ephem-release/target/ephem-jail",
+    "--root",
+    "/opt/ephem-php-rootfs-v1",
+    "--worker",
+    "/usr/bin/php-cgi",
+    "--cgi-script",
+    "/app/receiver.php",
+    "--deadline-ms",
+    "1000",
+    "--max-inflight",
+    "4",
+    "--cgroup-root",
+    "/sys/fs/cgroup/ephem-php-phase3-v2",
+    "--",
+    "-n",
+    "-d",
+    "expose_php=0",
+    "-d",
+    "error_log=/tmp/php.log",
+    "-d",
+    "max_execution_time=0"
+  ],
+  "distinct_fresh_host_pids": true,
+  "application_sha256_after": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+  "rootfs_application_sha256_after": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+  "owned_gate_returncode": 0
+}

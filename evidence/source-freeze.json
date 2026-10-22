@@ -1,0 +1,31 @@
+{
+  "schema": "ephem-source-freeze-v1",
+  "phase": "0.2.0 experimental",
+  "created_date_kst": "2026-10-23",
+  "sha256": {
+    "Cargo.lock": "e0e67e4455fa79d1c2819d53b59131b12ef134dd48a250ddc576fbf72414d710",
+    "Cargo.toml": "e0c8ed7337610c71cc41aa232a3c4cb9236fab7c08f87101ed7c3e74824acaf8",
+    "bpf/worker_containment.bpf.c": "691cbe6d14293d419866059b379edfda3859cbc81984a150287f62c985a26b95",
+    "bpf/worker_containment.h": "1b71e93b63fec69beeaf64f31fcb6276f22efd3e61fe71c7a8217a58a0bca7c8",
+    "crates/ephem-gate/Cargo.toml": "f4b1e22b0283084bd38b8d7c7bb7fc57b22864a1c95e52ea9ec4c720ae92ccc4",
+    "crates/ephem-gate/src/main.rs": "7cfa1fac5b9fea0ad62d4b3be6f48a5484f119d4ab2ed028616df7abf7c36972",
+    "crates/ephem-gate/src/resources.rs": "1edae9714e4342ddda8b7f4769d7a47ccccf9aeb5d6c5cf7dee871baa563750b",
+    "crates/ephem-jail/main.c": "eff456b4fc543442c18079d63f11f7c30ef80e88f597aa0fcbb1a07260d1462e",
+    "examples/php/receiver.php": "c20a7b07a54d2341fca097d4e81e7e9d6ea1bcfda9b08deb62e1c9d4d711e681",
+    "packaging/build-jail.sh": "e172ee171b9592ffb6a30f46221e6dfa8ed4bd8e005f9cb5982c8c9cfa4ba431",
+    "packaging/entrypoint.sh": "3b37d13b1eefe19d2d46e23b10f4509f73585b898f57da7bacd44861800f53f1",
+    "packaging/prepare-cgroup.sh": "9729dd5a8efff17c75308b7837747d748e5233c463e06509f93453f2f1c8b981",
+    "rust-toolchain.toml": "d13306be0ecda81ce779baa290ffb417380d525928477f16200884b5169cca33",
+    "scripts/make-php-rootfs.py": "dce8db549b92f09274a08449febc7b95cd7e811696bf64703686b197b0282bbd",
+    "scripts/validate-linux.sh": "40009a4f247705575e3ea7c8f28a05b3474e6d14d14e99e51c0211fe83b89791",
+    "tests/ephem/audit_probes.py": "da8f1146df4a3fcfb714b837f0414216bfba07a6a248cfc1fcafd98a02a30b1b",
+    "tests/ephem/build-rootfs.sh": "649221249ee0850d2a438da3876b1131a15f7d5beb8d0d87bc290a152161db69",
+    "tests/ephem/fixture.c": "37eaf606cd8e5bbdf4b2b5f5590bf2f00d3f53f99dd09a583ec276b3cd872b14",
+    "tests/ephem/parent_race.py": "6252c6ff294cca7957af3e49fb63b5dd0256ae2e526b7f812c50b4d18394aacb",
+    "tests/ephem/php_cgi_smoke.py": "b14ef001415d059b9aa09a9f92a76b039596e3fcba352104a41cfb39c57becd3",
+    "tests/ephem/seccomp_policy_probes.py": "8587730c0ed4d02eaf4beced5106a2c255a4cdb9d243ee70feb64d2f57afec6f",
+    "tests/ephem/seccomp_probe.c": "1c98a67064c2db87ded16f6adbeee663d412212f6a1877c0e7079ce3d74436ce",
+    "tests/test_ephemeral_lifecycle.py": "f8acfd68cd1b52dc520ba49b97811374dfe3f976eab0ed2b103b0048ee3e9713",
+    "tests/test_fail_closed.py": "56497a1b3049b6c5789106f37102308cf149ddef0b8982a1267b9a2f042ede7c"
+  }
+}

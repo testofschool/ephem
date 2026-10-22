@@ -1,0 +1,51 @@
+{
+  "schema": "ephem-independent-v1",
+  "platform": "Linux-6.8.0-146-generic-aarch64-with-glibc2.39",
+  "started_utc": "2026-10-22T17:37:59Z",
+  "probes": [
+    {
+      "name": "unsandboxed_disposable_chroot",
+      "status": "PASS",
+      "outputs_hex": [
+        "7772697474656e0a",
+        "70726573656e740a"
+      ]
+    },
+    {
+      "name": "sandbox_fresh_tmp",
+      "status": "PASS"
+    },
+    {
+      "name": "forged_stdout_is_data",
+      "status": "PASS"
+    },
+    {
+      "name": "CGI_body_hash_and_unknown_header",
+      "status": "PASS"
+    },
+    {
+      "name": "partial_request_deadline",
+      "status": "PASS",
+      "elapsed_ms": 1002.0993139999632,
+      "observed_worker_pids": []
+    },
+    {
+      "name": "owned_launcher_death",
+      "status": "PASS",
+      "worker_after_grace": null
+    },
+    {
+      "name": "exact_fixture_executable_cleanup",
+      "status": "PASS",
+      "immediate_pids": [],
+      "remaining_pids_after_grace": [],
+      "scope": "exact /proc exe matches; zombie check separately covers owned launcher child"
+    }
+  ],
+  "status": "PASS",
+  "raw_path": "/home/felix.guest/ephem-release/evidence/arm64-v1/integration/boundaries.json.raw.json",
+  "preregistration_sha256": "254bdf54c8fb935d94e076d7d015ed920287f792487547503a59829202e02376",
+  "frozen_sources_unchanged": true,
+  "frozen_artifacts_unchanged": true,
+  "exit_code": 0
+}

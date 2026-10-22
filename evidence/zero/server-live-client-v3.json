@@ -1,0 +1,64 @@
+{
+  "schema": "ephem-separated-client-lab-session-v1",
+  "status": "PASS",
+  "started_utc": "2026-10-22T18:14:14Z",
+  "sessions": [
+    {
+      "event": "ready",
+      "port": 53252,
+      "relay_pid": 4434,
+      "relay_start_ticks": 111025,
+      "node_executable": "/opt/ephem-zero-node-v26.8.2/bin/node",
+      "gate_pid": 4375,
+      "manifest_sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+      "run_dir": "/run/ephem-zero-session-4368"
+    },
+    {
+      "event": "ready",
+      "port": 53252,
+      "relay_pid": 4463,
+      "relay_start_ticks": 111241,
+      "node_executable": "/opt/ephem-zero-node-v26.8.2/bin/node",
+      "gate_pid": 4375,
+      "manifest_sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+      "run_dir": "/run/ephem-zero-session-4368"
+    },
+    {
+      "event": "ready",
+      "port": 53252,
+      "relay_pid": 4479,
+      "relay_start_ticks": 111440,
+      "node_executable": "/opt/ephem-zero-node-v26.8.2/bin/node",
+      "gate_pid": 4375,
+      "manifest_sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+      "run_dir": "/run/ephem-zero-session-4368"
+    }
+  ],
+  "binary_sha256": {
+    "node": "79cacf598919b276679de47040fab8039ed76eab731f38f937995926caec4ae8",
+    "gate": "86acef592763f3d6dd1647d155b2cc1dfd58a405a3036314ff75d852021cbe67",
+    "jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894",
+    "manifest": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+    "worker": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3",
+    "relay": "1fba6e2d28f7405253ad5c2fdaed5b5576f7075eded6c6c7de12b0380119f91a",
+    "store": "d7ced0b8d342326ff76143a8948d95eb5433f6598d2bc91685b05a5356fd1310",
+    "envelope": "5416be1fb044f0c784be92de7258f8607154f532194b11e5feeb7f34cc1c0be1",
+    "zero_entrypoint": "20ac87b3b61cd17b70164ff1dddc05f5d1c4b2734dccd0b75b41d74902035552",
+    "entrypoint": "3b37d13b1eefe19d2d46e23b10f4509f73585b898f57da7bacd44861800f53f1",
+    "prepare_cgroup": "9729dd5a8efff17c75308b7837747d748e5233c463e06509f93453f2f1c8b981"
+  },
+  "cleanup": {
+    "relay_exit_code": 0,
+    "gate_exit_code": 0,
+    "cgroup_empty_before_remove": true,
+    "cgroup_absent": true,
+    "run_dir_absent": true
+  },
+  "gate_identity": {
+    "pid": 4375,
+    "start_ticks": 111022,
+    "executable": "/opt/ephem-zero-lab-v1/bin/ephem-gate"
+  },
+  "finished_utc": "2026-10-22T18:14:18Z",
+  "exit_code": 0
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "ephem-local-client-install-readback-v1",
+  "status": "PASS",
+  "installed": "/Users/felix/Desktop/php2shell/.runtime/ephem-zero-client-v2",
+  "node": "/Users/felix/.local/bin/node",
+  "node_version": "v26.8.2",
+  "sha256": {
+    "client.mjs": "67ba880b5f18ef0f799920d3be30b555340c04291f7da376329b0d7644e154e7",
+    "envelope.mjs": "5416be1fb044f0c784be92de7258f8607154f532194b11e5feeb7f34cc1c0be1"
+  },
+  "wrapper_sha256": "412fce1b9bc3cc70bfa49588b90b07e7c630ff589fe4aea43f27bf1ae9603c64",
+  "actual_installed_cli": {
+    "seal": {
+      "ok": true,
+      "operation": "seal"
+    },
+    "open": {
+      "ok": true,
+      "operation": "open"
+    }
+  },
+  "roundtrip_bytes": 223,
+  "roundtrip_matches": true,
+  "scope": "Synthetic local install readback only; production customer adoption not measured."
+}

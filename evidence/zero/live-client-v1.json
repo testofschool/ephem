@@ -1,0 +1,8 @@
+{
+  "schema": "ephem-separated-blind-relay-v1",
+  "status": "FAIL",
+  "probes": [],
+  "scope": "Trusted separately installed client, encrypted-only one-shot relay; not arbitrary plaintext computation or physical erasure.",
+  "error": "RuntimeError: service not ready",
+  "exit_code": 1
+}

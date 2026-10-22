@@ -13,6 +13,16 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Install pinned toolchain
         run: rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy
+      - name: Set up Node.js for the ciphertext profile
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - name: Ciphertext client, relay, and store unit checks
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/ci-zero
+          node --version | tee evidence/ci-zero/node-version.txt
+          node --test tests/zero/*.test.mjs | tee evidence/ci-zero/node-unit.log
       - name: Build, lint, and unit checks
         run: |
           cargo fmt --all -- --check
@@ -35,6 +45,14 @@ jobs:
             printf "core\n" > /proc/sys/kernel/core_pattern
             printf "+cpu +memory +pids\n" > /sys/fs/cgroup/cgroup.subtree_control
             sh scripts/validate-linux.sh "$PWD/evidence/ci"
+            ephem_zero_cgroup=/sys/fs/cgroup/ephem-zero-ci-$$
+            sh packaging/prepare-cgroup.sh "$ephem_zero_cgroup"
+            trap '\''rmdir -- "$ephem_zero_cgroup" || true; printf "%s\n" "$ephem_saved_core" > /proc/sys/kernel/core_pattern'\'' EXIT
+            python3 tests/zero/test_root_manifest.py \
+              --gate "$PWD/target/release/ephem-gate" \
+              --jail "$PWD/target/ephem-jail" \
+              --cgroup-root "$ephem_zero_cgroup" \
+              --report "$PWD/evidence/ci-zero/root-manifest.json"
           '
       - name: Preserve reports, including failures
         if: always()
@@ -44,4 +62,5 @@ jobs:
           path: |
             evidence/ci/
             evidence/ci-host-profile/
+            evidence/ci-zero/
           if-no-files-found: warn

@@ -7,7 +7,7 @@
 
 A small Linux runtime for giving compatible CGI and CLI programs a fresh, restricted execution environment for every request.
 
-[How it works](#how-it-works) · [Quick start](#quick-start) · [Threat model](docs/THREAT_MODEL.md) · [Evidence](evidence/RESULTS.md) · [Roadmap](docs/ROADMAP.md)
+[Zero profile](docs/ZERO_PROFILE.md) · [How it works](#how-it-works) · [Quick start](#quick-start) · [Threat model](docs/THREAT_MODEL.md) · [Evidence](evidence/RESULTS.md) · [Roadmap](docs/ROADMAP.md)
 
 ![An isolated execution cell dissolving after a request](assets/ephem-hero.png)
 
@@ -118,6 +118,14 @@ canary successfully: an allowed response is still an information channel.
 
 Press Ctrl+C in the gate terminal to stop admission and drain active work. See the [runbook](docs/OPERATIONS.md) for cleanup, test execution, CGI setup and the stricter packaging entrypoint. Do not install the launcher setuid.
 
+## Optional zero profile
+
+The [zero profile](docs/ZERO_PROFILE.md) adds an exact root-filesystem manifest that refuses unapproved files before launch and before each request. A separate ciphertext-only, one-shot relay keeps decryption keys on a trusted client. The server accepts encrypted envelopes, sends them through a disposable worker, and retains only bounded ciphertext until one retrieval or expiry. It has no server decryption API.
+
+This is a narrow encrypted transfer workload. A generic worker processing plaintext can still return that plaintext. Root manifests establish approved byte identity; they do not detect embedded secrets. The gate, relay, host and shared kernel remain trusted. This profile does not establish physical memory erasure or universal protection after compromise.
+
+The [Linux root replay](evidence/zero/root-replay-v2.json) passed 26 probes; [Node checks](evidence/zero/node-linux-v3.log) passed 32 tests. A [separate Mac client / Linux VM run](evidence/zero/live-client-v3.json) exercised encryption, exact recovery, one-time retrieval, expiry and restart without copying the client key to the VM. See the profile guide for the memory-scan scope, retained failed runs and reproduction commands. These results do not grant production qualification.
+
 ## What this protects — and what it does not
 
 EPHEM aims to stop worker state from being intentionally reused across requests and to deny direct durable filesystem and network effects under its restricted profile. It is a **shared-kernel sandbox**, with a trusted root gate and launcher.
@@ -165,6 +173,7 @@ EPHEM's focus is a small request-oriented wrapper, a restrictive offline profile
 ## Project
 
 - [Threat model](docs/THREAT_MODEL.md) — assets, assumptions and exclusions.
+- [Zero profile](docs/ZERO_PROFILE.md) — exact public-root policy and ciphertext-only transfer.
 - [Operations](docs/OPERATIONS.md) — supported host setup and reproduction.
 - [Roadmap](docs/ROADMAP.md) — next engineering gates.
 - [Initial source audit](docs/INITIAL_AUDIT.md) — earlier gaps and their provenance.

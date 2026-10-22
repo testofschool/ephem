@@ -1,0 +1,32 @@
+{
+  "schema": "ephem-evidence-gate-negative-control-v1",
+  "status": "PASS",
+  "verifier_sha256": "16da9603f7a189d6199f96f0b46a8964c1937ff912a416cab5467d9dd8f9ce6a",
+  "valid_bundle_exit": 0,
+  "rejections": [
+    {
+      "name": "one_byte_source_drift",
+      "exit_code": 1,
+      "errors": [
+        "executed source changed: crates/ephem-gate/src/main.rs"
+      ]
+    },
+    {
+      "name": "stale_30_test_log",
+      "exit_code": 1,
+      "errors": [
+        "Node unit checks incomplete: node-host-v3.log"
+      ]
+    },
+    {
+      "name": "raw_secret_return_hidden_by_aggregate",
+      "exit_code": 1,
+      "errors": [
+        "raw response body digest mismatch: strict_READSECRET_cannot_read_absent_ambient_file",
+        "raw attack response does not reproduce the aggregate"
+      ]
+    }
+  ],
+  "isolated_temporary_copy": true,
+  "real_checkout_modified": false
+}

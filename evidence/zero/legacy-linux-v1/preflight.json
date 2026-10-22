@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "observations": [
+    {
+      "probe": "missing-cgroup",
+      "returncode": 2,
+      "bound_socket": false,
+      "pass": true
+    },
+    {
+      "probe": "ordinary-directory",
+      "returncode": 1,
+      "bound_socket": false,
+      "pass": true
+    },
+    {
+      "probe": "relative-cgroup",
+      "returncode": 1,
+      "bound_socket": false,
+      "pass": true
+    },
+    {
+      "probe": "absent-cgroup",
+      "returncode": 1,
+      "bound_socket": false,
+      "pass": true
+    },
+    {
+      "probe": "missing-parent",
+      "returncode": 125,
+      "pass": true
+    },
+    {
+      "probe": "wrong-parent",
+      "returncode": 125,
+      "pass": true
+    }
+  ]
+}

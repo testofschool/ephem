@@ -1,0 +1,67 @@
+{
+  "schema": "ephem-scoped-force-solution-v1",
+  "problem": "The unchanged READSECRET worker could return a readable ambient root secret; refuse non-approved root content before launch and use a client-key-only relay for opaque transfer.",
+  "requested_goal_status": "Universal patchless, physically impossible data theft is NOT_SOLVED. This result covers the named offline/root and ciphertext-transfer profiles only.",
+  "evidence": [
+    {
+      "kind": "worked",
+      "claim": "Active-swap admission stopped startup instead of proceeding with an unsupported memory policy",
+      "source": "evidence/ci-x86-v1/lifecycle.json:19-24",
+      "quote": "  \"gate_log\": \"Error: active host swap is unsupported; use a dedicated no-swap host\\n\",\n  \"status\": \"FAIL\",\n  \"tests_run\": 0,\n  \"failures\": 0,\n  \"errors\": 1,\n  \"skipped\": 0,"
+    },
+    {
+      "kind": "failed",
+      "claim": "A cleanly exiting worker returned the permitted root secret before the new profile",
+      "source": "evidence/arm64-v2/integration/lifecycle.json:2641-2654",
+      "quote": "      \"probe\": \"READSECRET\",\n      \"status\": 200,\n      \"headers\": {\n        \"content-type\": \"application/octet-stream\",\n        \"content-length\": \"35\",\n        \"connection\": \"close\",\n        \"cache-control\": \"no-store\",\n        \"x-ephem-worker-pid\": \"5741\",\n        \"x-ephem-output-sha256\": \"07c1f2962e28edac2c2317953c01ecdddd9906e06fce49549fb7a3d2b5d30149\",\n        \"x-ephem-elapsed-ms\": \"1.795416\"\n      },\n      \"response_bytes\": 35,\n      \"response_sha256\": \"07c1f2962e28edac2c2317953c01ecdddd9906e06fce49549fb7a3d2b5d30149\",\n      \"client_elapsed_ms\": 1.99842"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "C1",
+      "description": "Fresh per-request read-only worker; bounded host-owned output quarantine; no DB credentials or pass-through effects",
+      "provenance": "upstream:kill-report-convergence",
+      "source": "evidence/zero/upstream-selection.json"
+    },
+    {
+      "id": "C2",
+      "description": "Client-encrypted opaque relay as a narrower transfer workload",
+      "provenance": "designer",
+      "excluded_from_pick": true
+    }
+  ],
+  "device": {
+    "type": "script",
+    "path": "packaging/zero-entrypoint.sh",
+    "blocks": "Starting the named zero-profile gate without an external manifest; Rust startup/request checks refuse mismatched inventories before socket bind or worker spawn. scripts/verify-zero-evidence.py exits nonzero to block zero-profile packaging on retained source/evidence drift."
+  },
+  "replay": {
+    "input": "READSECRET (hex 52454144534543524554), unchanged worker d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3",
+    "metric": "responses containing the ambient synthetic root secret",
+    "before": 1,
+    "after": 0,
+    "higher_is_better": false,
+    "runs_per_arm": 1,
+    "source": "evidence/zero/root-replay-v2.json"
+  },
+  "deploy": {
+    "delivered": true,
+    "installed": "verified",
+    "readback": "Owned Linux VM /opt/ephem-zero-lab-v1 ran the installed named wrapper, gate, jail and pinned relay (server-live-client-v3.json), then drained/removed session resources. Separate Mac client copy /Users/felix/Desktop/php2shell/.runtime/ephem-zero-client-v2 matched current source and completed installed CLI seal/open (client-install-v2.json). No public production service is running."
+  },
+  "additional_measured_workload": {
+    "client_relay_tests": 32,
+    "separated_client_linux_probes": 9,
+    "source": "evidence/zero/live-client-v3.json"
+  },
+  "census": {
+    "status": "BLOCKED",
+    "canonical_exit": 2,
+    "required_tool": "memory_list(include_preview=true)",
+    "reason": "Provider unavailable; no full owner census or canonical line_for_answer is claimed.",
+    "local_inventory_only": "Local project inventory only: 381 files read in full; 207 records contain known-outcome lines. Global memory census BLOCKED (memory_list unavailable)."
+  },
+  "production": "HOLD",
+  "external_security_audit": "UNRUN",
+  "physical_erasure": "UNPROVEN"
+}

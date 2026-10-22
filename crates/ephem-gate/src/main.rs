@@ -4,6 +4,7 @@
 compile_error!("ephem-gate requires Linux: no insecure portability mode is provided");
 
 mod resources;
+mod root_manifest;
 
 use anyhow::{bail, ensure, Context, Result};
 use clap::Parser;
@@ -45,6 +46,11 @@ struct Config {
     jail: PathBuf,
     #[arg(long)]
     root: PathBuf,
+    /// Trusted closed-world public-root policy. This is not secret-content detection.
+    #[arg(long)]
+    root_manifest: Option<PathBuf>,
+    #[arg(skip)]
+    root_policy: Option<root_manifest::RootManifest>,
     #[arg(long)]
     worker: String,
     /// Empty, root-owned cgroup-v2 subtree with cpu, memory and pids enabled.
@@ -424,6 +430,17 @@ async fn execute(
     request: Request,
     deadline: Instant,
 ) -> Result<Output> {
+    // Check before cgroup creation/spawn. The root administrator and immutable
+    // provisioning remain trusted; request bytes cannot select policy paths.
+    if let Some(policy) = &cfg.root_policy {
+        policy
+            .validate(&cfg.root)
+            .context("root manifest refused request")?;
+    }
+    ensure!(
+        Instant::now() < deadline,
+        "root verification exceeded request deadline"
+    );
     let mut scope = resources.create()?;
     let result = execute_scoped(cfg, request, deadline, &scope).await;
     // Both success and failure destroy the owned cgroup. No response is released
@@ -481,7 +498,13 @@ async fn handle(
     match result {
         Ok(out) => {
             let elapsed = accepted.elapsed().as_secs_f64() * 1000.0;
-            let extra = format!("X-Ephem-Worker-Pid: {}\r\nX-Ephem-Output-Sha256: {}\r\nX-Ephem-Elapsed-Ms: {elapsed:.6}\r\n", out.receipt.worker_pid, out.digest);
+            let mut extra = format!("X-Ephem-Worker-Pid: {}\r\nX-Ephem-Output-Sha256: {}\r\nX-Ephem-Elapsed-Ms: {elapsed:.6}\r\n", out.receipt.worker_pid, out.digest);
+            if let Some(policy) = &cfg.root_policy {
+                extra.push_str(&format!(
+                    "X-Ephem-Root-Manifest-Sha256: {}\r\n",
+                    policy.digest()
+                ));
+            }
             // Fixed metadata only. No worker stderr, input, URI, or output in logs.
             eprintln!(
                 "{}",
@@ -524,7 +547,7 @@ impl Drop for SocketGuard {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let cfg = Config::parse();
+    let mut cfg = Config::parse();
     resources::secure_host_memory()?;
     let resources = Arc::new(ResourceRoot::open(
         &cfg.cgroup_root,
@@ -548,6 +571,14 @@ async fn main() -> Result<()> {
         cfg.jail.is_absolute() && cfg.root.is_absolute() && cfg.socket.is_absolute(),
         "host paths must be absolute"
     );
+    // Mandatory for the explicit public-root profile, before any socket bind.
+    if let Some(path) = &cfg.root_manifest {
+        cfg.root_policy = Some(root_manifest::RootManifest::load(
+            path,
+            &cfg.root,
+            &cfg.worker,
+        )?);
+    }
     let parent = cfg.socket.parent().context("socket parent")?;
     let meta = fs::symlink_metadata(parent)?;
     // Restrict the local authority boundary; do not unlink an existing socket.
@@ -578,7 +609,7 @@ async fn main() -> Result<()> {
     let mut terminate = tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())?;
     eprintln!(
         "{}",
-        serde_json::json!({"ready":true,"profile":"read-only-fresh-exec-v1"})
+        serde_json::json!({"ready":true,"profile": if cfg.root_policy.is_some() { "public-root-fresh-exec-v1" } else { "read-only-fresh-exec-v1" }})
     );
     loop {
         tokio::select! {

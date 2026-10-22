@@ -1,0 +1,37 @@
+✔ empty, binary and maximum-sized data roundtrip with client-only key (15.390375ms)
+✔ separate WebCrypto interface authenticates actual AES-256-GCM envelope (2.426709ms)
+✔ wrong key and authenticated field tampering never produce plaintext (0.436208ms)
+✔ strict wire schema rejects keys, plaintext, bad base64, oversized and unknown fields (0.961083ms)
+✔ fresh CLI processes keep key private, preserve binary input, refuse overwrite and unsafe key files (330.626167ms)
+✔ RAM store owns ciphertext copy, claims once, and expires exactly at deadline (2.276458ms)
+✔ RAM store enforces individual, slot, and aggregate limits (0.388542ms)
+✔ RAM store rejects unsafe configuration and TTL over 60 seconds (0.1125ms)
+✔ client encrypts and decrypts; relay and worker receive ciphertext only (19.275833ms)
+✔ simultaneous takes yield exactly one successful claim (10.174334ms)
+✔ a failed take response still consumes the object (3.697459ms)
+✔ expiry removes the encrypted object without a take request (44.894542ms)
+✔ gate failure and altered output cannot create a retained object (1.954083ms)
+✔ an envelope with a secret key field is rejected before reaching gate (1.39675ms)
+✔ strict envelope framing rejects duplicate keys, whitespace, unknown fields, and invalid JSON (5.426458ms)
+✔ token API refuses URL tokens, extra fields, and noncanonical JSON (4.106709ms)
+✔ strict HTTP headers reject credentials, browser origins, and alternate hosts (3.144375ms)
+✔ an oversized declared body is refused before reading or invoking gate (1.505583ms)
+✔ a refused oversized streaming body may receive 413 or a connection reset (1.607291ms)
+✔ maximum supported plaintext remains inside relay wire limit (21.177666ms)
+✔ slot and byte budgets return fixed capacity failure (4.014625ms)
+✔ in-flight gate jobs are bounded and shutdown cannot retain a late result (2.745542ms)
+✔ shutdown clears all retained objects and is idempotent (1.157542ms)
+✔ a colliding port fails without replacing the existing listener (1.283916ms)
+✔ the service refuses any non-loopback listener (0.165ms)
+✔ no plaintext, decryption, dump, or debugging route is present (2.986917ms)
+✔ Transfer-Encoding, Expect, Upgrade, and missing length fail closed (2.662542ms)
+✔ CLI exposes no test bypass and emits only a fixed startup failure (215.323875ms)
+✔ host preflight fails on non-Linux without a portability bypass (0.245292ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 420.257125

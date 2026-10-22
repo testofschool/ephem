@@ -1,0 +1,9 @@
+{
+  "canonical_census_exit": 2,
+  "local_files_fully_read": 381,
+  "local_lines_processed": 184593,
+  "local_records_with_outcome_lines": 207,
+  "global_owner_census": "UNUSABLE: provider unavailable",
+  "line_for_answer": null,
+  "local_line_for_answer": "Local project inventory only: 381 files read in full; 207 records contain known-outcome lines. Global memory census BLOCKED (memory_list unavailable)."
+}

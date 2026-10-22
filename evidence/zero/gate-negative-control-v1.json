@@ -1,0 +1,23 @@
+{
+  "schema": "ephem-evidence-gate-negative-control-v1",
+  "status": "PASS",
+  "valid_bundle_exit": 0,
+  "one_byte_source_drift_exit": 1,
+  "refusal": {
+    "result": "HOLD",
+    "source_files": 38,
+    "errors": [
+      "executed source changed: crates/ephem-gate/src/main.rs"
+    ],
+    "original_READSECRET": {
+      "before": 1,
+      "after": 0
+    },
+    "physical_erasure": "UNPROVEN",
+    "arbitrary_plaintext_secrecy": "NOT_PROVIDED",
+    "global_owner_census": "BLOCKED: memory_list unavailable",
+    "production": "HOLD"
+  },
+  "isolated_temporary_copy": true,
+  "real_checkout_modified": false
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "ephem-separated-client-lab-session-v1",
+  "status": "FAIL",
+  "started_utc": "2026-10-22T18:07:54Z",
+  "sessions": [],
+  "binary_sha256": {},
+  "cleanup": {
+    "relay_exit_code": null,
+    "gate_exit_code": null,
+    "cgroup_absent": true,
+    "run_dir_absent": true
+  },
+  "reason": "untrusted_install_path",
+  "finished_utc": "2026-10-22T18:07:54Z",
+  "exit_code": 1
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "ephem-upstream-selection-v1",
+  "source": "research/ephem/process/RANK.json in the supplied local project record",
+  "source_sha256": "bc997d918d1ee7f7b21d21d60d7ec3a919fbc6f011b7e16cdc2ba881ca7c7c2c",
+  "source_verdict": "NO_SURVIVOR_STAY_WITH_BASELINE",
+  "selected_escape": {
+    "text": "Fresh per-request read-only worker; bounded host-owned output quarantine; no DB credentials or pass-through effects",
+    "named_by": [
+      "A",
+      "B"
+    ],
+    "grade": "converged"
+  },
+  "designer_extension": {
+    "description": "Client-encrypted opaque one-shot relay",
+    "excluded_from_pick": true
+  },
+  "scope": "Provenance of the selected device, not market validation or proof of security."
+}

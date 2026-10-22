@@ -1,0 +1,23 @@
+2026-10-22T18:11:58Z
+rustc 1.99.1 (58cf8f9c3 2026-10-13)
+cargo 1.99.1 (5f94df478 2026-08-27)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running unittests src/main.rs (target/debug/deps/ephem_gate-49899ca875e58857)
+
+running 7 tests
+test root_manifest::tests::manifest_schema_rejects_unknown_duplicate_and_missing_fields ... ok
+test resources::tests::regular_filesystem_and_relative_roots_fail_closed ... ok
+test root_manifest::tests::manifest_names_reject_ambiguous_and_hidden_path_components ... ok
+test resources::tests::counters_are_strict_and_required ... ok
+test tests::cgi_preserves_binary_body_and_status ... ok
+test tests::cgi_rejects_unapproved_and_ambiguous_headers ... ok
+test tests::cgroup_root_is_mandatory_and_limits_have_bounded_defaults ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+    Finished `release` profile [optimized] target(s) in 0.02s
+/home/felix.guest/ephem-release/target/ephem-jail
+86acef592763f3d6dd1647d155b2cc1dfd58a405a3036314ff75d852021cbe67  target/release/ephem-gate
+cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894  target/ephem-jail
+BUILD_EXIT=0

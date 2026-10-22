@@ -1,0 +1,40 @@
+✔ empty, binary and maximum-sized data roundtrip with client-only key (18.872614ms)
+✔ separate WebCrypto interface authenticates actual AES-256-GCM envelope (5.360872ms)
+✔ wrong key and authenticated field tampering never produce plaintext (0.587541ms)
+✔ strict wire schema rejects keys, plaintext, bad base64, oversized and unknown fields (1.080916ms)
+✔ fresh CLI processes keep key private, preserve binary input, refuse overwrite and unsafe key files (258.493603ms)
+✔ CLI rejects oversized files and unsupported inputs without waiting for a FIFO writer (130.962842ms)
+✔ CLI detects a real input file growing between its size check and read (83.465494ms)
+✔ RAM store owns ciphertext copy, claims once, and expires exactly at deadline (3.907332ms)
+✔ RAM store enforces individual, slot, and aggregate limits (0.576916ms)
+✔ RAM store rejects unsafe configuration and TTL over 60 seconds (0.32275ms)
+✔ client encrypts and decrypts; relay and worker receive ciphertext only (33.768022ms)
+✔ simultaneous takes yield exactly one successful claim (13.108784ms)
+✔ a failed take response still consumes the object (6.596163ms)
+✔ expiry removes the encrypted object without a take request (44.272017ms)
+✔ gate failure and altered output cannot create a retained object (1.958708ms)
+✔ an envelope with a secret key field is rejected before reaching gate (1.339916ms)
+✔ strict envelope framing rejects duplicate keys, whitespace, unknown fields, and invalid JSON (4.173414ms)
+✔ token API refuses URL tokens, extra fields, and noncanonical JSON (4.412706ms)
+✔ strict HTTP headers reject credentials, browser origins, and alternate hosts (3.55804ms)
+✔ an oversized declared body is refused before reading or invoking gate (0.756875ms)
+✔ a refused oversized streaming body may receive 413 or a connection reset (1.224583ms)
+✔ maximum supported plaintext remains inside relay wire limit (32.60119ms)
+✔ slot and byte budgets return fixed capacity failure (2.841248ms)
+✔ in-flight gate jobs are bounded and shutdown cannot retain a late result (3.032415ms)
+✔ shutdown clears all retained objects and is idempotent (1.244ms)
+✔ a colliding port fails without replacing the existing listener (1.123166ms)
+✔ the service refuses any non-loopback listener (0.212083ms)
+✔ real gate operation requires an explicit pinned root-manifest digest (0.330125ms)
+✔ no plaintext, decryption, dump, or debugging route is present (5.469789ms)
+✔ Transfer-Encoding, Expect, Upgrade, and missing length fail closed (2.09554ms)
+✔ CLI exposes no test bypass and emits only a fixed startup failure (220.326874ms)
+✔ host preflight fails on non-Linux without a portability bypass (0.184666ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 563.973387

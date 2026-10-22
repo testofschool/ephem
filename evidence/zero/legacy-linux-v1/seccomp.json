@@ -1,0 +1,75 @@
+{
+  "platform": "Linux-6.8.0-146-generic-aarch64-with-glibc2.39",
+  "observations": [
+    {
+      "argv": [
+        "/root/.ephem-policy-l5m4q9gs/seccomp-probe",
+        "peer0"
+      ],
+      "probe": "peer0",
+      "returncode": 0,
+      "expected_returncode": 0,
+      "stdout": "result=-1 errno=88\n",
+      "stderr": "",
+      "elapsed_ms": 0.766867,
+      "status": "PASS"
+    },
+    {
+      "argv": [
+        "/root/.ephem-policy-l5m4q9gs/seccomp-probe",
+        "peer1"
+      ],
+      "probe": "peer1",
+      "returncode": -31,
+      "expected_returncode": -31,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_ms": 0.523703,
+      "status": "PASS"
+    },
+    {
+      "argv": [
+        "/root/.ephem-policy-l5m4q9gs/seccomp-probe",
+        "vma0"
+      ],
+      "probe": "vma0",
+      "returncode": 0,
+      "expected_returncode": 0,
+      "stdout": "result=-1 errno=22\n",
+      "stderr": "",
+      "elapsed_ms": 0.434371,
+      "status": "PASS"
+    },
+    {
+      "argv": [
+        "/root/.ephem-policy-l5m4q9gs/seccomp-probe",
+        "vma-high"
+      ],
+      "probe": "vma-high",
+      "returncode": -31,
+      "expected_returncode": -31,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_ms": 0.424162,
+      "status": "PASS"
+    },
+    {
+      "argv": [
+        "/root/.ephem-policy-l5m4q9gs/seccomp-probe",
+        "dumpable"
+      ],
+      "probe": "dumpable",
+      "returncode": -31,
+      "expected_returncode": -31,
+      "stdout": "",
+      "stderr": "",
+      "elapsed_ms": 0.50562,
+      "status": "PASS"
+    }
+  ],
+  "preregistration_sha256": "eb5344e550accbb0435a8ca9636ae0c5d29035175315bb1091dbae9d086bde1d",
+  "frozen_sources_unchanged": true,
+  "binary_unchanged": true,
+  "status": "PASS",
+  "exit_code": 0
+}

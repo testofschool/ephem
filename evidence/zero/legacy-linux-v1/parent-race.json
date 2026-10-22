@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "probe": "gate-death-before-launcher-main",
+  "expected_gate_pid": 3698,
+  "reaped_launcher_pid": 3699,
+  "launcher_exit": 125,
+  "stderr": "ephem-jail requires its live, explicitly identified supervisor\n",
+  "scope": "controlled pre-exec orphan; no worker starts"
+}

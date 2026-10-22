@@ -106,8 +106,14 @@ This explicit repeat does not establish production performance under load.
 
 ## Host policy and unresolved gates
 
-No active guest swap was observed. Active-swap refusal is source-reviewed but
-was not tested by enabling swap. The VM's piped `core_pattern` was deliberately
+No active guest swap was observed on the ARM64 lab. The first public x86-64
+[CI run](https://github.com/testofschool/ephem/actions/runs/39825136033) found active
+runner swap and correctly refused startup: **0 lifecycle tests, 1 setup error**.
+That is a retained CI failure, not a passed lifecycle run; [raw files](ci-x86-v1/)
+record the refusal. The workflow now explicitly provisions a no-swap profile on
+its disposable runner. The runtime policy is unchanged.
+
+The ARM64 VM's piped `core_pattern` was deliberately
 replaced with `core` only for owned fixture runs, then restored. No production
 host policy changed. There were no leftover `ephem-*` test cgroups after cleanup.
 

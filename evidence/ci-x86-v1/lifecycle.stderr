@@ -1,0 +1,15 @@
+setUpClass (__main__.EphemeralLifecycle) ... ERROR
+
+======================================================================
+ERROR: setUpClass (__main__.EphemeralLifecycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/ephem/ephem/tests/test_ephemeral_lifecycle.py", line 165, in setUpClass
+    raise AssertionError("gate did not start: " + cls.log.read().decode(errors="replace"))
+AssertionError: gate did not start: Error: active host swap is unsupported; use a dedicated no-swap host
+
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.695s
+
+FAILED (errors=1)

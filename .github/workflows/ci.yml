@@ -24,6 +24,12 @@ jobs:
         run: |
           sudo bash -c '
             set -euo pipefail
+            mkdir -p evidence/ci-host-profile
+            cat /proc/swaps > evidence/ci-host-profile/swaps-before.txt
+            # This runner is an ephemeral test VM. Provision its explicit
+            # no-swap fixture profile; the runtime itself never changes swap.
+            swapoff --all
+            cat /proc/swaps > evidence/ci-host-profile/swaps-during.txt
             ephem_saved_core=$(cat /proc/sys/kernel/core_pattern)
             trap '\''printf "%s\n" "$ephem_saved_core" > /proc/sys/kernel/core_pattern'\'' EXIT
             printf "core\n" > /proc/sys/kernel/core_pattern
@@ -35,5 +41,7 @@ jobs:
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: linux-x86-64-evidence
-          path: evidence/ci/
+          path: |
+            evidence/ci/
+            evidence/ci-host-profile/
           if-no-files-found: warn

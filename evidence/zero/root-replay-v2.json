@@ -1,0 +1,700 @@
+{
+  "schema": "ephem-public-root-replay-v1",
+  "status": "PASS",
+  "started_utc": "2026-10-22T18:09:22Z",
+  "platform": "Linux-6.8.0-146-generic-aarch64-with-glibc2.39",
+  "probes": [
+    {
+      "name": "historical_READSECRET_returns_readable_canary",
+      "status": "PASS"
+    },
+    {
+      "name": "strict_READSECRET_cannot_read_absent_ambient_file",
+      "status": "PASS"
+    },
+    {
+      "name": "public_echo_still_useful",
+      "status": "PASS"
+    },
+    {
+      "name": "worker_has_no_extra_descriptors",
+      "status": "PASS"
+    },
+    {
+      "name": "worker_has_no_capabilities",
+      "status": "PASS"
+    },
+    {
+      "name": "scratch_write",
+      "status": "PASS"
+    },
+    {
+      "name": "next_worker_has_no_scratch_marker",
+      "status": "PASS"
+    },
+    {
+      "name": "crash_output_withheld",
+      "status": "PASS"
+    },
+    {
+      "name": "current_input_plaintext_still_returnable",
+      "status": "PASS"
+    },
+    {
+      "name": "late_root_injection_refuses_before_spawn",
+      "status": "PASS"
+    },
+    {
+      "name": "admin_removed_injection_restores_valid_profile",
+      "status": "PASS"
+    },
+    {
+      "name": "late_manifest_change_refuses_request",
+      "status": "PASS"
+    },
+    {
+      "name": "admin_restored_manifest_recovers_profile",
+      "status": "PASS"
+    },
+    {
+      "name": "startup_refuses_extra_file",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_renamed_canary",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_binary_canary",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_symlink",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_hardlinked_worker",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_special_fifo",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_modified_worker",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_writable_worker",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_mutated_manifest",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_unknown_schema_field",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_duplicate_manifest_path",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "startup_refuses_noncanonical_manifest_path",
+      "status": "PASS",
+      "socket_bound": false
+    },
+    {
+      "name": "worker_does_not_inherit_parent_secret_environment",
+      "status": "PASS"
+    }
+  ],
+  "responses": [
+    {
+      "request_hex": "52454144534543524554",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "35",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4040",
+        "x-ephem-output-sha256": "07c1f2962e28edac2c2317953c01ecdddd9906e06fce49549fb7a3d2b5d30149",
+        "x-ephem-elapsed-ms": "11.024105"
+      },
+      "body_hex": "53594e5448455449435f5345435245545f56495349424c455f544f5f574f524b45520a",
+      "body_sha256": "07c1f2962e28edac2c2317953c01ecdddd9906e06fce49549fb7a3d2b5d30149",
+      "name": "historical_READSECRET_returns_readable_canary"
+    },
+    {
+      "request_hex": "52454144534543524554",
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910",
+      "name": "strict_READSECRET_cannot_read_absent_ambient_file"
+    },
+    {
+      "request_hex": "4543484f2068656c6c6f2066726f6d20657068656d",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "16",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4050",
+        "x-ephem-output-sha256": "6f901588b179b40fd5ce521d80264dbdb3b9e54f0a45cf6a288339b3303a2a82",
+        "x-ephem-elapsed-ms": "3.881479",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "68656c6c6f2066726f6d20657068656d",
+      "body_sha256": "6f901588b179b40fd5ce521d80264dbdb3b9e54f0a45cf6a288339b3303a2a82",
+      "name": "public_echo_still_useful"
+    },
+    {
+      "request_hex": "4644",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "12",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4052",
+        "x-ephem-output-sha256": "53c53d14e7e61215711ad485e71252a7c11a2a0143808f89b398231ae7ec3709",
+        "x-ephem-elapsed-ms": "4.259184",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "65787472615f6664733d300a",
+      "body_sha256": "53c53d14e7e61215711ad485e71252a7c11a2a0143808f89b398231ae7ec3709",
+      "name": "worker_has_no_extra_descriptors"
+    },
+    {
+      "request_hex": "434150",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "83",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4054",
+        "x-ephem-output-sha256": "dd9680f681e838e56aa951134a82196527f5f581a3d4d49236ce396d5f4e9d24",
+        "x-ephem-elapsed-ms": "4.065268",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "6566666563746976653d30303030303030303030303030303030207065726d69747465643d3030303030303030303030303030303020696e686572697461626c653d303030303030303030303030303030300a",
+      "body_sha256": "dd9680f681e838e56aa951134a82196527f5f581a3d4d49236ce396d5f4e9d24",
+      "name": "worker_has_no_capabilities"
+    },
+    {
+      "request_hex": "4449525459",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "8",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4056",
+        "x-ephem-output-sha256": "d9ed84a15ec3aa6e344981cb5b92da385361d08a8b6e579c73ce716e55cdecab",
+        "x-ephem-elapsed-ms": "4.041644",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "7772697474656e0a",
+      "body_sha256": "d9ed84a15ec3aa6e344981cb5b92da385361d08a8b6e579c73ce716e55cdecab",
+      "name": "scratch_write"
+    },
+    {
+      "request_hex": "434c45414e",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "7",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4058",
+        "x-ephem-output-sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4",
+        "x-ephem-elapsed-ms": "3.732354",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "616273656e740a",
+      "body_sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4",
+      "name": "next_worker_has_no_scratch_marker"
+    },
+    {
+      "request_hex": "4352415348",
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910",
+      "name": "crash_output_withheld"
+    },
+    {
+      "request_hex": "4543484f2043555252454e545f524551554553545f43414e415259",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "22",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4062",
+        "x-ephem-output-sha256": "52771ab281cfb4906fa2d804bf5e383e99518c61196063163bfaa54b5d52c5f7",
+        "x-ephem-elapsed-ms": "3.870812",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "43555252454e545f524551554553545f43414e415259",
+      "body_sha256": "52771ab281cfb4906fa2d804bf5e383e99518c61196063163bfaa54b5d52c5f7",
+      "name": "current_input_plaintext_still_returnable"
+    },
+    {
+      "request_hex": "4543484f206865616c746879",
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910",
+      "name": "late_root_injection_refuses_before_spawn"
+    },
+    {
+      "request_hex": "4543484f206865616c746879",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "7",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4064",
+        "x-ephem-output-sha256": "87695fdac81728b9d7f2d4a1335c2632bb5e6ba1bed21d2dff0254fba31c7d5b",
+        "x-ephem-elapsed-ms": "3.775395",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "6865616c746879",
+      "body_sha256": "87695fdac81728b9d7f2d4a1335c2632bb5e6ba1bed21d2dff0254fba31c7d5b",
+      "name": "admin_removed_injection_restores_valid_profile"
+    },
+    {
+      "request_hex": "4543484f206865616c746879",
+      "status": 500,
+      "headers": {
+        "content-type": "text/plain",
+        "content-length": "19",
+        "connection": "close",
+        "cache-control": "no-store"
+      },
+      "body_hex": "657865637574696f6e2072656a65637465640a",
+      "body_sha256": "e0872f58e4903f19e15899037e774c1a1df16feb84f55f491ffdd203690b0910",
+      "name": "late_manifest_change_refuses_request"
+    },
+    {
+      "request_hex": "4543484f206865616c746879",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "7",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4066",
+        "x-ephem-output-sha256": "87695fdac81728b9d7f2d4a1335c2632bb5e6ba1bed21d2dff0254fba31c7d5b",
+        "x-ephem-elapsed-ms": "3.904854",
+        "x-ephem-root-manifest-sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1"
+      },
+      "body_hex": "6865616c746879",
+      "body_sha256": "87695fdac81728b9d7f2d4a1335c2632bb5e6ba1bed21d2dff0254fba31c7d5b",
+      "name": "admin_restored_manifest_recovers_profile"
+    },
+    {
+      "request_hex": "70726f6265",
+      "status": 200,
+      "headers": {
+        "content-type": "application/octet-stream",
+        "content-length": "7",
+        "connection": "close",
+        "cache-control": "no-store",
+        "x-ephem-worker-pid": "4151",
+        "x-ephem-output-sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4",
+        "x-ephem-elapsed-ms": "10.634608",
+        "x-ephem-root-manifest-sha256": "5279d2c67234b1ffda00eabf2f71cd4326398f01103be32befc46f9134158b2b"
+      },
+      "body_hex": "616273656e740a",
+      "body_sha256": "7925d3e9a9613a093e5eb4054b32aa39de910d2b03ba7e8046c3b4550b8de1e4",
+      "name": "worker_does_not_inherit_parent_secret_environment"
+    }
+  ],
+  "gate_logs": [
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-1.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/historical",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000"
+      ],
+      "exit_code": 0,
+      "log": "{\"profile\":\"read-only-fresh-exec-v1\",\"ready\":true}\n{\"disposed\":true,\"memory_peak_bytes\":851968,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4034-1\"}\n{\"accepted\":true,\"bytes\":35,\"elapsed_ms\":11.024104999999999,\"request\":1,\"worker_pid\":4040}\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-2.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/strict-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/strict-manifest.json"
+      ],
+      "exit_code": 0,
+      "log": "{\"profile\":\"public-root-fresh-exec-v1\",\"ready\":true}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-1\"}\n{\"accepted\":false,\"request\":1}\n{\"disposed\":true,\"memory_peak_bytes\":851968,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-2\"}\n{\"accepted\":true,\"bytes\":16,\"elapsed_ms\":3.881479,\"request\":2,\"worker_pid\":4050}\n{\"disposed\":true,\"memory_peak_bytes\":851968,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-3\"}\n{\"accepted\":true,\"bytes\":12,\"elapsed_ms\":4.259184,\"request\":3,\"worker_pid\":4052}\n{\"disposed\":true,\"memory_peak_bytes\":892928,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-4\"}\n{\"accepted\":true,\"bytes\":83,\"elapsed_ms\":4.0652680000000005,\"request\":4,\"worker_pid\":4054}\n{\"disposed\":true,\"memory_peak_bytes\":991232,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-5\"}\n{\"accepted\":true,\"bytes\":8,\"elapsed_ms\":4.041644,\"request\":5,\"worker_pid\":4056}\n{\"disposed\":true,\"memory_peak_bytes\":815104,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-6\"}\n{\"accepted\":true,\"bytes\":7,\"elapsed_ms\":3.732354,\"request\":6,\"worker_pid\":4058}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-7\"}\n{\"accepted\":false,\"request\":7}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-8\"}\n{\"accepted\":true,\"bytes\":22,\"elapsed_ms\":3.870812,\"request\":8,\"worker_pid\":4062}\n{\"accepted\":false,\"request\":9}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-9\"}\n{\"accepted\":true,\"bytes\":7,\"elapsed_ms\":3.775395,\"request\":10,\"worker_pid\":4064}\n{\"accepted\":false,\"request\":11}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4042-10\"}\n{\"accepted\":true,\"bytes\":7,\"elapsed_ms\":3.9048540000000003,\"request\":12,\"worker_pid\":4066}\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-3.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/extra_file-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/extra_file-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unapproved root entry\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-4.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/renamed_canary-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/renamed_canary-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unapproved root entry\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-5.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/binary_canary-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/binary_canary-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unapproved root entry\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-6.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/symlink-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/symlink-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unapproved root entry\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-7.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/hardlinked_worker-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/hardlinked_worker-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: root file is a link or special file\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-8.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/special_fifo-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/special_fifo-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unapproved root entry\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-9.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/modified_worker-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/modified_worker-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: root file digest mismatch\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-10.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/writable_worker-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/writable_worker-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: root entry owner or mode mismatch\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-11.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/mutated_manifest-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/mutated_manifest-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: unsupported root manifest version\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-12.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/unknown_schema_field-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/unknown_schema_field-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: invalid root manifest schema\n\nCaused by:\n    unknown field `approved`, expected `version` or `entries` at line 1 column 421\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-13.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/duplicate_manifest_path-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/duplicate_manifest_path-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: duplicate manifest path\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-14.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/noncanonical_manifest_path-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/noncanonical_manifest_path-manifest.json"
+      ],
+      "exit_code": 1,
+      "log": "Error: noncanonical in-root manifest path\n"
+    },
+    {
+      "argv": [
+        "/home/felix.guest/ephem-release/target/release/ephem-gate",
+        "--socket",
+        "/root/.ephem-public-root-5vpz73v9/gate-15.sock",
+        "--jail",
+        "/home/felix.guest/ephem-release/target/ephem-jail",
+        "--root",
+        "/root/.ephem-public-root-5vpz73v9/env-root",
+        "--worker",
+        "/worker",
+        "--cgroup-root",
+        "/sys/fs/cgroup/ephem-zero-profile-v2",
+        "--deadline-ms",
+        "1000",
+        "--root-manifest",
+        "/root/.ephem-public-root-5vpz73v9/env-manifest.json"
+      ],
+      "exit_code": 0,
+      "log": "{\"profile\":\"public-root-fresh-exec-v1\",\"ready\":true}\n{\"disposed\":true,\"memory_peak_bytes\":811008,\"oom\":0,\"oom_kill\":0,\"resource_scope\":\"request-4145-1\"}\n{\"accepted\":true,\"bytes\":7,\"elapsed_ms\":10.634608,\"request\":1,\"worker_pid\":4151}\n"
+    }
+  ],
+  "scope": "Ambient root-file denial only; current plaintext request remains readable and returnable; no physical erasure claim.",
+  "fixture_build": {
+    "stdout": "/root/.ephem-public-root-5vpz73v9/historical\n",
+    "stderr": ""
+  },
+  "preregistration_sha256": "bf4299232045f8d13e70b0e794f7f805861cacc74254e56617ac7c1d7fe2551d",
+  "artifact_sha256": {
+    "/home/felix.guest/ephem-release/target/release/ephem-gate": "86acef592763f3d6dd1647d155b2cc1dfd58a405a3036314ff75d852021cbe67",
+    "/home/felix.guest/ephem-release/target/ephem-jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894",
+    "/root/.ephem-public-root-5vpz73v9/historical/worker": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3"
+  },
+  "minimal_root_build": {
+    "schema": "ephem-minimal-public-root-build-v1",
+    "root": "/root/.ephem-public-root-5vpz73v9/strict-root",
+    "manifest": "/root/.ephem-public-root-5vpz73v9/strict-manifest.json",
+    "worker_source": "/root/.ephem-public-root-5vpz73v9/historical/worker",
+    "worker_sha256": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3",
+    "manifest_sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+    "claim": "Exact reviewed-worker inventory; no semantic secret detection or current-input confidentiality guarantee."
+  },
+  "replay": {
+    "input_hex": "52454144534543524554",
+    "worker_sha256_before": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3",
+    "worker_sha256_after": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3",
+    "metric": "responses containing ambient synthetic root secret",
+    "before": 1,
+    "after": 0,
+    "runs_per_arm": 1,
+    "fresh_worker_per_request": true
+  },
+  "environment_probe": {
+    "source_sha256": "5082642343548c9d67072dc10a70bcb473474b637c9a3c0dff655bd3db3f66c6",
+    "worker_sha256": "5b5f409e401de9a3241db8b51c1563af01aa2d10c897162454205d7b2aa0c4e8",
+    "compile_stderr": ""
+  },
+  "remaining_request_cgroups": [],
+  "exit_code": 0,
+  "finished_utc": "2026-10-22T18:09:23Z"
+}

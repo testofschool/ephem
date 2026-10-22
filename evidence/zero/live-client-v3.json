@@ -1,0 +1,69 @@
+{
+  "schema": "ephem-separated-blind-relay-v1",
+  "status": "PASS",
+  "probes": [
+    {
+      "name": "trusted_client_only_sends_ciphertext",
+      "status": "PASS",
+      "plaintext_matches_on_wire": 0,
+      "key_matches_on_wire": 0
+    },
+    {
+      "name": "real_gate_accepted_and_retained_ciphertext",
+      "status": "PASS"
+    },
+    {
+      "name": "owned_relay_private_writable_memory_scan",
+      "status": "PASS",
+      "bytes_scanned": 371998720,
+      "mappings_scanned": 86,
+      "plaintext_hits": 0,
+      "raw_key_hits": 0,
+      "encoded_key_hits": 0
+    },
+    {
+      "name": "actual_client_roundtrip_recovers_exact_binary",
+      "status": "PASS",
+      "bytes": 121,
+      "sha256": "f9ba3b8204f5f9073ebc10aad4edad879329390cd0770e94a8b6728d8c7fbb27"
+    },
+    {
+      "name": "second_take_cannot_recover_object",
+      "status": "PASS"
+    },
+    {
+      "name": "concurrent_take_is_at_most_once",
+      "status": "PASS",
+      "contenders": 8,
+      "successful_claims": 1
+    },
+    {
+      "name": "expiry_removes_object",
+      "status": "PASS",
+      "configured_ttl_ms": 1500
+    },
+    {
+      "name": "restart_has_no_durable_object_restore",
+      "status": "PASS",
+      "new_process": true
+    },
+    {
+      "name": "key_field_rejected_before_worker",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Trusted separately installed client, encrypted-only one-shot relay; not arbitrary plaintext computation or physical erasure.",
+  "server_ready": {
+    "event": "ready",
+    "port": 53252,
+    "relay_pid": 4434,
+    "relay_start_ticks": 111025,
+    "node_executable": "/opt/ephem-zero-node-v26.8.2/bin/node",
+    "gate_pid": 4375,
+    "manifest_sha256": "650c3ef67b30463bef131f7eab736788e5c13cca2d08bf5c1bec8ea94e7728e1",
+    "run_dir": "/run/ephem-zero-session-4368"
+  },
+  "client_key_location": "trusted host only; not copied to VM",
+  "deployment": "installed files and live execution verified in owned Linux lab",
+  "exit_code": 0
+}

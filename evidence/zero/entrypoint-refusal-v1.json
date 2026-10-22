@@ -1,0 +1,9 @@
+{
+  "schema": "ephem-zero-entrypoint-refusal-v1",
+  "status": "PASS",
+  "wrapper_sha256": "20ac87b3b61cd17b70164ff1dddc05f5d1c4b2734dccd0b75b41d74902035552",
+  "missing_manifest_exit": 1,
+  "stderr": "packaging/zero-entrypoint.sh: line 4: EPHEM_ROOT_MANIFEST: EPHEM_ROOT_MANIFEST is mandatory for the zero profile\n",
+  "worker_spawned": false,
+  "profile_fell_back": false
+}

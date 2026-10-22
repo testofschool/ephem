@@ -1,0 +1,40 @@
+{
+  "source_sha256": {
+    "/home/felix.guest/ephem-release/tests/zero/test_root_manifest.py": "ba4dbadf1bddc395831e86b3812088ae3288aafd8c06841ec90f1b825d040933",
+    "/home/felix.guest/ephem-release/packaging/build-minimal-root.py": "333a2462bc2ce60d61fa8180318d669b33ba7cdc141552f6c422d2c29933dfd9",
+    "/home/felix.guest/ephem-release/crates/ephem-gate/src/root_manifest.rs": "080124587af3d5c3d7b95b390b84134cbd524b58e8f1fc4f7a9376326715f269",
+    "/home/felix.guest/ephem-release/crates/ephem-gate/src/main.rs": "fd71b412b34ccbda8a91b4b0cd12d4c7bd4348e314e4bfffef944af1c964d66c",
+    "/home/felix.guest/ephem-release/tests/ephem/fixture.c": "37eaf606cd8e5bbdf4b2b5f5590bf2f00d3f53f99dd09a583ec276b3cd872b14",
+    "/home/felix.guest/ephem-release/tests/ephem/build-rootfs.sh": "649221249ee0850d2a438da3876b1131a15f7d5beb8d0d87bc290a152161db69"
+  },
+  "artifact_sha256": {
+    "/home/felix.guest/ephem-release/target/release/ephem-gate": "86acef592763f3d6dd1647d155b2cc1dfd58a405a3036314ff75d852021cbe67",
+    "/home/felix.guest/ephem-release/target/ephem-jail": "cfcc923329f8cf23bb94f636fb9a315401240e42db7eed5d6bd88f5c4e574894",
+    "/root/.ephem-public-root-5vpz73v9/historical/worker": "d8edead9110c1f016d4fea8de52dd96916e4bb81f46c7bf6125d58c3d5606fa3"
+  },
+  "original_request_hex": "52454144534543524554",
+  "metric": "responses containing ambient root synthetic secret",
+  "planned_probes": [
+    "READSECRET before/after",
+    "public ECHO",
+    "extra file",
+    "renamed canary",
+    "binary canary",
+    "symlink",
+    "hardlink",
+    "FIFO",
+    "modified worker",
+    "writable worker",
+    "mutated manifest",
+    "unknown schema field",
+    "duplicate manifest path",
+    "noncanonical manifest path",
+    "late root injection",
+    "late manifest change",
+    "empty extra FDs/capabilities",
+    "scratch non-reuse",
+    "crash output quarantine",
+    "current input remains exposed"
+  ],
+  "deployment": "dedicated test VM only"
+}

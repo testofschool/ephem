@@ -1,0 +1,34 @@
+{
+  "scope": "Scoped force-solution implementation, not universal security",
+  "checks": {
+    "root_policy": {
+      "probes": 26,
+      "source": "root-replay-v2.json"
+    },
+    "rust_units": {
+      "passed": 7,
+      "source": "build-linux-v2.log"
+    },
+    "node_units": {
+      "passed": 32,
+      "sources": [
+        "node-host-v3.log",
+        "node-linux-v3.log"
+      ]
+    },
+    "separated_client": {
+      "probes": 9,
+      "source": "live-client-v3.json"
+    }
+  },
+  "before_after": {
+    "metric": "ambient synthetic root secret responses",
+    "before": 1,
+    "after": 0,
+    "same_input": true,
+    "same_worker": true,
+    "runs_per_arm": 1
+  },
+  "global_census": "BLOCKED: unavailable memory_list",
+  "production": "HOLD"
+}

@@ -1,0 +1,13 @@
+{
+  "result": "BOUNDED_ZERO_EVIDENCE_CONSISTENT",
+  "source_files": 38,
+  "errors": [],
+  "original_READSECRET": {
+    "before": 1,
+    "after": 0
+  },
+  "physical_erasure": "UNPROVEN",
+  "arbitrary_plaintext_secrecy": "NOT_PROVIDED",
+  "global_owner_census": "BLOCKED: memory_list unavailable",
+  "production": "HOLD"
+}

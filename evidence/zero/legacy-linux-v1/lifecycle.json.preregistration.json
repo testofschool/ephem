@@ -1,0 +1,19 @@
+{
+  "schema": "ephem-lifecycle-v1",
+  "platform": "Linux-6.8.0-146-generic-aarch64-with-glibc2.39",
+  "started_utc": "2026-10-22T18:07:53Z",
+  "source_sha256": {
+    "tests/test_ephemeral_lifecycle.py": "f8acfd68cd1b52dc520ba49b97811374dfe3f976eab0ed2b103b0048ee3e9713",
+    "tests/ephem/fixture.c": "37eaf606cd8e5bbdf4b2b5f5590bf2f00d3f53f99dd09a583ec276b3cd872b14",
+    "tests/ephem/build-rootfs.sh": "649221249ee0850d2a438da3876b1131a15f7d5beb8d0d87bc290a152161db69"
+  },
+  "contract": {
+    "requests": 50,
+    "deadline_ms": 1000,
+    "max_input": 1048576,
+    "max_output": 1048576,
+    "max_inflight": 4,
+    "baseline_samples": 50
+  },
+  "empirical_status": "UNRUN"
+}

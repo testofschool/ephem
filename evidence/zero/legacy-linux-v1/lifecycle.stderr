@@ -1,0 +1,17 @@
+test_01_fifty_fresh_workers_and_trusted_receipts (__main__.EphemeralLifecycle.test_01_fifty_fresh_workers_and_trusted_receipts) ... ok
+test_02_identity_fds_and_capabilities (__main__.EphemeralLifecycle.test_02_identity_fds_and_capabilities) ... ok
+test_03_tmp_state_does_not_cross_requests (__main__.EphemeralLifecycle.test_03_tmp_state_does_not_cross_requests) ... ok
+test_04_crash_output_burn_and_recovery (__main__.EphemeralLifecycle.test_04_crash_output_burn_and_recovery) ... ok
+test_05_seccomp_forbidden_syscalls_burn_output (__main__.EphemeralLifecycle.test_05_seccomp_forbidden_syscalls_burn_output) ... ok
+test_06_filesystem_denial_is_not_execution_attestation (__main__.EphemeralLifecycle.test_06_filesystem_denial_is_not_execution_attestation) ... ok
+test_07_timeout_and_output_limit_burn (__main__.EphemeralLifecycle.test_07_timeout_and_output_limit_burn) ... ok
+test_08_input_limit_and_malformed_http (__main__.EphemeralLifecycle.test_08_input_limit_and_malformed_http) ... ok
+test_09_concurrent_requests_have_distinct_workers (__main__.EphemeralLifecycle.test_09_concurrent_requests_have_distinct_workers) ... ok
+test_10_raw_cold_exec_and_jail_timings (__main__.EphemeralLifecycle.test_10_raw_cold_exec_and_jail_timings) ... ok
+test_11_resource_oom_burn_and_cleanup (__main__.EphemeralLifecycle.test_11_resource_oom_burn_and_cleanup) ... ok
+test_12_clean_exit_does_not_prevent_response_exfiltration (__main__.EphemeralLifecycle.test_12_clean_exit_does_not_prevent_response_exfiltration) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.542s
+
+OK

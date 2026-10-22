@@ -1,61 +1,78 @@
-# LinkedIn launch draft — English
+# LinkedIn draft — zero profile
 
-Status: draft only. No LinkedIn post has been published. The text below uses the
-verified ARM64 experiment; GitHub CI status remains separately inspectable.
-
----
-
-What if a compromised request didn't get a second lifetime?
-
-I started with a stubborn question:
-
-“Why does an application keep yesterday's risk alive after today's request is already over?”
-
-That question became EPHEM, an experimental open-source Linux runtime.
-
-One request. One disposable worker.
-
-1) Give the request less to keep.
-
-EPHEM starts a fresh restricted worker for each request. Its application filesystem is read-only. Its scratch space belongs to that request. Direct networking is denied.
-
-2) Finish the cleanup before releasing the result.
-
-Output stays staged until execution and teardown checks pass. A crash, forbidden syscall, timeout, output overflow or cgroup OOM discards that staged output.
-
-On a real Linux VM, the current build passed 12 lifecycle tests. Fifty sequential requests used fifty distinct workers. An existing 963-byte PHP receiver handled four uploads without a source-code change.
-
-Those are small, reproducible results. They are what we've actually measured.
-
-3) Publish the uncomfortable test, too.
-
-I added a worker that reads a synthetic secret and returns it normally.
-
-It succeeds.
-
-Because destroying a process afterward cannot undo data it was allowed to return. Clean exit is not proof of safe computation. That boundary belongs in the README, alongside the demo.
-
-This isn't a world-first isolation primitive. Groundhog, nsjail, gVisor and others have already done important work here.
-
-The contribution I'm working on is making a strict request lifetime practical for compatible existing CGI/CLI workloads—with restrictive defaults and evidence you can inspect.
-
-No “unhackable” claim. No promise that patches disappear. The privileged control plane still needs hardening and external review.
-
-But I want to keep pushing this question:
-
-How much damage can we remove simply by refusing to give a request a second lifetime?
-
-Code, threat model, raw tests and the counterexample:
-https://github.com/testofschool/ephem
-
-If you maintain an offline parser or a read-only CGI handler, I'd be interested in the first compatibility boundary you would test.
-
-#OpenSource #SecurityEngineering #Linux #Sandboxing
+Draft only. Publish after reviewing the matching source and evidence. The public
+alpha's earlier results and this branch's new results are distinct.
 
 ---
 
-Suggested image: [`assets/ephem-hero.png`](../assets/ephem-hero.png).
-Evidence: [`evidence/RESULTS.md`](../evidence/RESULTS.md).
-Prior art: [`docs/PRIOR_ART.md`](PRIOR_ART.md).
+What if the server never received your plaintext in the first place?
 
-Do not add world-first, zero-deployment, patch-free or physically-unhackable claims.
+I wanted to build a system where a compromised request had nothing useful to keep.
+
+So I started with disposable workers: one request, a fresh restricted process, private scratch space, and cleanup before the response leaves.
+
+Then I wrote the test I least wanted to pass.
+
+“Read this synthetic secret. Return it. Exit normally.”
+
+It worked.
+
+The process disappeared afterward. The secret was already in the response.
+
+That result changed what I built next.
+
+1) Remove ambient secrets from the worker.
+
+EPHEM now has an exact root-filesystem policy. Extra file? Changed executable? Symlink? Reject the launch. The gate checks again before every request.
+
+With the same worker binary and the same request, the earlier secret-reading test went from returning the synthetic secret to rejecting execution. Public echo still worked.
+
+A hash cannot decide whether an approved program contains a secret. The root must still come from reviewed inputs. That boundary is explicit.
+
+2) Keep the decryption key on the client.
+
+I added a deliberately narrow workload: a one-shot encrypted transfer relay.
+
+The client encrypts locally. The server receives ciphertext. A fresh EPHEM worker handles that ciphertext. The relay retains a bounded object in RAM until one retrieval or expiry.
+
+Decryption happens back on the client. There is no server decryption API.
+
+This changes the data the server gets to hold. It does not make arbitrary plaintext applications confidential by wrapping them.
+
+3) Test across the machine boundary.
+
+A trusted Mac client and a separate Linux VM completed the real round trip. The key stayed on the Mac.
+
+Eight simultaneous retrievals produced one successful claim. A second retrieval failed. Expired objects disappeared from the service, and a restarted relay restored none.
+
+I also streamed a bounded sample of the owned relay's writable private memory back to the client. Across 371,998,720 scanned bytes, that run's synthetic plaintext and key had zero matches. The search needles stayed on the client.
+
+That is one reproducible observation, with its limits published. It is not a physical-erasure certificate.
+
+The current record includes 26 root-policy probes, 32 client/relay/store tests, and nine separate-client integration probes passing. The initial failed attempts are retained too.
+
+The kernel and control plane still need patches. Independent security review is still ahead. A compromised server can still expose ciphertext and metadata, or refuse service.
+
+But this is the direction I want to make practical:
+
+Give a compromised request less authority, less history, and fewer secrets to reach.
+
+The new profile is on an experimental branch. Source, threat boundaries, tests and raw evidence:
+https://github.com/testofschool/ephem/tree/zero-secret-profile
+
+If you operate a secret-free offline worker or need a short-lived encrypted handoff, which boundary would you try to break first?
+
+#OpenSource #SecurityEngineering #Linux #Encryption
+
+---
+
+Evidence for the new claims:
+
+- [Root replay: 26 probes](../evidence/zero/root-replay-v2.json)
+- [Node tests: 32 tests](../evidence/zero/node-linux-v3.log)
+- [Separate client run: nine probes and bounded memory observation](../evidence/zero/live-client-v3.json)
+- [Installed-server identity and cleanup](../evidence/zero/server-live-client-v3.json)
+- [Scope, assumptions and reproduction](ZERO_PROFILE.md)
+
+Suggested image: [existing EPHEM illustration](../assets/ephem-hero.png). It is a
+visual metaphor; it is not evidence of secret erasure.

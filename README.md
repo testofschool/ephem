@@ -28,7 +28,8 @@ or certification. Results below come from [the Phase 3 report](docs/EPHEM_PHASE3
 Test host: Linux aarch64, kernel 6.8.0-146-generic, Rust 1.99.1,
 PHP 8.3.6 NTS embed. PostgreSQL 16.15 was tested in the original validation;
 PostgreSQL and BPF were **UNRUN in the release-alignment invocation**.
-x86_64 execution remains **UNRUN**.
+The supplied independent-host x86_64 native run is now retained and checked
+below. Its PHP adapter, live PostgreSQL and BPF LSM paths remain **UNRUN**.
 
 ## Architecture
 
@@ -61,6 +62,44 @@ PostgreSQL COMMIT acknowledgment is **indeterminate**: HTTP 500,
 truthfully be reported as zero committed mutations.
 
 ## Verified empirical results
+
+### Verified cross-architecture native reproduction
+
+The supplied [x86_64 report](evidence/x86-independent-v1/X86_REPRODUCTION.json)
+records a different host at source commit
+`1320713d065f04ae701026e14edf46226e71af6d`. Stored-record verification recomputes
+all 1,000 samples after 100 reported warmups and checks all 13 lifecycle cases
+and 23 retained worker receipts. This ingestion executes no Linux worker.
+Values below preserve the JSON numbers without rounding; each row is a
+separate run, with nearest-rank percentiles and startup excluded.
+
+| Architecture | Recorded host / run | Native p50 (ms) | Native p95 (ms) | Native p99 (ms) | Native max (ms) | p95 <2.0ms |
+| :--- | :--- | ---: | ---: | ---: | ---: | :---: |
+| ARM64 (aarch64) | Same-host VM, kernel 6.8.0-146-generic; original validation | 0.448963 | 0.684507 | 0.916343 | 1.383182 | PASS |
+| ARM64 (aarch64) | Same-host VM, kernel 6.8.0-146-generic; release alignment | 0.408537 | 0.520076 | 0.5900340000000001 | 0.9285720000000001 | PASS |
+| ARM64 (aarch64) | Same-host VM, kernel 6.8.0-146-generic; separate remote-sync command | 0.610938 | 1.4441330000000001 | 2.111405 | 3.505912 | PASS |
+| x86_64 | Supplied independent-host report, kernel 6.18.44-fc-v140 | 0.44322300000000003 | **0.593124** | 0.7238249999999999 | 1.8941999999999999 | PASS |
+
+The x86 cargo logs record 21 tests passed and one ignored real-PostgreSQL test,
+plus successful release builds. The native receipts record eight classic
+seccomp SIGSYS denials and clean recoveries, alongside COW reset, SIGSEGV,
+timeout, verifier rejection and truncated state IPC checks. Binary hashes are
+recorded; the x86 binaries themselves were not supplied for byte verification.
+Detailed CPU/VM/load metadata and the complete invocation transcript are
+unrecorded. These observations establish bounded native fixture compatibility;
+they do not establish matched host performance, complete PHP reproduction or
+production parity. **Production remains HOLD.** The x86 PHP HTTP path, full
+reproduction checker, live PostgreSQL and BPF LSM remain **UNRUN**.
+
+```sh
+python3 scripts/verify_stored_evidence.py
+python3 scripts/verify_x86_evidence.py
+```
+
+The first command preserves the historical four-report snapshot, including
+the PHP latency FAIL and its original local x86 UNRUN field. The second checks
+the newly supplied x86 records separately. See the [ingestion audit](docs/audit/INGESTION_20261023.md)
+for archive identities, corrections to the handoff examples and remaining gaps.
 
 The remote-sync integration check preserved the public `ephem-gate` 0.2.0 source
 and passed workspace format, clippy with warnings denied, 21 unit tests and release
@@ -218,6 +257,9 @@ and [x86_64 parity](.github/ISSUE_SEEDS/issue_3_x86_parity.md).
 
 | Evidence | What it records |
 | :--- | :--- |
+| [Independent x86_64 evidence](evidence/x86-independent-v1/) | Supplied raw native samples, lifecycle receipts, cargo logs, environment and recorded binary hashes; native p95 0.593124ms |
+| [Evidence ingestion audit](docs/audit/INGESTION_20261023.md) | Verified ingestion scope, original archive hashes and outstanding x86 qualification gaps |
+| [Preserved audit snapshot](docs/audit/INDEPENDENT_AUDIT_20261023.md) | Historical stored-record and scope review at source commit 1320713; not a new security audit |
 | [REMOTE_SYNC_PRECHECK.json](reports/phase3/REMOTE_SYNC_PRECHECK.json) | Integrated-tree checks and PHP latency-gate FAIL; separate from retained release-alignment results |
 | [Remote-sync raw run](reports/phase3/remote-sync-run/) | Integrated-checkout reproduction evidence, including the failed PHP timing gate |
 | [RELEASE_ALIGNMENT.json](reports/phase3/RELEASE_ALIGNMENT.json) | Retained 0.520076ms native p95, SQLite rerun, reproduction checks and invocation limits |

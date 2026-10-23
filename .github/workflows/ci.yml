@@ -27,6 +27,11 @@ jobs:
           python3 -m unittest discover -s tests -p test_phase3_reproduction.py -v
           python3 -m unittest discover -s tests -p test_issue_seeding.py -v
           python3 -m unittest discover -s tests -p test_phase3_release_bundle.py -v
+          python3 -m unittest discover -s tests -p test_stored_evidence.py -v
+          python3 -m unittest discover -s tests -p test_x86_evidence.py -v
+          python3 scripts/verify_stored_evidence.py
+          python3 scripts/verify_x86_evidence.py
+          python3 docs/audit/stored-evidence-20261023/process/direction_sweep.py check docs/audit/stored-evidence-20261023/SWEEP.json
           ./scripts/seed_issues.sh --dry-run
           ./scripts/bundle_release.sh --output artifacts/release-phase3/ci
       - name: Real Linux integration on the disposable runner

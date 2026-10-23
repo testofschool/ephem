@@ -1,0 +1,2 @@
+a8f457691fe5daa432a375506f6ec5d28b8e91a5ffd71a742433e32016eb9219  target/release/ephem-warm-pool
+17367ec48e2beca552299eb7fcc34559eb60db2fbac81d87fdff328b65600acb  target/release/ephem-stateful

@@ -26,6 +26,7 @@ import re
 import shlex
 import shutil
 import stat
+import subprocess
 import sys
 import tarfile
 import tempfile
@@ -59,6 +60,22 @@ DOWNLOAD_ASSETS = (
     "SHA256SUMS.txt",
     "RELEASE_ALIGNMENT.json",
     "REMOTE_SYNC_PRECHECK.json",
+)
+CANONICAL_STAGE = f"artifacts/release-phase3/{TAG}"
+ARM64_ARCHIVE = "artifacts/ephem-phase3-linux-arm64.tar.gz"
+# Published v0.3.0 asset identity, preserved by this evidence-only addendum.
+ARM64_ARCHIVE_SHA256 = "d8edad0b10ed8dbcf59a23787f1439649a842bff0c2a6b3ba6c5a2be03a09dca"
+X86_DIRECTORY = "evidence/x86-independent-v1"
+X86_ARCHIVE = "artifacts/ephem-phase3-x86_64-evidence.tar.gz"
+X86_FILES = (
+    "X86_REPRODUCTION.json", "binary-sha256.txt", "cargo-build.log", "cargo-test.log",
+    "env.txt", "upstream-commit.txt", "warm-native.json", "warm-native.stderr.log",
+)
+ADDENDUM_FILES = (
+    "README.md", ".github/workflows/ci.yml", "scripts/bundle_release.sh",
+    "scripts/verify_stored_evidence.py", "scripts/verify_x86_evidence.py",
+    "tests/test_stored_evidence.py", "tests/test_x86_evidence.py",
+    "tests/test_phase3_release_bundle.py",
 )
 
 
@@ -242,6 +259,156 @@ def same_tree(first, second):
     return inventory(first) == inventory(second)
 
 
+def write_root_checksums(output_dir, addendum=False):
+    names = {path.relative_to(ROOT).as_posix() for path in all_files(output_dir)}
+    if addendum:
+        for directory in (X86_DIRECTORY, "docs/audit"):
+            names.update(path.relative_to(ROOT).as_posix()
+                         for path in all_files(ROOT / directory)
+                         if "__pycache__" not in path.parts and path.suffix != ".pyc")
+        names.update(name for name in ADDENDUM_FILES if (ROOT / name).exists())
+    data = "".join(f"{digest_source(name)['sha256']}  {name}\n"
+                   for name in sorted(names)).encode()
+    descriptor, temporary = tempfile.mkstemp(prefix=".SHA256SUMS-", dir=ROOT)
+    try:
+        with os.fdopen(descriptor, "wb") as output:
+            output.write(data)
+        os.chmod(temporary, 0o644)
+        if (ROOT / "SHA256SUMS.txt").is_symlink():
+            fail("repository SHA256SUMS.txt became a symlink")
+        os.replace(temporary, ROOT / "SHA256SUMS.txt")
+    finally:
+        if os.path.lexists(temporary):
+            os.unlink(temporary)
+
+
+def deterministic_archive(directory, archive):
+    archive.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+    with archive.open("xb") as output:
+        with gzip.GzipFile(filename="", fileobj=output, mode="wb", mtime=0) as compressed:
+            with tarfile.open(fileobj=compressed, mode="w|", format=tarfile.USTAR_FORMAT) as tar:
+                for path in all_files(directory):
+                    info = tarfile.TarInfo(path.relative_to(directory).as_posix())
+                    info.size = path.stat().st_size
+                    info.mode = 0o644
+                    info.mtime = 0
+                    info.uid = info.gid = 0
+                    info.uname = info.gname = ""
+                    with path.open("rb") as source:
+                        tar.addfile(info, source)
+    archive.chmod(0o644)
+
+
+def stage_checksums(stage, assets):
+    names = sorted({ARM64_ARCHIVE, NOTES, "RELEASE_ALIGNMENT.json",
+                    "REMOTE_SYNC_PRECHECK.json"} | ({X86_ARCHIVE} if X86_ARCHIVE in assets else set()))
+    return "".join(f"{file_digest(stage / name)}  {name}\n" for name in names).encode()
+
+
+def download_checksums(stage, assets):
+    return "".join(f"{file_digest(stage / name)}  {PurePosixPath(name).name}\n"
+                   for name in assets).encode()
+
+
+def validate_existing_stage(stage):
+    if not stat.S_ISDIR(stage.lstat().st_mode):
+        fail(f"existing output is not a real directory: {stage}")
+    names = {p.relative_to(stage).as_posix() for p in all_files(stage)}
+    base = {ARM64_ARCHIVE, NOTES, "RELEASE_ALIGNMENT.json", "REMOTE_SYNC_PRECHECK.json",
+            "SHA256SUMS.txt", "DOWNLOAD_SHA256SUMS.txt"}
+    if names not in (base, base | {X86_ARCHIVE}):
+        fail(f"unexpected existing release-stage inventory: {stage}")
+    if file_digest(stage / ARM64_ARCHIVE) != ARM64_ARCHIVE_SHA256:
+        fail("published ARM64 archive identity differs; refusing evidence addendum")
+    for staged, source in ((NOTES, NOTES), ("RELEASE_ALIGNMENT.json", ALIGNMENT),
+                           ("REMOTE_SYNC_PRECHECK.json", PRECHECK)):
+        if (stage / staged).read_bytes() != read_source(source):
+            fail(f"original staged release file differs: {staged}")
+    assets = DOWNLOAD_ASSETS + ((X86_ARCHIVE,) if X86_ARCHIVE in names else ())
+    if (stage / "SHA256SUMS.txt").read_bytes() != stage_checksums(stage, assets):
+        fail(f"existing staged checksums differ: {stage}")
+    if (stage / "DOWNLOAD_SHA256SUMS.txt").read_bytes() != download_checksums(stage, assets):
+        fail(f"existing flat-download checksums differ: {stage}")
+
+
+def prepare_x86_addendum(output_relative):
+    evidence = ROOT / X86_DIRECTORY
+    if not stat.S_ISDIR(evidence.lstat().st_mode):
+        fail("x86 evidence must be a real directory")
+    if [p.relative_to(evidence).as_posix() for p in all_files(evidence)] != sorted(X86_FILES):
+        fail("x86 addendum requires exactly the original eight evidence files")
+    records = {name: digest_source(f"{X86_DIRECTORY}/{name}") for name in X86_FILES}
+    # The portable verifier reads stored bytes only; no binary or benchmark runs.
+    read_source("scripts/verify_x86_evidence.py")
+    result = subprocess.run([sys.executable, "-I", "-B", str(ROOT / "scripts/verify_x86_evidence.py")],
+                            capture_output=True, text=True, timeout=30)
+    if result.returncode != 0 or json.loads(result.stdout).get("status") != "PASS":
+        fail("x86 stored-evidence verification failed: " + result.stdout + result.stderr)
+    canonical = ROOT / CANONICAL_STAGE
+    validate_existing_stage(canonical)
+    parent = ensure_output_parent(output_relative.parts[:-1])
+    lock = ROOT / "artifacts/release-phase3/.bundle.lock"
+    try:
+        lock.mkdir(mode=0o700)
+    except FileExistsError:
+        fail(f"another bundle operation or stale lock exists: {lock}; inspect it before retrying")
+    scratch = None
+    try:
+        scratch = Path(tempfile.mkdtemp(prefix=".bundle-", dir=parent))
+        payload, stage = scratch / "x86", scratch / "stage"
+        payload.mkdir(mode=0o755)
+        stage.mkdir(mode=0o755)
+        for name in sorted(X86_FILES):
+            with (payload / name).open("xb") as output:
+                actual = digest_source(f"{X86_DIRECTORY}/{name}", output)
+            if actual != records[name]:
+                fail(f"x86 evidence changed before staging: {name}")
+            (payload / name).chmod(0o644)
+        write_bytes(payload / "SHA256SUMS.txt", checksum_bytes(payload))
+        deterministic_archive(payload, stage / X86_ARCHIVE)
+        for name in (ARM64_ARCHIVE, NOTES, "RELEASE_ALIGNMENT.json", "REMOTE_SYNC_PRECHECK.json"):
+            source = f"{CANONICAL_STAGE}/{name}"
+            destination = stage / name
+            destination.parent.mkdir(parents=True, exist_ok=True, mode=0o755)
+            with destination.open("xb") as output:
+                digest_source(source, output)
+            destination.chmod(0o644)
+        if file_digest(stage / ARM64_ARCHIVE) != ARM64_ARCHIVE_SHA256:
+            fail("published ARM64 archive changed before staging")
+        assets = DOWNLOAD_ASSETS + (X86_ARCHIVE,)
+        write_bytes(stage / "SHA256SUMS.txt", stage_checksums(stage, assets))
+        write_bytes(stage / "DOWNLOAD_SHA256SUMS.txt", download_checksums(stage, assets))
+        # Recheck original receipts and their checksum layers after copying.
+        validate_existing_stage(stage)
+        if ((canonical / X86_ARCHIVE).exists()
+                and file_digest(canonical / X86_ARCHIVE) != file_digest(stage / X86_ARCHIVE)):
+            fail("canonical x86 evidence archive differs; preserving it")
+        output_dir = ROOT / str(output_relative)
+        if output_dir.exists() or output_dir.is_symlink():
+            validate_existing_stage(output_dir)
+            if ((output_dir / X86_ARCHIVE).exists()
+                    and file_digest(output_dir / X86_ARCHIVE) != file_digest(stage / X86_ARCHIVE)):
+                fail("existing x86 evidence archive differs; preserving it")
+            for name in (X86_ARCHIVE, "SHA256SUMS.txt", "DOWNLOAD_SHA256SUMS.txt"):
+                os.replace(stage / name, output_dir / name)
+        else:
+            os.rename(stage, output_dir)
+            output_dir.chmod(0o755)
+        write_root_checksums(output_dir, addendum=True)
+        print(f"Prepared evidence addendum: {output_dir}")
+        print(f"Preserved published ARM64 archive SHA-256: {ARM64_ARCHIVE_SHA256}")
+        print("Verified: eight stored x86 files; deterministic evidence archive; no binaries executed.")
+        print("Production: HOLD. PHP paired latency gate: FAIL; PostgreSQL/BPF gaps unchanged.")
+        print("Flat download checksums cover five assets; upload stage checksum files, not repository sums.")
+        print(f"cd -- {shlex.quote(str(output_dir))}")
+        print(f"gh release upload {TAG} --repo testofschool/ephem "
+              f"{X86_ARCHIVE} SHA256SUMS.txt DOWNLOAD_SHA256SUMS.txt --clobber")
+    finally:
+        if scratch is not None:
+            shutil.rmtree(scratch)
+        lock.rmdir()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Prepare verified Phase 3 assets; no upload or publication occurs.")
@@ -367,6 +534,10 @@ def main():
     if packaged:
         input_map[f"{ARTIFACT_DIR}/README.md"] = f"{ARTIFACT_DIR}/README.md"
 
+    if (ROOT / X86_DIRECTORY).exists() or (ROOT / X86_DIRECTORY).is_symlink():
+        prepare_x86_addendum(output_relative)
+        return
+
     parent = ensure_output_parent(output_relative.parts[:-1])
     lock = ROOT / "artifacts/release-phase3/.bundle.lock"
     try:
@@ -481,20 +652,7 @@ def main():
             output_dir.chmod(0o755)
         # The repository checkpoint checks every staged regular file, including
         # its own checksum manifest. The payload has its own original-file sums.
-        root_manifest = "".join(
-            f"{file_digest(path)}  {path.relative_to(ROOT).as_posix()}\n"
-            for path in all_files(output_dir)).encode()
-        descriptor, temporary = tempfile.mkstemp(prefix=".SHA256SUMS-", dir=ROOT)
-        try:
-            with os.fdopen(descriptor, "wb") as output:
-                output.write(root_manifest)
-            os.chmod(temporary, 0o644)
-            if root_checksums.is_symlink():
-                fail("repository SHA256SUMS.txt became a symlink")
-            os.replace(temporary, root_checksums)
-        finally:
-            if os.path.lexists(temporary):
-                os.unlink(temporary)
+        write_root_checksums(output_dir)
         print(f"Prepared: {output_dir}")
         print(f"Verified: {len(BINARIES)} measured ARM64 binaries, "
               f"{len(sources) - len(source_exceptions)} exact source hashes, "
@@ -520,7 +678,7 @@ def main():
 
 try:
     main()
-except (OSError, ValueError, KeyError, TypeError, tarfile.TarError) as error:
+except (OSError, ValueError, KeyError, TypeError, tarfile.TarError, subprocess.SubprocessError) as error:
     print(f"ERROR: release bundle not prepared: {error}", file=sys.stderr)
     sys.exit(1)
 PY

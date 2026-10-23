@@ -1,0 +1,60 @@
+{
+  "report": "EPHEM Phase 3 \u2014 independent x86_64 host reproduction",
+  "date_utc": "2026-10-23T01:34:01.496432Z",
+  "tier": "INDEPENDENT_HOST_REPRODUCTION (different machine + different architecture from upstream arm64 evidence)",
+  "upstream": {
+    "repo": "https://github.com/testofschool/ephem",
+    "commit": "1320713d065f04ae701026e14edf46226e71af6d",
+    "tag": "v0.3.0-stateful-alpha"
+  },
+  "environment": {
+    "arch": "x86_64",
+    "kernel": "6.18.44-fc-v140",
+    "rustc": "1.99.1",
+    "user": "root",
+    "cgroup2": true
+  },
+  "steps": {
+    "cargo_test_locked_workspace": "RC=0 (16+5 passed, 0 failed, 1 ignored=real PostgreSQL)",
+    "cargo_build_release_deliverables": "RC=0",
+    "native_lifecycle": "ephem-warm-pool --iterations 1000 --warmup 100 --lifecycle-check --require-p95-ms 2 \u2192 RC=0"
+  },
+  "native_lifecycle_ms": {
+    "p50": 0.44322300000000003,
+    "p95": 0.593124,
+    "p99": 0.7238249999999999,
+    "max": 1.8941999999999999,
+    "p95_below_2ms": true
+  },
+  "lifecycle_checks_executed": [
+    "cow_reset",
+    "segv",
+    "seccomp",
+    "signal-broker",
+    "fcntl-signal-broker",
+    "fcntl-async",
+    "execve",
+    "execveat",
+    "signal-high-tgid",
+    "signal-high-tid",
+    "timeout",
+    "verifier",
+    "truncated-state"
+  ],
+  "reference_arm64": {
+    "p50": 0.448963,
+    "p95_original": 0.684507,
+    "p95_release_align": 0.520076,
+    "p99": 0.916343
+  },
+  "UNRUN_here": {
+    "php_http_adapter_path": "libphp8.3 embed not installed in this container \u2192 stateful/PHP gate not reproduced (would be exit 77)",
+    "verify_phase3_run_full": "requires --stateful artifact; native-only comparison done by hand above",
+    "postgresql_live": "not run",
+    "bpf_lsm": "not run"
+  },
+  "binary_sha256": [
+    "a8f457691fe5daa432a375506f6ec5d28b8e91a5ffd71a742433e32016eb9219  target/release/ephem-warm-pool",
+    "17367ec48e2beca552299eb7fcc34559eb60db2fbac81d87fdff328b65600acb  target/release/ephem-stateful"
+  ]
+}

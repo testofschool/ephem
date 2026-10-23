@@ -1,0 +1,211 @@
+{
+  "schema": "ephem.evidence-ingestion-validation.v1",
+  "date": "2026-10-23",
+  "production_status": "HOLD",
+  "runtime_reexecuted": false,
+  "independent_security_audit": false,
+  "portable_unit_tests": {
+    "total": 64,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "suites": {
+      "test_phase3_reproduction.py": 12,
+      "test_issue_seeding.py": 6,
+      "test_phase3_release_bundle.py": 6,
+      "test_stored_evidence.py": 24,
+      "test_x86_evidence.py": 16
+    }
+  },
+  "ingested_original_files_byte_verified": 18,
+  "audit_archive_manifest_entries_verified_before_extraction": 36,
+  "sweep": {
+    "check": {
+      "matches_preserved_result": true
+    },
+    "rank": {
+      "matches_preserved_result": true,
+      "verdict": "NO_PROPOSAL_BEATS_BASELINE"
+    },
+    "report": {
+      "matches_preserved_result": true
+    }
+  },
+  "historical_checker": {
+    "verdict": "STORED_EVIDENCE_CONSISTENT",
+    "commit": "1320713d065f04ae701026e14edf46226e71af6d",
+    "runtime_reexecuted": false,
+    "independent_security_audit": false,
+    "production_status": "HOLD",
+    "native_ms": {
+      "reports/phase3/release-alignment-final/warm-native.json": {
+        "p50": 0.408537,
+        "p95": 0.520076,
+        "p99": 0.5900340000000001,
+        "max": 0.9285720000000001
+      },
+      "reports/phase3/remote-sync-run/warm-native.json": {
+        "p50": 0.610938,
+        "p95": 1.4441330000000001,
+        "p99": 2.111405,
+        "max": 3.505912
+      }
+    },
+    "php_ms": {
+      "baseline_ms": {
+        "p50": 10.570422,
+        "p95": 29.886462,
+        "p99": 86.668419,
+        "max": 135.541051
+      },
+      "isolated_ms": {
+        "p50": 7.364921,
+        "p95": 18.569558,
+        "p99": 37.198239,
+        "max": 37.509707
+      },
+      "paired_delta_ms": {
+        "p50": -3.080839,
+        "p95": 3.730803,
+        "p99": 12.478680999999998,
+        "max": 14.267237999999999
+      }
+    },
+    "php_p95_gate": "FAIL",
+    "full_reproduce_script_exit_code": 1,
+    "recorded_faults_checked": 5,
+    "fault_worker_output_and_cleanup_fields_checked": true,
+    "fault_worker_status_fields_checked": true,
+    "native_receipt_semantics_checked": false,
+    "fault_committed_mutations": 0,
+    "staged_mutation_count": "UNRECORDED",
+    "unrun_statuses_preserved": {
+      "native_stage_within_full_script": "UNRUN: script stopped after the PHP latency gate",
+      "postgres_live_or_paused_backend": "UNRUN in remote sync; retained original evidence only",
+      "bpf_lsm": "UNRUN in remote sync; retained exit77 only",
+      "x86_64_phase3_lifecycle": "UNRUN locally; legacy public x86 checks are separate"
+    },
+    "scope": "Pinned report bytes, recorded outcomes, and arithmetic consistency only"
+  },
+  "x86_checker": {
+    "status": "PASS",
+    "scope": "Bounded stored x86_64 native samples and lifecycle receipts only",
+    "runtime_reexecuted": false,
+    "independent_security_audit": false,
+    "binary_bytes_verified": false,
+    "production_status": "HOLD",
+    "upstream_declared": {
+      "repo": "https://github.com/testofschool/ephem",
+      "commit": "1320713d065f04ae701026e14edf46226e71af6d",
+      "tag": "v0.3.0-stateful-alpha"
+    },
+    "environment_reported": {
+      "arch": "x86_64",
+      "kernel": "6.18.44-fc-v140",
+      "rustc": "1.99.1",
+      "user": "root",
+      "cgroup2": true
+    },
+    "native_measurement_scope": "Native callback only; dispatch, fork, seccomp, state round trip, private scratch MADV_DONTNEED, output EOF and waitpid receipt. Startup excluded. No web/PHP overhead claim.",
+    "iterations": 1000,
+    "warmup_excluded_reported": 100,
+    "native_lifecycle_ms": {
+      "p50": 0.44322300000000003,
+      "p95": 0.593124,
+      "p99": 0.7238249999999999,
+      "max": 1.8941999999999999
+    },
+    "p95_below_2ms": true,
+    "samples_at_or_above_2ms": 0,
+    "lifecycle_checks": [
+      "cow_reset",
+      "segv",
+      "seccomp",
+      "signal-broker",
+      "fcntl-signal-broker",
+      "fcntl-async",
+      "execve",
+      "execveat",
+      "signal-high-tgid",
+      "signal-high-tid",
+      "timeout",
+      "verifier",
+      "truncated-state"
+    ],
+    "lifecycle_check_count": 13,
+    "retained_worker_receipts": 23,
+    "unique_worker_pids": 23,
+    "cargo_test_logged": {
+      "passed": 21,
+      "failed": 0,
+      "ignored": 1,
+      "return_code": 0
+    },
+    "cargo_release_build_logged": {
+      "return_code": 0,
+      "profile": "release optimized"
+    },
+    "binary_sha256_recorded_only": {
+      "target/release/ephem-warm-pool": "a8f457691fe5daa432a375506f6ec5d28b8e91a5ffd71a742433e32016eb9219",
+      "target/release/ephem-stateful": "17367ec48e2beca552299eb7fcc34559eb60db2fbac81d87fdff328b65600acb"
+    },
+    "UNRUN": {
+      "php_http_adapter_path": "UNRUN",
+      "verify_phase3_run_full": "UNRUN",
+      "postgresql_live": "UNRUN",
+      "bpf_lsm": "UNRUN"
+    },
+    "reported_UNRUN_here": {
+      "php_http_adapter_path": "libphp8.3 embed not installed in this container \u2192 stateful/PHP gate not reproduced (would be exit 77)",
+      "verify_phase3_run_full": "requires --stateful artifact; native-only comparison done by hand above",
+      "postgresql_live": "not run",
+      "bpf_lsm": "not run"
+    },
+    "limitations": [
+      "Stored-evidence consistency check; no live runtime reproduction in this invocation.",
+      "Reported source identity is not a clean-tree or build attestation.",
+      "Reported binary hash strings agree; binary bytes were not supplied.",
+      "Root and cgroup2 are summary assertions without separate host evidence.",
+      "Native command is abbreviated: mandatory --root path and command transcript absent.",
+      "Native return code is reported in the summary, not a standalone command log.",
+      "Detailed CPU, VM, distribution, governor, memory, storage and load metadata absent.",
+      "Classic seccomp fixture only; no PHP, end-to-end parity or BPF LSM conclusion.",
+      "Production throughput and tails remain UNMEASURED."
+    ],
+    "original_file_bytes_verified": {
+      "binary-sha256.txt": {
+        "size": 193,
+        "sha256": "bc54efdc4b852acdbb392cc41bd306326c5a5320ef9a9604b84780d3b60d5587"
+      },
+      "env.txt": {
+        "size": 111,
+        "sha256": "2277976124af3aa0c936165f6b789f100b75e979c6c3d1e2e85c8953916d2e4e"
+      },
+      "cargo-test.log": {
+        "size": 10764,
+        "sha256": "2a73a7ad41b26576809186f2c8e0fdc2485d7c0724cba155561fbe3d1d166303"
+      },
+      "upstream-commit.txt": {
+        "size": 63,
+        "sha256": "2df8506d55d54b641fe54b5b357650ce9cba4605c99bda6072d856fc6e4554cc"
+      },
+      "warm-native.stderr.log": {
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "cargo-build.log": {
+        "size": 3773,
+        "sha256": "74ea2a3ac115bf0814e19ff05943907be2fe8f373adfe66350729069b2f552ea"
+      },
+      "X86_REPRODUCTION.json": {
+        "size": 1972,
+        "sha256": "413a52bdd5d1496ae320f8af6ca36b4fdab515199a1ec7a8b2c6b13ec0e52741"
+      },
+      "warm-native.json": {
+        "size": 23796,
+        "sha256": "a06da461c759c8a55a9266b8f641b1c55618c9f53dbf17fede3656a5b203ba13"
+      }
+    }
+  },
+  "issue_4_disposition": "OPEN: owner requested comment with unmet PHP/host requirements"
+}

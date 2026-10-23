@@ -1,0 +1,297 @@
+{
+  "schema": "direction-sweep/1",
+  "question": "Which external-validation direction is supported before further integration work?",
+  "success_line": {
+    "status": "minimum",
+    "text": "Proposed research target: by 2026-10-30 receive one operator-authored synthetic task packet, including current method and unmet acceptance rule; no payment or adoption is claimed."
+  },
+  "swept_at": "2026-10-23T01:41:23.122082+00:00",
+  "scope_note": "This is research-stage direction testing. payer stays unknown because no money/workflow commitment was observed. It is not replaced with interest. No memory_list tool is exposed; no complete personal-record census is claimed.",
+  "candidates": [
+    {
+      "id": "C1",
+      "label": "Immediate Paperless-ready optional profile proposal",
+      "kind": "proposal",
+      "provenance": "requester",
+      "axis": "upstream adoption and integration",
+      "premises": {
+        "payer": {
+          "claim": "A qualified operator will spend time evaluating this proposal.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary",
+          "ladder_level": 0
+        },
+        "mechanism": {
+          "claim": "The published profile is ready for the stock Paperless OCR subprocess pipeline.",
+          "verdict": "fails",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "Strict seccomp: no new sockets, AF_INET, execve or execveat",
+          "tier": "primary"
+        },
+        "substitute": {
+          "claim": "An incumbent exists; exact operator adequacy is not established.",
+          "verdict": "contested",
+          "status": "read",
+          "source": "https://ocrmypdf.readthedocs.io/en/latest/docker.html",
+          "quote": "the OCRmyPDF Docker container is ephemeral – it runs for one OCR job and terminates",
+          "tier": "official"
+        },
+        "reach": {
+          "claim": "Paperless permits starting a feature discussion.",
+          "verdict": "holds",
+          "status": "read",
+          "source": "https://github.com/paperless-ngx/paperless-ngx/blob/dev/CONTRIBUTING.md",
+          "quote": "As above, please start with a discussion! Maybe something similar is already in development and we can make it happen together.",
+          "tier": "primary"
+        },
+        "input": {
+          "claim": "The required synthetic task and authorized test host are available.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        }
+      },
+      "kill": {
+        "verdict": "wounded",
+        "sentence": "Immediate readiness is contradicted by the subprocess policy; a qualified discussion may still work.",
+        "angle": "mechanism"
+      }
+    },
+    {
+      "id": "C2",
+      "label": "Public break challenge using universal no-commit wording",
+      "kind": "proposal",
+      "provenance": "requester",
+      "axis": "provocative independent-review recruitment",
+      "premises": {
+        "payer": {
+          "claim": "A qualified operator will spend time evaluating this proposal.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary",
+          "ladder_level": 0
+        },
+        "mechanism": {
+          "claim": "Any failure/absence of success means that no DB bytes can have committed.",
+          "verdict": "fails",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/docs/EPHEM_PHASE3.md",
+          "quote": "A PostgreSQL commit acknowledgment can be lost after the server commits.",
+          "tier": "primary"
+        },
+        "substitute": {
+          "claim": "Independent review has no established adequate substitute.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/SECURITY.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "reach": {
+          "claim": "One named qualified operator is reachable through a permitted channel.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://seoul.aitinkerers.org/",
+          "quote": "",
+          "tier": "primary"
+        },
+        "input": {
+          "claim": "The required synthetic task and authorized test host are available.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        }
+      },
+      "kill": {
+        "verdict": "dead",
+        "sentence": "A failure can follow a durable commit; the universal announcement contradicts the state contract.",
+        "angle": "mechanism",
+        "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/docs/EPHEM_PHASE3.md",
+        "quote": "A PostgreSQL commit acknowledgment can be lost after the server commits."
+      }
+    },
+    {
+      "id": "C3",
+      "label": "One qualified AI Tinkerers synthetic workload request",
+      "kind": "proposal",
+      "provenance": "upstream:recurrent-drift",
+      "axis": "external workload discovery",
+      "premises": {
+        "payer": {
+          "claim": "A qualified operator will spend time evaluating this proposal.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary",
+          "ladder_level": 0
+        },
+        "mechanism": {
+          "claim": "A synthetic external task can be qualified without assuming general agent support.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/docs/EPHEM_PHASE3.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "substitute": {
+          "claim": "No-network sandbox capability exists, but adequacy for the unknown task is unproved.",
+          "verdict": "contested",
+          "status": "read",
+          "source": "https://docs.e2b.dev/network/internet-access",
+          "quote": "When internet access is disabled, the sandbox cannot make outbound network connections, which provides an additional layer of security for sensitive code execution.",
+          "tier": "official"
+        },
+        "reach": {
+          "claim": "One named qualified operator is reachable through a permitted channel.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://seoul.aitinkerers.org/",
+          "quote": "",
+          "tier": "primary"
+        },
+        "input": {
+          "claim": "The required synthetic task and authorized test host are available.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        }
+      },
+      "kill": {
+        "verdict": "wounded",
+        "sentence": "No named operator, task, unmet rule or baseline comparison is established.",
+        "angle": "input"
+      }
+    },
+    {
+      "id": "S1",
+      "label": "Retain the operator current method / existing sandbox",
+      "kind": "substitute",
+      "provenance": "designer",
+      "premises": {
+        "payer": {
+          "claim": "A qualified operator will spend time evaluating this proposal.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "mechanism": {
+          "claim": "An existing sandbox can disable network access.",
+          "verdict": "holds",
+          "status": "read",
+          "source": "https://docs.e2b.dev/network/internet-access",
+          "quote": "When internet access is disabled, the sandbox cannot make outbound network connections, which provides an additional layer of security for sensitive code execution.",
+          "tier": "official"
+        },
+        "substitute": {
+          "claim": "The current method does not already meet the acceptance rule.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "reach": {
+          "claim": "One named qualified operator is reachable through a permitted channel.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://seoul.aitinkerers.org/",
+          "quote": "",
+          "tier": "primary"
+        },
+        "input": {
+          "claim": "The required synthetic task and authorized test host are available.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        }
+      }
+    },
+    {
+      "id": "W1",
+      "label": "Keep HOLD and review public evidence before adopting any route",
+      "kind": "wait",
+      "provenance": "designer",
+      "premises": {
+        "payer": {
+          "claim": "A qualified operator will spend time evaluating this proposal.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "mechanism": {
+          "claim": "Keep production HOLD instead of asserting deployment readiness.",
+          "verdict": "holds",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "Production remains HOLD.",
+          "tier": "primary"
+        },
+        "substitute": {
+          "claim": "The current method does not already meet the acceptance rule.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "",
+          "tier": "primary"
+        },
+        "reach": {
+          "claim": "One named qualified operator is reachable through a permitted channel.",
+          "verdict": "unknown",
+          "status": "read",
+          "source": "https://seoul.aitinkerers.org/",
+          "quote": "",
+          "tier": "primary"
+        },
+        "input": {
+          "claim": "Public retained records can be reviewed without a new runtime deployment.",
+          "verdict": "holds",
+          "status": "read",
+          "source": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/README.md",
+          "quote": "The failed latency result is\nretained in [the remote-sync precheck](reports/phase3/REMOTE_SYNC_PRECHECK.json)\nand [its raw run directory](reports/phase3/remote-sync-run/); it is not a new\nend-to-end reproduction PASS.",
+          "tier": "primary"
+        }
+      }
+    }
+  ],
+  "escapes": [
+    {
+      "text": "Collect an operator-selected synthetic task, expected result, current method and unmet rule before runtime changes.",
+      "named_by": [
+        "C1",
+        "C3"
+      ]
+    }
+  ],
+  "pick": {
+    "candidate": "W1",
+    "chosen_by": "script-baseline",
+    "kill_criterion": {
+      "assumption": "An external operator has an unmet rule worth testing; this is not yet observed.",
+      "cheapest_test": "Prepare an unsent synthetic-workload request and qualification packet; send only on a user-authorized permitted channel.",
+      "pass_rule": "One qualified operator packet: task, synthetic input, checker, current method, unmet rule, dependencies and bounds. This reopens C3; it does not prove production readiness.",
+      "fail_rule": "Seven days after an actual authorized invitation, no qualified packet; classify no-send, no-reply and incomplete replies separately.",
+      "stop_rule": "No integration work if current method meets the rule, requirements are unsupported, permission is absent, or the scoped two-hour fit budget expires.",
+      "registered_at": "2026-10-23T01:41:23.122082+00:00",
+      "check_by": "2026-10-30T01:41:23.122082+00:00"
+    }
+  }
+}

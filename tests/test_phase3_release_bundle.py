@@ -17,6 +17,13 @@ FROZEN = (
     'reports/phase3/RELEASE_ALIGNMENT.json',
 )
 PRECHECK = 'reports/phase3/REMOTE_SYNC_PRECHECK.json'
+STAGE = 'artifacts/release-phase3/v0.3.0-stateful-alpha'
+ARM64 = 'artifacts/ephem-phase3-linux-arm64.tar.gz'
+ARM64_SHA256 = 'd8edad0b10ed8dbcf59a23787f1439649a842bff0c2a6b3ba6c5a2be03a09dca'
+X86 = 'artifacts/ephem-phase3-x86_64-evidence.tar.gz'
+X86_DIRECTORY = 'evidence/x86-independent-v1'
+BASE_FILES = (ARM64, 'docs/EPHEM_PHASE3.md', 'RELEASE_ALIGNMENT.json', 'REMOTE_SYNC_PRECHECK.json')
+DOWNLOAD_FILES = (ARM64, 'SHA256SUMS.txt', 'RELEASE_ALIGNMENT.json', 'REMOTE_SYNC_PRECHECK.json')
 
 
 class Phase3ReleaseBundleTests(unittest.TestCase):
@@ -49,9 +56,9 @@ class Phase3ReleaseBundleTests(unittest.TestCase):
         fixture.write_text('PHP paired latency gate: FAIL; no benchmark retry.\n')
         self.frozen = {name: (self.root / name).read_bytes() for name in FROZEN}
 
-    def bundle(self):
+    def bundle(self, *args):
         return subprocess.run(
-            ['bash', 'scripts/bundle_release.sh'], cwd=self.root,
+            ['bash', 'scripts/bundle_release.sh', *args], cwd=self.root,
             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=30,
         )
 
@@ -147,6 +154,116 @@ class Phase3ReleaseBundleTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('recorded provenance mismatch: Cargo.lock', result.stderr)
         self.assertFalse((self.root / 'SHA256SUMS.txt').exists())
+
+    def with_x86_addendum(self):
+        """Use published ARM64 bytes without executing any ELF or fixture worker."""
+        stage = self.root / STAGE
+        for name in BASE_FILES:
+            destination = stage / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / STAGE / name, destination)
+        # The legacy fixture substitutes a precheck; the additive path instead
+        # preserves the already published precheck and notes byte for byte.
+        (self.root / PRECHECK).write_bytes((stage / 'REMOTE_SYNC_PRECHECK.json').read_bytes())
+        (self.root / 'docs/EPHEM_PHASE3.md').write_bytes((stage / 'docs/EPHEM_PHASE3.md').read_bytes())
+        self.assertEqual(hashlib.sha256((stage / ARM64).read_bytes()).hexdigest(), ARM64_SHA256)
+        sums = ''.join(f'{hashlib.sha256((stage / name).read_bytes()).hexdigest()}  {name}\n'
+                       for name in sorted(BASE_FILES)).encode()
+        (stage / 'SHA256SUMS.txt').write_bytes(sums)
+        downloads = ''.join(
+            f'{hashlib.sha256((stage / name).read_bytes()).hexdigest()}  {Path(name).name}\n'
+            for name in DOWNLOAD_FILES).encode()
+        (stage / 'DOWNLOAD_SHA256SUMS.txt').write_bytes(downloads)
+        for directory in (X86_DIRECTORY, 'docs/audit'):
+            shutil.copytree(ROOT / directory, self.root / directory,
+                            ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
+        for name in ('README.md', '.github/workflows/ci.yml',
+                     'scripts/verify_x86_evidence.py', 'scripts/verify_stored_evidence.py',
+                     'tests/test_x86_evidence.py', 'tests/test_stored_evidence.py',
+                     'tests/test_phase3_release_bundle.py'):
+            if (ROOT / name).exists():
+                destination = self.root / name
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(ROOT / name, destination)
+        root_sums = ''.join(
+            f'{hashlib.sha256(path.read_bytes()).hexdigest()}  {path.relative_to(self.root).as_posix()}\n'
+            for path in sorted(stage.rglob('*')) if path.is_file()).encode()
+        (self.root / 'SHA256SUMS.txt').write_bytes(root_sums)
+        return stage, {name: (stage / name).read_bytes() for name in BASE_FILES}
+
+    def test_x86_addendum_preserves_arm64_and_all_checksum_layers_repeatably(self):
+        stage, originals = self.with_x86_addendum()
+        result = self.bundle()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('gh release upload v0.3.0-stateful-alpha', result.stdout)
+        self.assertIn(X86 + ' SHA256SUMS.txt DOWNLOAD_SHA256SUMS.txt --clobber', result.stdout)
+        for name, content in originals.items():
+            self.assertEqual((stage / name).read_bytes(), content)
+        stage_names = self.assert_checksums((stage / 'SHA256SUMS.txt').read_bytes(),
+                                            lambda name: (stage / name).read_bytes())
+        self.assertEqual(stage_names, set(BASE_FILES) | {X86})
+        flat = self.root / 'flat-download'
+        flat.mkdir()
+        for name in (*DOWNLOAD_FILES, X86, 'DOWNLOAD_SHA256SUMS.txt'):
+            shutil.copy2(stage / name, flat / Path(name).name)
+        download_names = self.assert_checksums((flat / 'DOWNLOAD_SHA256SUMS.txt').read_bytes(),
+                                               lambda name: (flat / name).read_bytes())
+        self.assertEqual(download_names, {Path(name).name for name in (*DOWNLOAD_FILES, X86)})
+        with tarfile.open(stage / X86) as archive:
+            names = set(archive.getnames())
+            read = lambda name: archive.extractfile(name).read()
+            evidence_files = {path.name for path in (self.root / X86_DIRECTORY).iterdir()}
+            self.assertEqual(len(evidence_files), 8)
+            self.assertEqual(names, evidence_files | {'SHA256SUMS.txt'})
+            self.assertEqual(self.assert_checksums(read('SHA256SUMS.txt'), read), evidence_files)
+            for name in evidence_files:
+                self.assertEqual(read(name), (self.root / X86_DIRECTORY / name).read_bytes())
+            for member in archive.getmembers():
+                self.assertEqual((member.mtime, member.uid, member.gid, member.mode), (0, 0, 0, 0o644))
+        root_names = self.assert_checksums((self.root / 'SHA256SUMS.txt').read_bytes(),
+                                           lambda name: (self.root / name).read_bytes())
+        required = {path.relative_to(self.root).as_posix()
+                    for directory in (X86_DIRECTORY, 'docs/audit')
+                    for path in (self.root / directory).rglob('*') if path.is_file()}
+        self.assertTrue(required <= root_names)
+        self.assertTrue({'scripts/bundle_release.sh', 'scripts/verify_x86_evidence.py',
+                         'scripts/verify_stored_evidence.py', 'README.md',
+                         'tests/test_phase3_release_bundle.py'} <= root_names)
+        before = (self.root / 'SHA256SUMS.txt').read_bytes()
+        archive_before = (stage / X86).read_bytes()
+        result = self.bundle()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((stage / X86).read_bytes(), archive_before)
+        self.assertEqual((self.root / 'SHA256SUMS.txt').read_bytes(), before)
+        result = self.bundle('--output', 'artifacts/release-phase3/ci')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        ci = self.root / 'artifacts/release-phase3/ci'
+        self.assertEqual((ci / ARM64).read_bytes(), originals[ARM64])
+        self.assertEqual((ci / X86).read_bytes(), archive_before)
+
+    def test_corrupt_x86_evidence_cannot_modify_published_assets(self):
+        stage, originals = self.with_x86_addendum()
+        before = (self.root / 'SHA256SUMS.txt').read_bytes()
+        report = self.root / X86_DIRECTORY / 'warm-native.json'
+        report.write_bytes(report.read_bytes() + b'\n')
+        result = self.bundle()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('x86 stored-evidence verification failed', result.stderr)
+        self.assertFalse((stage / X86).exists())
+        self.assertEqual((self.root / 'SHA256SUMS.txt').read_bytes(), before)
+        for name, content in originals.items():
+            self.assertEqual((stage / name).read_bytes(), content)
+
+    def test_arm64_archive_drift_is_rejected_by_published_identity(self):
+        stage, _ = self.with_x86_addendum()
+        archive = stage / ARM64
+        archive.write_bytes(archive.read_bytes() + b'\n')
+        before = (self.root / 'SHA256SUMS.txt').read_bytes()
+        result = self.bundle()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('published ARM64 archive identity differs', result.stderr)
+        self.assertFalse((stage / X86).exists())
+        self.assertEqual((self.root / 'SHA256SUMS.txt').read_bytes(), before)
 
     def test_measured_snapshot_hash_must_match_frozen_provenance(self):
         snapshot = self.root / 'reports/phase3/measured-workspace/Cargo.lock'

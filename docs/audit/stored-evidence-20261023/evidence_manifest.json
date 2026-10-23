@@ -1,0 +1,34 @@
+{
+  "schema": "ephem.stored-evidence-manifest.v1",
+  "commit": "1320713d065f04ae701026e14edf46226e71af6d",
+  "files": [
+    {
+      "path": "reports/phase3/release-alignment-final/warm-native.json",
+      "git_blob_sha": "9c5dd4405d2c0be00dbf315b7791b537ac94b69d",
+      "source_url": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/reports/phase3/release-alignment-final/warm-native.json",
+      "sha256": "5b3aeb64c0148e0e52f664f1178a12c9b9db12300c10e1a70ddb872366b133af",
+      "size_bytes": 23619
+    },
+    {
+      "path": "reports/phase3/remote-sync-run/warm-native.json",
+      "git_blob_sha": "d6013a17a10efea20d0f062ddd27bbc25adf1df5",
+      "source_url": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/reports/phase3/remote-sync-run/warm-native.json",
+      "sha256": "c455afe9f2764f8d47d4d3ea770f62ba0d10180267fc1ff0d1c97f14310df34d",
+      "size_bytes": 23593
+    },
+    {
+      "path": "reports/phase3/remote-sync-run/stateful-verification.json",
+      "git_blob_sha": "f3300fec1b0e4d1893675602503229a6896e1317",
+      "source_url": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/reports/phase3/remote-sync-run/stateful-verification.json",
+      "sha256": "44fb1072316e21c0a9bff7998e2faf5cbc97559801f552bd231a4bdcd6136eec",
+      "size_bytes": 362544
+    },
+    {
+      "path": "reports/phase3/REMOTE_SYNC_PRECHECK.json",
+      "git_blob_sha": "61376384276c22110a784c143ac785ceb7d1685e",
+      "source_url": "https://github.com/testofschool/ephem/blob/1320713d065f04ae701026e14edf46226e71af6d/reports/phase3/REMOTE_SYNC_PRECHECK.json",
+      "sha256": "adcc3da82b0d51e39c1c4e4d0906acf4b35082d15085a9af26ee2e0ff3e45b8e",
+      "size_bytes": 4377
+    }
+  ]
+}

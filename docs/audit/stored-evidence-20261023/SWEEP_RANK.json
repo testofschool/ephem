@@ -1,0 +1,75 @@
+{
+ "verdict": "NO_PROPOSAL_BEATS_BASELINE",
+ "survivors": [
+  {
+   "id": "C3",
+   "label": "One qualified AI Tinkerers synthetic workload request",
+   "unknown": [
+    "payer",
+    "mechanism",
+    "reach",
+    "input"
+   ],
+   "contested": [
+    "substitute"
+   ],
+   "kill": "wounded",
+   "test_first": "substitute",
+   "route": "differentiation-engine"
+  }
+ ],
+ "baselines": [
+  {
+   "id": "W1",
+   "label": "Keep HOLD and review public evidence before adopting any route",
+   "kind": "wait",
+   "unknown": [
+    "payer",
+    "substitute",
+    "reach"
+   ],
+   "fails": [],
+   "test_first": "payer"
+  },
+  {
+   "id": "S1",
+   "label": "Retain the operator current method / existing sandbox",
+   "kind": "substitute",
+   "unknown": [
+    "payer",
+    "substitute",
+    "reach",
+    "input"
+   ],
+   "fails": [],
+   "test_first": "payer"
+  }
+ ],
+ "eliminated": [
+  {
+   "id": "C1",
+   "label": "Immediate Paperless-ready optional profile proposal",
+   "reasons": [
+    "premise 'mechanism' fails: Strict seccomp: no new sockets, AF_INET, execve or execveat"
+   ]
+  },
+  {
+   "id": "C2",
+   "label": "Public break challenge using universal no-commit wording",
+   "reasons": [
+    "premise 'mechanism' fails: A PostgreSQL commit acknowledgment can be lost after the server commits.",
+    "killed: A failure can follow a durable commit; the universal announcement contradicts the state contract."
+   ]
+  }
+ ],
+ "escapes": [
+  {
+   "text": "Collect an operator-selected synthetic task, expected result, current method and unmet rule before runtime changes.",
+   "named_by": [
+    "C1",
+    "C3"
+   ],
+   "grade": "converged"
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+2026-10-23 00:00:56.368 UTC [23739] LOG:  starting PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit
+2026-10-23 00:00:56.369 UTC [23739] LOG:  listening on Unix socket "/tmp/ephem-pg-phase3.fDtz9o/socket/.s.PGSQL.55439"
+2026-10-23 00:00:56.373 UTC [23742] LOG:  database system was shut down at 2026-10-23 00:00:56 UTC
+2026-10-23 00:00:56.377 UTC [23739] LOG:  database system is ready to accept connections
+2026-10-23 00:01:19.013 UTC [24409] ERROR:  bigint out of range
+2026-10-23 00:01:19.013 UTC [24409] STATEMENT:  INSERT INTO public.ephem_kv (key,value,expires_at_ms,version)
+	                    VALUES ($1,$2,$3,1) ON CONFLICT(key) DO UPDATE SET
+	                    value=EXCLUDED.value, expires_at_ms=EXCLUDED.expires_at_ms,
+	                    version=public.ephem_kv.version+1
+2026-10-23 00:02:03.173 UTC [23739] LOG:  received fast shutdown request
+2026-10-23 00:02:03.174 UTC [23739] LOG:  aborting any active transactions
+2026-10-23 00:02:03.176 UTC [23739] LOG:  background worker "logical replication launcher" (PID 23745) exited with exit code 1
+2026-10-23 00:02:03.176 UTC [23740] LOG:  shutting down
+2026-10-23 00:02:03.177 UTC [23740] LOG:  checkpoint starting: shutdown immediate
+2026-10-23 00:02:03.215 UTC [23740] LOG:  checkpoint complete: wrote 929 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.008 s, sync=0.028 s, total=0.040 s; sync files=306, longest=0.012 s, average=0.001 s; distance=4342 kB, estimate=4342 kB; lsn=0/192CE70, redo lsn=0/192CE70
+2026-10-23 00:02:03.218 UTC [23739] LOG:  database system is shut down

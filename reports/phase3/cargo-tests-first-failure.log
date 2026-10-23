@@ -1,0 +1,82 @@
+    Updating crates.io index
+     Locking 18 packages to highest compatible versions
+      Adding ahash v0.8.12
+      Adding cc v1.9.0
+      Adding fallible-iterator v0.3.0
+      Adding fallible-streaming-iterator v0.1.9
+      Adding find-msvc-tools v0.1.15
+      Adding hashbrown v0.14.5
+      Adding hashlink v0.9.1
+      Adding hmac v0.12.1 (available: v0.13.0)
+      Adding libsqlite3-sys v0.30.1
+      Adding once_cell v1.21.4
+      Adding pkg-config v0.3.34
+      Adding rusqlite v0.32.1 (available: v0.40.2)
+      Adding shlex v2.0.1
+      Adding subtle v2.6.1
+      Adding syn v2.0.119
+      Adding vcpkg v0.2.15
+      Adding zerocopy v0.8.63
+      Adding zerocopy-derive v0.8.63
+ Downloading crates ...
+  Downloaded fallible-streaming-iterator v0.1.9
+  Downloaded ahash v0.8.12
+  Downloaded subtle v2.6.1
+  Downloaded find-msvc-tools v0.1.15
+  Downloaded pkg-config v0.3.34
+  Downloaded once_cell v1.21.4
+  Downloaded shlex v2.0.1
+  Downloaded fallible-iterator v0.3.0
+  Downloaded hmac v0.12.1
+  Downloaded hashlink v0.9.1
+  Downloaded hashbrown v0.14.5
+  Downloaded cc v1.9.0
+  Downloaded rusqlite v0.32.1
+  Downloaded vcpkg v0.2.15
+  Downloaded zerocopy v0.8.63
+  Downloaded libsqlite3-sys v0.30.1
+   Compiling zerocopy v0.8.63
+   Compiling ahash v0.8.12
+   Compiling shlex v2.0.1
+   Compiling find-msvc-tools v0.1.15
+   Compiling cc v1.9.0
+   Compiling subtle v2.6.1
+   Compiling once_cell v1.21.4
+   Compiling vcpkg v0.2.15
+   Compiling pkg-config v0.3.34
+   Compiling digest v0.10.7
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling fallible-iterator v0.3.0
+   Compiling sha2 v0.10.9
+   Compiling hmac v0.12.1
+   Compiling ephem-warm-pool v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-warm-pool)
+   Compiling ephem-gate v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-gate)
+   Compiling libsqlite3-sys v0.30.1
+warning: variable does not need to be mutable
+   --> crates/ephem-warm-pool/src/lib.rs:417:14
+    |
+417 |         let (mut parent, mut child) = UnixStream::pair()?;
+    |              ----^^^^^^
+    |              |
+    |              help: remove this `mut`
+    |
+    = note: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+error[E0596]: cannot borrow `setup` as mutable, as it is not declared as mutable
+   --> crates/ephem-warm-pool/src/lib.rs:459:26
+    |
+449 |                         let _ = write_frame(&mut child, format!("ERROR:{error:#}").as_bytes());
+    |                                                  ----- calling `setup` requires mutable binding due to mutable borrow of `child`
+...
+459 |             let result = setup();
+    |                          ^^^^^ cannot borrow as mutable
+    |
+help: consider changing this to be mutable
+    |
+427 |             let mut setup = || -> Result<()> {
+    |                 +++
+
+For more information about this error, try `rustc --explain E0596`.
+warning: `ephem-warm-pool` (lib) generated 1 warning
+error: could not compile `ephem-warm-pool` (lib) due to 1 previous error; 1 warning emitted
+warning: build failed, waiting for other jobs to finish...

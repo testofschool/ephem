@@ -1,0 +1,28 @@
+{"functional_status": "PASS", "consecutive_clean_requests": 100, "unique_worker_pids": 232, "corrupted_committed_keys": 0}
+{
+  "pairs": 100,
+  "warmup_pairs_excluded": 20,
+  "order_seed": 20261023,
+  "percentiles": "nearest rank; signed paired deltas",
+  "event": "UDS HTTP connect through complete response EOF, identical warmed PHP script and two-key SQLite atomic transaction",
+  "baseline_limit": "uncontained Python supervisor opens SQLite connection per request; Rust gate retains its connection; not stock PHP-FPM",
+  "baseline_ms": {
+    "p50": 3.882493,
+    "p95": 6.00964,
+    "p99": 6.732114,
+    "max": 6.736905
+  },
+  "isolated_ms": {
+    "p50": 2.215431,
+    "p95": 3.751046,
+    "p99": 4.808204,
+    "max": 5.187407
+  },
+  "paired_delta_ms": {
+    "p50": -1.5920689999999997,
+    "p95": -0.3202640000000003,
+    "p99": 0.3169310000000003,
+    "max": 0.8630120000000003
+  },
+  "p95_under_2ms": true
+}

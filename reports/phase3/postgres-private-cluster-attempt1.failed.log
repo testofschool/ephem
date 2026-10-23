@@ -1,0 +1,32 @@
+2026-10-22 23:51:38.665 UTC [15595] LOG:  starting PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit
+2026-10-22 23:51:38.666 UTC [15595] LOG:  listening on Unix socket "/tmp/ephem-pg-phase3.nfG2xS/socket/.s.PGSQL.55439"
+2026-10-22 23:51:38.668 UTC [15598] LOG:  database system was shut down at 2026-10-22 23:51:38 UTC
+2026-10-22 23:51:38.671 UTC [15595] LOG:  database system is ready to accept connections
+2026-10-22 23:51:42.492 UTC [15620] ERROR:  bigint out of range
+2026-10-22 23:51:42.492 UTC [15620] STATEMENT:  INSERT INTO public.ephem_kv (key,value,expires_at_ms,version)
+	                    VALUES ($1,$2,$3,1) ON CONFLICT(key) DO UPDATE SET
+	                    value=EXCLUDED.value, expires_at_ms=EXCLUDED.expires_at_ms,
+	                    version=public.ephem_kv.version+1
+2026-10-22 23:52:56.484 UTC [16919] ERROR:  bigint out of range
+2026-10-22 23:52:56.484 UTC [16919] STATEMENT:  INSERT INTO public.ephem_kv (key,value,expires_at_ms,version)
+	                    VALUES ($1,$2,$3,1) ON CONFLICT(key) DO UPDATE SET
+	                    value=EXCLUDED.value, expires_at_ms=EXCLUDED.expires_at_ms,
+	                    version=public.ephem_kv.version+1
+2026-10-22 23:56:38.773 UTC [15596] LOG:  checkpoint starting: time
+2026-10-22 23:57:40.629 UTC [21501] ERROR:  bigint out of range
+2026-10-22 23:57:40.629 UTC [21501] STATEMENT:  INSERT INTO public.ephem_kv (key,value,expires_at_ms,version)
+	                    VALUES ($1,$2,$3,1) ON CONFLICT(key) DO UPDATE SET
+	                    value=EXCLUDED.value, expires_at_ms=EXCLUDED.expires_at_ms,
+	                    version=public.ephem_kv.version+1
+2026-10-22 23:57:40.633 UTC [21503] LOG:  could not receive data from client: Connection reset by peer
+2026-10-22 23:58:19.587 UTC [15596] LOG:  checkpoint complete: wrote 968 buffers (5.9%); 0 WAL file(s) added, 0 removed, 0 recycled; write=100.400 s, sync=0.402 s, total=100.814 s; sync files=314, longest=0.386 s, average=0.002 s; distance=4553 kB, estimate=4553 kB; lsn=0/1962630, redo lsn=0/1961950
+2026-10-23 00:00:01.886 UTC [23681] LOG:  could not receive data from client: Connection reset by peer
+2026-10-23 00:00:02.156 UTC [23679] LOG:  could not send data to client: Broken pipe
+2026-10-23 00:00:02.157 UTC [23679] FATAL:  connection to client lost
+2026-10-23 00:00:15.994 UTC [15595] LOG:  received fast shutdown request
+2026-10-23 00:00:15.996 UTC [15595] LOG:  aborting any active transactions
+2026-10-23 00:00:15.997 UTC [15595] LOG:  background worker "logical replication launcher" (PID 15601) exited with exit code 1
+2026-10-23 00:00:15.998 UTC [15596] LOG:  shutting down
+2026-10-23 00:00:15.998 UTC [15596] LOG:  checkpoint starting: shutdown immediate
+2026-10-23 00:00:16.002 UTC [15596] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.002 s, total=0.005 s; sync files=3, longest=0.001 s, average=0.001 s; distance=3 kB, estimate=4098 kB; lsn=0/1962868, redo lsn=0/1962868
+2026-10-23 00:00:16.006 UTC [15595] LOG:  database system is shut down

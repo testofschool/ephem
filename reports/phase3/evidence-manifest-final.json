@@ -1,0 +1,145 @@
+{
+  "schema": "ephem.phase3.evidence-manifest.v1",
+  "files": {
+    "reports/phase3/VALIDATION.json": {
+      "sha256": "6a481936e9fc68ac3947f3a36e76e2d8a7285bbfc419261c3772f4c14a9427f4",
+      "bytes": 5979
+    },
+    "reports/phase3/bpf-build-final.log": {
+      "sha256": "05a7c50d88b9daccedad37a3f260315dcbc661f7d52211f5591ff3f3821cb489",
+      "bytes": 107
+    },
+    "reports/phase3/bpf-kernel-final.log": {
+      "sha256": "cf4ec237e7648123b1b2e78f51312ed632d383fc64b428a1a0419279ecf3c1df",
+      "bytes": 64
+    },
+    "reports/phase3/build-deliverable-final.log": {
+      "sha256": "b4d8ab0db4c749481703d931bfc8f92aac8c08e62202994936be5a872f49c0bb",
+      "bytes": 152
+    },
+    "reports/phase3/build-workspace-final.log": {
+      "sha256": "4426e85320082f2a984c73f73f7a26208eda0df7261b3f02f6a076af002eb1dc",
+      "bytes": 244
+    },
+    "reports/phase3/cargo-tests-final.log": {
+      "sha256": "380947ff11dee4e8dc6077591c5f1be63634dab789961387b0b39fb705595f0c",
+      "bytes": 3362
+    },
+    "reports/phase3/cargo-tests-first-failure.log": {
+      "sha256": "887c3bc657d57ebb310012cb583bef6903a8c78e29749f76f70c143881fd6790",
+      "bytes": 3069
+    },
+    "reports/phase3/cargo-tests-v2.log": {
+      "sha256": "cb9a11a8fa391dc15cf4d88c90a44beb33aac442d54f3971e5a2c14cb41887a3",
+      "bytes": 2979
+    },
+    "reports/phase3/clippy-final.log": {
+      "sha256": "f8d5b244c7bd4c81284ddb1526780cc3bb494834b119fac4fc2d15b68e035ee8",
+      "bytes": 254
+    },
+    "reports/phase3/format-final.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase3/postgres-http-attempt1.failed.json": {
+      "sha256": "46088e5295ac67c5250e70cd961e302ec681ee0843e78f6a8f1b5f940507d705",
+      "bytes": 1451
+    },
+    "reports/phase3/postgres-http-attempt1.failed.run.log": {
+      "sha256": "a6cf5df434aafa732ea272cffdb60de365fa2f718556b0eb99f48b592f323f04",
+      "bytes": 509
+    },
+    "reports/phase3/postgres-http-final.json": {
+      "sha256": "c9a7f591abed361649af900687dafcf0ff6e09f6dce502f96c7f9b3d1c583071",
+      "bytes": 120728
+    },
+    "reports/phase3/postgres-http-final.receipts.jsonl": {
+      "sha256": "710a52ba176f654e2d43d95719dc9a184fbc88ce77d32b806f8757473ac6b770",
+      "bytes": 44713
+    },
+    "reports/phase3/postgres-http-final.recovery.receipts.jsonl": {
+      "sha256": "d398f4384a4d3a2d83df9be39dbf4304de795ffdb9bca64307dd3c028ee6352f",
+      "bytes": 458
+    },
+    "reports/phase3/postgres-http-final.recovery.server.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase3/postgres-http-final.run.log": {
+      "sha256": "94ba51285756ae5663164ece098c208e40433ea221b8a7ce5f61a301abe61c92",
+      "bytes": 375
+    },
+    "reports/phase3/postgres-http-final.server.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase3/postgres-private-cluster-attempt1.failed.log": {
+      "sha256": "d9ab7d0e903c31c8b66745099cb336fcedad9266a6149e7c083ef15b0ff04c1c",
+      "bytes": 3151
+    },
+    "reports/phase3/postgres-private-cluster-final.log": {
+      "sha256": "d5c9636ffa3b6c777ea73217c17e89616aaf7084bd6c03fab440a198ced1b1f0",
+      "bytes": 1664
+    },
+    "reports/phase3/postgres-unit-attempt1.failed.log": {
+      "sha256": "4be4e3c8d0f723200e67b4be3dffd60bfb995888c13629d1090afa1585b3bee3",
+      "bytes": 2466
+    },
+    "reports/phase3/postgres-unit-final.log": {
+      "sha256": "bf7c3db59f79ce56a9372a6294353ecaeaf1300343493a722d5e605a60305a88",
+      "bytes": 2278
+    },
+    "reports/phase3/provenance-final.json": {
+      "sha256": "f69589728d16df003aa7efb978c34997d4e2c958d10af7ba99b9cf8c8b331960",
+      "bytes": 4912
+    },
+    "reports/phase3/source-files.json": {
+      "sha256": "7611e7869ccbc899b6e35bce1104817eab042e1feceb63b6479b4570a5dbab26",
+      "bytes": 852
+    },
+    "reports/phase3/source-manifest-final.json": {
+      "sha256": "7e5ce15261a8d9e8fdb10ddae61f38f49b867224dfc17a18a276b0697f1b2500",
+      "bytes": 4151
+    },
+    "reports/phase3/stateful-isolation-final.json": {
+      "sha256": "a0ec0c513ec54e67de1b60af552b4b6ae1dd17a19752632b73ee80a11998aedd",
+      "bytes": 363012
+    },
+    "reports/phase3/stateful-isolation-final.receipts.jsonl": {
+      "sha256": "280abf923081ae847eccc5675d4f636a73daa79ce3b3cff3abf7ce3a21e7375e",
+      "bytes": 91037
+    },
+    "reports/phase3/stateful-isolation-final.server-0.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "reports/phase3/stateful-isolation-final.server-1.log": {
+      "sha256": "3ec3fa7542eaa6976d09baef30a5fbf46586fccc39d806cceaf88d9e4775eacc",
+      "bytes": 20529
+    },
+    "reports/phase3/stateful-isolation-first-failure.json": {
+      "sha256": "3a10ef58260241f355c557ed372f12ad5d53a7f8737ea256bb18559c60dab539",
+      "bytes": 1592
+    },
+    "reports/phase3/stateful-isolation-v2.json": {
+      "sha256": "1f9b3d6c1797b078d88cff56b1f6caf4e156924360a5a30b33e89896965f854c",
+      "bytes": 352451
+    },
+    "reports/phase3/stateful-isolation-v2.receipts.jsonl": {
+      "sha256": "d70ee2b2940c886d75fbae8f5e43f8702bdf316d4ef494f050aa409712cda0e1",
+      "bytes": 83898
+    },
+    "reports/phase3/warm-native-deliverable-final.json": {
+      "sha256": "e4eddb6fbcc7b330bb5cd9b4024b2857bbacbd8afa8ba6f4fa813ecb4b4527cb",
+      "bytes": 23618
+    },
+    "reports/phase3/warm-native-final.json": {
+      "sha256": "1126692af1e0c4269bafdbe807a6dc1c64290f09f0ee98c6bf8938ce5801db2f",
+      "bytes": 19177
+    },
+    "reports/phase3/warm-native-signal-hardened.json": {
+      "sha256": "ba0bd0bc6267d951fa16bb6da9ba97440fbaf0ce9228499b0c236f35613d487f",
+      "bytes": 23789
+    }
+  }
+}

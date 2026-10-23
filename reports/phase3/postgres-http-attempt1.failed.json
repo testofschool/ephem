@@ -1,0 +1,27 @@
+{
+  "schema": "ephem.phase3.postgres-http.v1",
+  "functional_status": "FAIL",
+  "production_status": "HOLD",
+  "latency_acceptance": "UNMEASURED: correctness run only",
+  "memory_claim": "kernel-observed signals tested; silent corruption on exit0 not detectable",
+  "atomic_scope": "one PostgreSQL versioned KV table; no transparent SQL/MySQL/Redis or distributed atomicity",
+  "lost_commit_ack": "indeterminate count is null; real lost-ACK network injection UNRUN",
+  "application_sha256_before": "ec0856ce18d353ae6c91ee9cf3255d2c363fcd01e1c9314e97400a9a739af7c9",
+  "bootstrap_sha256": "5d88ed901c0524a75af993d54307eae01070ae9ba5c8b47290ea912644712a7f",
+  "adapter_sha256": "7fbefe136dec8f814e380c5be8467956375ab308f7fa82939de7b6fc33b6c11a",
+  "binary_sha256": "bb17c27a37ef9fc677b6fe866f3a0bc18725dee79c07f14c689b2addfd393652",
+  "environment": {
+    "kernel": "6.8.0-146-generic",
+    "machine": "aarch64",
+    "python": "3.12.3"
+  },
+  "failure": "AssertionError: private PostgreSQL query failed: psql: error: connection to server on socket \"/var/run/postgresql/.s.PGSQL.5432\" failed: No such file or directory\n\tIs the server running locally and accepting connections on that socket?\n",
+  "private_cluster_cleanup": {
+    "postmaster_pid": 15595,
+    "data": "/tmp/ephem-pg-phase3.nfG2xS/data",
+    "owner_uid": 501,
+    "status": "PASS",
+    "returncode": 0,
+    "output": "waiting for server to shut down.... done\nserver stopped\n"
+  }
+}

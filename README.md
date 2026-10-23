@@ -1,175 +1,236 @@
-# EPHEM
+# EPHEM: Ephemeral Zero-Persistence Runtime (Phase 3)
 
-[![Linux boundary checks](https://github.com/testofschool/ephem/actions/workflows/ci.yml/badge.svg)](https://github.com/testofschool/ephem/actions/workflows/ci.yml)
-[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+Mitigating deployment lag via COW worker isolation & pre-commit attestation gates; retained native p95: 0.52ms.
 
-**One request. One disposable worker.**
+![Production: HOLD](https://img.shields.io/badge/Production-HOLD-orange)
+![Audit: Verified on Linux ARM64 (Kernel 6.8)](https://img.shields.io/badge/Audit-Verified_on_Linux_ARM64_(Kernel_6.8)-blue)
 
-A small Linux runtime for giving compatible CGI and CLI programs a fresh, restricted execution environment for every request.
+**Recorded release-alignment native lifecycle p95: 0.52ms (0.520076ms measured). Zero corrupted keys committed in the tested fatal-fault fixtures. Production: HOLD.**
 
-[How it works](#how-it-works) · [Quick start](#quick-start) · [Threat model](docs/THREAT_MODEL.md) · [Evidence](evidence/RESULTS.md) · [Roadmap](docs/ROADMAP.md)
+**Remote-sync reproduction: PHP latency gate FAIL.** On the integrated checkout,
+the signed paired PHP delta p95 was **3.730803ms**, exceeding the <2.0ms gate;
+the reproduction script exited 1. Functional checks passed with zero corrupted
+keys in the SQLite fixture. See [the integration precheck](reports/phase3/REMOTE_SYNC_PRECHECK.json)
+and [the separate results below](#verified-empirical-results). The 0.52ms headline
+is a retained native measurement from the release-alignment run.
 
-![An isolated execution cell dissolving after a request](assets/ephem-hero.png)
+EPHEM runs each request in a fresh copy-on-write worker and quarantines its state
+changes and response until the trusted parent verifies its lifecycle and sealed
+ledger. The verified scope is a single execution lane, a warmed PHP NTS embed
+adapter, bounded state commands and one SQLite or PostgreSQL versioned KV table.
+It is an experimental mitigation for deployment lag; upstream vendor patching
+and application qualification remain necessary.
 
-> **Experimental — production qualification remains on HOLD.** Read the [threat model](docs/THREAT_MODEL.md) before running a workload. The illustration above is a visual metaphor; executed checks belong in [the evidence record](evidence/RESULTS.md).
+The badge describes retained engineering verification, not an independent audit
+or certification. Results below come from [the Phase 3 report](docs/EPHEM_PHASE3.md),
+[the release-alignment rerun](reports/phase3/RELEASE_ALIGNMENT.json) and
+[the original validation verdict](reports/phase3/VALIDATION.json), dated **2026-10-23 KST**.
+Test host: Linux aarch64, kernel 6.8.0-146-generic, Rust 1.99.1,
+PHP 8.3.6 NTS embed. PostgreSQL 16.15 was tested in the original validation;
+PostgreSQL and BPF were **UNRUN in the release-alignment invocation**.
+x86_64 execution remains **UNRUN**.
 
-## Why EPHEM?
-
-A request ends. Its process often stays alive.
-
-That process can retain temporary files, application state and data from earlier requests. EPHEM explores a stricter contract: start a fresh worker, restrict its direct effects, collect bounded output, and dispose of its execution scope before releasing a successful response.
-
-The first target is a narrow class of existing Linux programs: one bounded input, one bounded output, no direct networking and no durable writes. An offline parser or a read-only CGI handler can fit this model. Each real application still needs a compatibility check.
-
-## How it works
+## Architecture
 
 ```mermaid
-flowchart LR
-    A[Local request] --> B[Bounded ingress]
-    B --> C[New request cgroup]
-    C --> D[Fresh restricted worker]
-    D --> E[Stage output]
-    E --> F[Reap and dispose]
-    F --> G{Checks pass?}
-    G -->|Yes| H[Release response]
-    G -->|No| I[Discard staged output]
+flowchart TD
+    I[Untrusted ingress] --> U[Private Unix socket: mode 0600]
+    U --> P[Trusted parent: bounded HTTP admission and queue]
+    P --> B[Preinitialized namespace broker: UID/GID 65534, dropped capabilities]
+    B --> W[COW fork with pidfd identity and lifecycle tracking]
+    W --> S[Strict seccomp: no new sockets, AF_INET, execve or execveat]
+    S --> A[Deployment adapter: ephem://state]
+    A --> F[Bounded framed Unix IPC: state intents and quarantined output]
+    F --> G[Trusted parent attestation: HMAC-SHA256 sealed memfd ledger]
+    G --> C[Single PostgreSQL OR SQLite transactional commit]
+    C --> R[Release response after known successful commit]
 ```
 
-The Rust gate accepts one `POST /run HTTP/1.1` request per Unix-socket connection. The C launcher creates new PID, mount, network, IPC and UTS namespaces. Before the worker starts, it drops privileges and capabilities and applies Landlock and a seccomp allowlist.
+The namespace broker drops supplementary groups and all user/group IDs to
+`65534`; it is distinct from the trusted parent, which owns the backend and
+sealing key. The implementation uses `fork()` and pidfds. Each worker inherits
+only the bounded IPC capabilities needed for the request. The state adapter
+accepts GET, SET, SETEX, DEL, INCR, PING and QUIT; it forwards no arbitrary SQL.
+No worker receives a DB credential or raw network capability.
 
-The worker sees a curated read-only root filesystem and its own temporary `/tmp`. It has no direct network access. The gate owns the output buffer; the worker never receives its descriptor. A successful response requires a clean launcher receipt, bounded output, an empty and removed request cgroup, no recorded cgroup OOM, and completion within the request budget.
+The trusted parent requires matching worker identity, exit 0, no signal,
+complete IPC, a valid immutable ledger and an unexpired decision before commit.
+Fatal faults burn staged mutations and withhold worker output. A lost or timed-out
+PostgreSQL COMMIT acknowledgment is **indeterminate**: HTTP 500,
+`committed_mutations=null`, adapter quarantine and no automatic retry. It cannot
+truthfully be reported as zero committed mutations.
 
-| Default | Value |
-| --- | --- |
-| Input / output | 1 MiB each |
-| In-flight requests | 4 |
-| Request memory | 128 MiB cgroup limit |
-| Request process limit | 2: launcher and worker |
-| Request CPU quota | 100 ms per 100 ms period |
-| Private scratch filesystem | 16 MiB, 1,024 inodes |
-| Request budget | 1,000 ms from admission through successful disposal |
+## Verified empirical results
 
-Failure cleanup and response transmission have additional allowances. These defaults are resource controls, not a latency SLA. The request cgroups do not account for the trusted gate's buffers; give the service its own aggregate budget. See [operations](docs/OPERATIONS.md).
+The remote-sync integration check preserved the public `ephem-gate` 0.2.0 source
+and passed workspace format, clippy with warnings denied, 21 unit tests and release
+builds. Its reproduction script **failed the PHP paired-latency gate**:
 
-## Quick start
+| Remote-sync PHP check | Observed result |
+| :--- | :--- |
+| Complete contained PHP HTTP p95 | 18.569558ms |
+| Uncontained Python/PHP baseline p95 | 29.886462ms |
+| Signed matched PHP delta p95 / maximum | **3.730803ms / 14.267238ms; p95 gate FAIL** |
+| Functional status | PASS; 100 initial clean requests, 232 distinct workers, zero corrupted committed keys |
+| Reproduction script | Exit 1; stopped before the native stage |
 
-Use a **dedicated Linux VM**, with root access, Rust/Cargo, a C compiler with static libc support, and `curl`. The kernel must support the namespaces, Landlock ABI 3 or newer, seccomp notification, pidfds and cgroup v2 controls used by the runtime.
+After the PHP failure, a separate native invocation ran 1000 samples after
+100 warmups and passed the lifecycle checks and native p95 <2.0ms gate:
 
-The strict profile requires **no active host swap** and a readable **non-piped `kernel.core_pattern`**. The `cpu`, `memory` and `pids` controllers must already be delegated from the cgroup root. Follow the explicit host setup in [OPERATIONS.md](docs/OPERATIONS.md) first. EPHEM refuses incompatible settings; it does not change host swap or core-dump policy for you.
+| Separate remote-sync native run | p50 (ms) | p95 (ms) | p99 (ms) | max (ms) |
+| :--- | ---: | ---: | ---: | ---: |
+| Warm native lifecycle | 0.610938 | **1.444133** | 2.111405 | 3.505912 |
 
-Build the trusted programs:
+The paired delta is computed from matched request differences, not by
+subtracting the two route percentiles. The three rebuilt runtime binaries
+matched the original validation SHA-256 hashes. The failed latency result is
+retained in [the remote-sync precheck](reports/phase3/REMOTE_SYNC_PRECHECK.json)
+and [its raw run directory](reports/phase3/remote-sync-run/); it is not a new
+end-to-end reproduction PASS. The separate native PASS does not erase the PHP
+latency FAIL. No PHP retry was performed. **Production remains HOLD.**
 
-```sh
+The release-alignment run retained fresh raw samples and receipts. It
+reran the native lifecycle and SQLite PHP paths; it did not rerun PostgreSQL
+or BPF enforcement.
+
+| Metric / event | p50 (ms) | p95 (ms) | p99 (ms) | Observed status |
+| :--- | ---: | ---: | ---: | :--- |
+| Native warm worker lifecycle, 1000 samples after 100 warmups | 0.408537 | **0.520076** | 0.590034 | PASS, native p95 <2.0ms gate |
+| Complete contained PHP HTTP, 100 measured pairs | 2.076555 | 3.316038 | 3.658867 | Functional PASS; separate event from native lifecycle |
+| Signed matched PHP delta | -1.510438 | -0.350578 | 0.543993 | PASS, bounded comparison p95 <2.0ms |
+| Five PHP faults: SIGSEGV, SIGSYS, nonzero exit, deadline, verifier rejection | — | — | — | **0 corrupted keys committed** in the SQLite fixture, HTTP 500 and clean recovery |
+
+The release-alignment native maximum was **0.928572ms**. The earlier validation below is
+retained separately, including its 0.684507ms native p95; neither run is a
+production tail bound. The difference between those two observations does not
+establish a measured performance improvement.
+
+| Original validation event | p50 (ms) | p95 (ms) | p99 (ms) | Observed status |
+| :--- | ---: | ---: | ---: | :--- |
+| Native warm worker lifecycle, 1000 samples after 100 warmups | 0.448963 | 0.684507 | 0.916343 | Retained original PASS |
+| Complete contained PHP HTTP, 100 measured pairs | 2.205190 | 2.739029 | 3.486328 | Retained original functional PASS |
+| Uncontained Python/PHP baseline, same original paired run | 3.915000 | 5.130096 | 5.421015 | Reference |
+| Signed matched PHP delta | -1.703809 | -0.941094 | -0.652507 | Retained original bounded comparison PASS |
+| Actual paused PostgreSQL backend read | — | — | — | HTTP 500 in 106.746544ms; quarantined next request in 1.597850ms |
+
+Native lifecycle includes dispatch, fork, seccomp, state round trip, private
+scratch-page discard, output EOF and reaping; startup is excluded. HTTP timing
+includes connection through complete response EOF. The paired PHP run excludes
+20 warmup pairs, randomizes order with seed 20261023, uses nearest-rank
+percentiles and retains all samples. The Python baseline opens SQLite per
+request while the Rust parent keeps its connection. This confounds an isolated
+overhead estimate: a negative delta does not establish universal <2ms switching
+cost or stock PHP-FPM performance. Throughput and production tails are
+**UNMEASURED**.
+
+The release-alignment run passed 18 workspace unit tests and 12 reproduction
+checker regression tests. Original retained checks include a separately
+executed real PostgreSQL adapter fixture, 100 initial clean requests on each
+backend, namespace/seccomp probes, fault recovery and build provenance. The
+five PHP faults are separate from the paused-PostgreSQL test. The original
+SQLite and PostgreSQL runs both recorded zero corrupted keys; this is evidence
+for these fixtures, not proof against every possible corruption.
+
+## Why production status is HOLD
+
+- **No universal `S_in=0`.** The unchanged compatible fixture still requires
+  the execution host, PHP embed/bootstrap adapter, `ephem://state` protocol and
+  fixed KV schema. Raw SQL/PDO/mysqli and native Redis clients are unsupported.
+- **Response-channel exfiltration remains possible.** Output is withheld until
+  exit verification and commit, but a clean request can include any secret it
+  can read in a valid response. Process disposal and lifecycle checks do not
+  determine whether those response bytes disclose sensitive data.
+- **Silent corruption is outside the proof.** Exit 0 is lifecycle evidence,
+  not memory-integrity evidence. Corruption that emits valid allowed commands
+  and exits cleanly can commit. The gate does not authorize business intent.
+- **BPF LSM enforcement is UNRUN (exit 77).** `bpf` was absent from the tested
+  kernel's active LSM list. C/BPF compilation passed; the Rust daemon does not
+  enroll/load the optional policy. The executed policy uses mandatory
+  namespaces and classic seccomp. See [BPF scope and self-test](bpf/WARM_CONTAINMENT.md).
+- **Commit and integration limits remain.** One backend commits per request;
+  SQL plus Redis atomicity is absent. In-flight durable commits cannot be
+  retroactively undone, response loss may follow commit, and DB WAL/journal
+  bytes may reach storage. Real lost-COMMIT-ACK network injection is **UNRUN**.
+  FastCGI, Node.js, WSGI, load qualification and production rollout are unverified.
+
+## Quickstart and reproduction
+
+Use a **dedicated Linux VM** with x86_64 or aarch64, kernel >=5.12, procfs,
+root namespace/mount permissions, cgroup v2, Rust/Cargo, a C compiler (`cc`),
+Python 3, PHP 8.3 NTS development headers and `libphp8.3-embed`.
+`PHP_CONFIG` defaults to `php-config8.3`. The cgroup v2 check is a host
+prerequisite; it does not assert that this Phase 3 runtime enforces cgroup limits.
+Run only the supplied trusted fixture: the baseline is uncontained.
+
+```bash
 git clone https://github.com/testofschool/ephem.git
 cd ephem
-cargo build --locked --release
-sh packaging/build-jail.sh
+# Authenticate sudo first if not running as root; keep Cargo on your user PATH.
+sudo -v
+./scripts/reproduce_phase3.sh --check
+./scripts/reproduce_phase3.sh
 ```
 
-Create a new demo installation and a synthetic test rootfs. These paths must not belong to an existing workload:
+The script checks prerequisites, runs `cargo test --locked --workspace`, builds
+the release workspace and tested deliverable feature set, compiles the C
+adapter, runs the SQLite PHP harness with `--require-p95`, then runs:
 
-```sh
-sudo test ! -e /opt/ephem-demo-bin
-sudo install -d -m 0755 /opt/ephem-demo-bin
-sudo install -m 0755 target/release/ephem-gate target/ephem-jail /opt/ephem-demo-bin/
-sudo sh tests/ephem/build-rootfs.sh /opt/ephem-demo
-sudo sh packaging/prepare-cgroup.sh /sys/fs/cgroup/ephem-demo
-sudo test ! -e /run/ephem-demo
-sudo install -d -m 0700 /run/ephem-demo
+```bash
+./target/release/ephem-warm-pool --root <fresh-root-owned-rootfs> \
+  --iterations 1000 --warmup 100 --lifecycle-check --require-p95-ms 2
 ```
 
-Start the gate in the foreground:
+Every invocation retains fresh evidence under `/tmp/ephem-phase3.XXXXXXXX/`,
+including failed runs. The final checker recomputes raw-sample percentiles,
+verifies lifecycle/fault invariants against `VALIDATION.json` and prints actual
+new measurements beside the original retained reference. The 0.520076ms
+release-alignment result and original 0.684507ms result are observations; a
+new run need not reproduce either exactly. The native gate is **p95 <2.0ms**. A failure exits nonzero;
+missing prerequisites exit **77 / UNRUN**, never PASS.
 
-```sh
-sudo /opt/ephem-demo-bin/ephem-gate \
-  --socket /run/ephem-demo/gate.sock \
-  --jail /opt/ephem-demo-bin/ephem-jail \
-  --root /opt/ephem-demo \
-  --worker /worker \
-  --cgroup-root /sys/fs/cgroup/ephem-demo
+This one-click path reruns **SQLite PHP and native lifecycle**. Live PostgreSQL,
+paused-backend and optional BPF tests are **UNRUN in that invocation**. Their
+retained results stay separately labeled. See [full Phase 3 commands and
+measurement definitions](docs/EPHEM_PHASE3.md#reproduce-in-a-dedicated-linux-vm)
+and [the local Linux lab guide](docs/LINUX_LAB.md) for separate execution.
+
+## Release preparation and community checks
+
+```bash
+./scripts/bundle_release.sh
+# Inspect the printed staging directory, archive and SHA256SUMS.txt.
+# Run the printed gh release command only when publication is intended.
+
+./scripts/seed_issues.sh
+# Review .github/ISSUE_SEEDS/; explicit posting:
+./scripts/seed_issues.sh --post
 ```
 
-From another terminal, send a request to the fixture's echo command:
+The bundler checks measured binary hashes, gathers evidence and release notes,
+and prints a `gh release create v0.3.0-stateful-alpha` command. It does not
+publish a release. The issue script prints commands by default; `--post`
+creates the three reviewed technical requests using GitHub CLI. The seeds
+cover [BPF LSM verification](.github/ISSUE_SEEDS/issue_1_bpf_lsm.md),
+[heterogeneous transaction semantics](.github/ISSUE_SEEDS/issue_2_hybrid_atomicity.md)
+and [x86_64 parity](.github/ISSUE_SEEDS/issue_3_x86_parity.md).
 
-```sh
-sudo curl --silent --show-error \
-  --unix-socket /run/ephem-demo/gate.sock \
-  --header 'Content-Type: application/octet-stream' \
-  --data-binary 'ECHO hello from ephem' \
-  http://localhost/run
-```
+## Evidence index and earlier work
 
-The expected body is `hello from ephem`. This exercises a synthetic fixture, not an application-security guarantee. The fixture root also contains an intentionally readable synthetic canary for testing the limits of output confidentiality.
+| Evidence | What it records |
+| :--- | :--- |
+| [REMOTE_SYNC_PRECHECK.json](reports/phase3/REMOTE_SYNC_PRECHECK.json) | Integrated-tree checks and PHP latency-gate FAIL; separate from retained release-alignment results |
+| [Remote-sync raw run](reports/phase3/remote-sync-run/) | Integrated-checkout reproduction evidence, including the failed PHP timing gate |
+| [RELEASE_ALIGNMENT.json](reports/phase3/RELEASE_ALIGNMENT.json) | Retained 0.520076ms native p95, SQLite rerun, reproduction checks and invocation limits |
+| [Release-alignment native run](reports/phase3/release-alignment-final/warm-native.json) | Raw samples and lifecycle receipts for the 0.520076ms run |
+| [Release-alignment PHP run](reports/phase3/release-alignment-final/stateful-verification.json) | SQLite faults, paired samples and recovery for that invocation |
+| [Measured workspace snapshot](reports/phase3/measured-workspace/Cargo.lock) | Lockfile used by the recorded measurements; public gate version metadata is preserved separately |
+| [VALIDATION.json](reports/phase3/VALIDATION.json) | Original bounded verdict, 0.684507ms native p95, binary hashes and unmet requirements |
+| [EPHEM_PHASE3.md](docs/EPHEM_PHASE3.md) | Architecture, integration contract, decisions and measurement caveats |
+| [SQLite run](reports/phase3/stateful-isolation-final.json) | PHP faults, receipts and randomized paired samples |
+| [PostgreSQL run](reports/phase3/postgres-http-final.json) | Single-backend faults, recovery and paused-backend observations |
+| [Native lifecycle](reports/phase3/warm-native-deliverable-final.json) | Raw samples, seccomp probes and COW lifecycle receipts |
+| [Provenance](reports/phase3/provenance-final.json) | Exact final source/build provenance |
+| [Earlier public README](README.v0.2.md) | Preserved v0.2 runtime, threat-model and evidence entry points |
 
-Make the lifetime boundary visible from that second terminal:
-
-```sh
-for command in DIRTY CLEAN CRASH CLEAN READSECRET; do
-  printf '\n%s → ' "$command"
-  sudo curl --silent --show-error --unix-socket /run/ephem-demo/gate.sock \
-    --data-binary "$command" http://localhost/run
-done
-```
-
-`DIRTY` writes a marker in private scratch space; the next `CLEAN` reports
-`absent`. `CRASH` prints a canary and faults, but the caller receives only
-`execution rejected`. `READSECRET` deliberately returns the readable synthetic
-canary successfully: an allowed response is still an information channel.
-
-Press Ctrl+C in the gate terminal to stop admission and drain active work. See the [runbook](docs/OPERATIONS.md) for cleanup, test execution, CGI setup and the stricter packaging entrypoint. Do not install the launcher setuid.
-
-## What this protects — and what it does not
-
-EPHEM aims to stop worker state from being intentionally reused across requests and to deny direct durable filesystem and network effects under its restricted profile. It is a **shared-kernel sandbox**, with a trusted root gate and launcher.
-
-**Clean exit is not data-loss prevention.** A compromised worker can read data supplied to it and return that data in a successful response. A response hash identifies bytes; it does not certify their safety or correctness. Do not place unrelated secrets in the rootfs.
-
-The runtime does not undo database writes, make arbitrary applications stateless, remove the need for patches, or establish resistance to kernel compromise, privileged host observers or physical attacks. Core/swap preflight is not secure physical-memory erasure. Read the full [threat model](docs/THREAT_MODEL.md).
-
-## Compatibility
-
-| Workload | Current contract |
-| --- | --- |
-| Single-request native CLI | stdin to stdout, compatible syscalls, explicit dependencies |
-| CGI | Fixed script and minimal request environment; bounded response parser |
-| Stateful application / PHP-FPM replacement | General drop-in compatibility is not established |
-| Database, remote API, background work | Outside the offline worker profile |
-| Streaming response, WebSocket, chunked request | Unsupported |
-| Existing container image | Image-rebuild-free attachment is environment-dependent; rollout is separate work |
-
-The CGI adapter accepts `Status` and `Content-Type`; it does not provide general cookies, session handling or redirect headers. A fresh worker has startup cost, and restrictive policies can reject otherwise valid programs.
-
-## Evidence, not immunity claims
-
-Current commands, environment details, outcomes and raw report paths are recorded in [RESULTS.md](evidence/RESULTS.md). Failed and unexecuted checks must remain visible.
-
-| Verification area | Record |
-| --- | --- |
-| Worker lifecycle and private temporary state | **12/12** tests on ARM64 and x86-64; **50/50** fresh workers in each run |
-| Crash, syscall denial, timeout, output overflow and OOM | Staged output withheld in the named fixture cases on both architectures |
-| Cgroup resources, host preflight and cleanup | Actual worker OOM and disposal; **6/6** startup controls on both architectures |
-| Existing PHP-CGI source | **4/4** tiny uploads on ARM64, unchanged **963-byte** receiver |
-| Successful response carrying readable data | [Limits and positive controls](evidence/RESULTS.md) |
-| External independent security audit / production qualification | Outstanding |
-
-Run the unit checks with `cargo test --locked --workspace`. Privileged integration checks require the dedicated-VM procedure in [OPERATIONS.md](docs/OPERATIONS.md). A missing prerequisite or skipped test is not a pass.
-Exact commands, retained failures, measurements and source/binary hashes are in
-[the evidence record](evidence/RESULTS.md).
-
-## Prior art
-
-**This is not a world-first claim.** Groundhog demonstrated transparent sequential request isolation; nsjail and bubblewrap wrap existing Linux programs; Firecracker, gVisor and Kata provide other isolation boundaries. Disposable environments also have a long history.
-
-EPHEM's focus is a small request-oriented wrapper, a restrictive offline profile and inspectable lifecycle evidence. The [prior-art review](docs/PRIOR_ART.md) compares the mechanisms, limitations and open questions. No comparative speed or security ranking is claimed.
-
-## Project
-
-- [Threat model](docs/THREAT_MODEL.md) — assets, assumptions and exclusions.
-- [Operations](docs/OPERATIONS.md) — supported host setup and reproduction.
-- [Roadmap](docs/ROADMAP.md) — next engineering gates.
-- [Initial source audit](docs/INITIAL_AUDIT.md) — earlier gaps and their provenance.
-- [한국어 조사 요약](docs/FINDINGS_KO.md) — 차별화와 남은 보강 과제.
-- [Contributing](CONTRIBUTING.md) — development and evidence expectations.
-- [Security policy](SECURITY.md) — private vulnerability reporting.
-
-Licensed under [Apache-2.0](LICENSE). Hero illustration [generation provenance](assets/GENERATION.md).
+The first compilation/integration failures and earlier tail measurements remain
+in `reports/phase3/`. No failure or unavailable test is rounded into a pass.

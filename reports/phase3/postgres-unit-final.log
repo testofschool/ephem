@@ -1,0 +1,38 @@
+   Compiling ephem-attestation v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-attestation)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.94s
+     Running unittests src/lib.rs (target/debug/deps/ephem_attestation-be31396024836472)
+
+running 16 tests
+test postgres_backend::tests::statement_completion_unknown_is_never_classified_as_burned ... ok
+test postgres_backend::tests::hostaddr_cannot_override_unix_socket_guard ... ok
+test transaction_gate::tests::backend_commit_error_burns_and_replaces_stdout ... ok
+test transaction_gate::tests::elapsed_deadline_burns_without_timing_flakiness ... ok
+test transaction_gate::tests::backend_failure_rolls_back_prior_mutation ... ok
+test transaction_gate::tests::clean_commit_has_read_your_writes_and_quarantined_output ... ok
+test transaction_gate::tests::http_rejects_smuggling_and_incomplete_responses ... ok
+test transaction_gate::tests::resp_rejects_truncation_overflow_and_pipelining ... ok
+test transaction_gate::tests::expired_key_increment_drops_old_expiry ... ok
+test transaction_gate::tests::response_missing_and_limit_failures_latch ... ok
+test transaction_gate::tests::lost_commit_acknowledgement_is_unknown_not_false_zero ... ok
+test transaction_gate::tests::every_untrusted_completion_path_burns ... ok
+test transaction_gate::tests::whitelist_failure_cannot_be_caught_and_ignored ... ok
+test transaction_gate::tests::seals_are_immutable_and_wrong_key_or_mac_burns ... ok
+test transaction_gate::tests::wrong_generation_or_missing_binding_burns ... ok
+test transaction_gate::tests::stale_snapshot_conflict_does_not_lose_increment ... ok
+
+test result: ok. 16 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/postgres.rs (target/debug/deps/postgres-a1011eeccbcbbd0e)
+
+running 1 test
+REAL_POSTGRES_PASS: commit visibility, staged read-your-writes, crash receipt burn, stale conflict, server-side partial failure rollback, u64 bounds
+test actual_postgres_commit_crash_burn_conflict_and_partial_failure_rollback ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+   Doc-tests ephem_attestation
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

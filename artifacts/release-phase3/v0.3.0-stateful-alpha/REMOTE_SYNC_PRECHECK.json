@@ -1,0 +1,111 @@
+{
+  "schema": "ephem.phase3.remote-sync-precheck.v1",
+  "date_kst": "2026-10-23",
+  "production_status": "HOLD",
+  "release_tag": "v0.3.0-stateful-alpha",
+  "base_main_commit": "8dae51274f38e5736b577e62014309eaa5060e6d",
+  "repository_integration": {
+    "existing_ephem_gate": "Public v0.2.0 sources preserved byte-for-byte from origin/main",
+    "phase3_runtime_sources": "Exact recorded hashes preserved",
+    "workspace_lock_delta": "Only ephem-gate package version metadata changes 0.1.0 to 0.2.0; original measured Cargo.toml/Cargo.lock snapshots retained",
+    "original_local_report": "RELEASE_ALIGNMENT.json preserved verbatim as historical evidence, including prepublication state"
+  },
+  "linux_checks": {
+    "platform": "Linux aarch64 kernel6.8.0-146-generic Rust1.99.1",
+    "cargo_fmt_all_check": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "remote-sync-run/fmt.log"
+    },
+    "cargo_clippy_locked_workspace_all_targets_warnings_denied": {
+      "status": "PASS",
+      "exit_code": 0,
+      "evidence": "remote-sync-run/clippy.log"
+    },
+    "cargo_test_locked_workspace": {
+      "status": "PASS",
+      "passed": 21,
+      "failed": 0,
+      "ignored_real_postgres": 1,
+      "evidence": "remote-sync-run/cargo-test.log"
+    },
+    "release_builds_and_php_embed_c": {
+      "status": "PASS",
+      "evidence": [
+        "remote-sync-run/cargo-build-workspace.log",
+        "remote-sync-run/cargo-build-deliverable.log",
+        "remote-sync-run/php-adapter-build.log"
+      ]
+    },
+    "phase3_rebuilt_binary_hashes": {
+      "target/release/ephem-stateful": "230c55de2a15f3220368075ddc2b75d8f6495a2402dd5fb8b4a5c00625b51876",
+      "target/release/ephem-warm-pool": "7db1a82250d3e2aaf628de7c40a3afc11118387ed9f97e1c8f099e8249cb3cdc",
+      "target/phase3/libephem_php.so": "7fbefe136dec8f814e380c5be8467956375ab308f7fa82939de7b6fc33b6c11a"
+    },
+    "rebuilt_binary_hashes_match_recorded": true,
+    "full_reproduce_script": {
+      "status": "FAIL",
+      "exit_code": 1,
+      "stopped_at": "PHP paired latency p95 gate",
+      "evidence": "remote-sync-run/driver.log"
+    },
+    "sqlite_php": {
+      "functional_status": "PASS",
+      "clean_requests": 100,
+      "fault_cases": 5,
+      "corrupted_committed_keys": 0,
+      "unique_reaped_workers": 232,
+      "baseline_ms": {
+        "p50": 10.570422,
+        "p95": 29.886462,
+        "p99": 86.668419,
+        "max": 135.541051
+      },
+      "contained_ms": {
+        "p50": 7.364921,
+        "p95": 18.569558,
+        "p99": 37.198239,
+        "max": 37.509707
+      },
+      "paired_delta_ms": {
+        "p50": -3.080839,
+        "p95": 3.730803,
+        "p99": 12.478680999999998,
+        "max": 14.267237999999999
+      },
+      "paired_p95_gate": "FAIL: p95 3.730803ms is not <2ms",
+      "evidence": "remote-sync-run/stateful-verification.json"
+    },
+    "native_stage_within_full_script": "UNRUN: script stopped after the PHP latency gate",
+    "native_separate_command": {
+      "status": "PASS",
+      "exit_code": 0,
+      "iterations": 1000,
+      "warmup": 100,
+      "lifecycle_checks": 13,
+      "latency_ms": {
+        "p50_ms": 0.610938,
+        "p95_ms": 1.4441330000000001,
+        "p99_ms": 2.111405,
+        "max_ms": 3.505912
+      },
+      "gate": "p95<2ms",
+      "evidence": "remote-sync-run/warm-native.json"
+    },
+    "postgres_live_or_paused_backend": "UNRUN in remote sync; retained original evidence only",
+    "bpf_lsm": "UNRUN in remote sync; retained exit77 only",
+    "x86_64_phase3_lifecycle": "UNRUN locally; legacy public x86 checks are separate"
+  },
+  "interpretation": "0.520076ms remains the exact retained release-alignment native observation; this later invocation has a different native tail and a failed PHP paired gate. No benchmark attempt was retried or omitted. No stable latency, production SLA or controlled speedup is inferred.",
+  "local_automation_tests": {
+    "reproduction_checker": 12,
+    "issue_seeding_mocked_gh": 6,
+    "release_bundler": 3,
+    "status": "PASS"
+  },
+  "cleanup": {
+    "stateful_or_warm_runtime_processes_after_tests": 0,
+    "dedicated_vm": "Shutdown requested after owned runtime teardown; final state recorded in local publication receipt"
+  },
+  "publication_state_at_precheck": "Prepared locally; publication receipts must be verified from remote commit/tag/release/issues after push"
+}

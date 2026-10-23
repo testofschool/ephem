@@ -1,0 +1,47 @@
+{
+  "schema": "ephem.phase3.stateful-isolation.v1",
+  "functional_status": "FAIL",
+  "production_status": "HOLD",
+  "memory_claim": "signals detected; silent corruption on exit0 not detectable",
+  "application_sha256_before": "ec0856ce18d353ae6c91ee9cf3255d2c363fcd01e1c9314e97400a9a739af7c9",
+  "environment": {
+    "kernel": "6.8.0-146-generic",
+    "machine": "aarch64",
+    "python": "3.12.3"
+  },
+  "server_commands": [
+    [
+      "/home/felix.guest/ephem-work/target/release/ephem-stateful",
+      "--socket",
+      "/tmp/ephem-stateful-qn076vr0/gate.sock",
+      "--root",
+      "/tmp/ephem-stateful-qn076vr0/rootfs",
+      "--database",
+      "/tmp/ephem-stateful-qn076vr0/gate.sqlite",
+      "--adapter",
+      "/home/felix.guest/ephem-work/target/phase3/libephem_php.so",
+      "--bootstrap",
+      "/home/felix.guest/ephem-work/runtime/phase3/bootstrap.php",
+      "--receipts",
+      "/tmp/ephem-stateful-qn076vr0/receipts.jsonl",
+      "--deadline-ms",
+      "200",
+      "--allow-fault-injection"
+    ],
+    [
+      "/usr/bin/python3",
+      "/home/felix.guest/ephem-work/runtime/phase3/baseline.py",
+      "--socket",
+      "/tmp/ephem-stateful-qn076vr0/base.sock",
+      "--database",
+      "/tmp/ephem-stateful-qn076vr0/base.sqlite",
+      "--adapter",
+      "/home/felix.guest/ephem-work/target/phase3/libephem_php.so",
+      "--bootstrap",
+      "/home/felix.guest/ephem-work/runtime/phase3/bootstrap.php",
+      "--application",
+      "/home/felix.guest/ephem-work/tests/fixtures/phase3/application.php"
+    ]
+  ],
+  "failure": "AssertionError: clean request 0 failed"
+}

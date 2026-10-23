@@ -1,0 +1,14 @@
+[package]
+name = "ephem-stateful"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+ephem-warm-pool = { path = "../ephem-warm-pool" }
+ephem-attestation = { path = "../ephem-attestation" }
+libc = "0.2"
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "io-util", "sync", "time"] }

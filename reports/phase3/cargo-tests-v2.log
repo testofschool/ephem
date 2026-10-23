@@ -1,0 +1,66 @@
+   Compiling ahash v0.8.12
+   Compiling libsqlite3-sys v0.30.1
+   Compiling ephem-warm-pool v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-warm-pool)
+   Compiling hashbrown v0.14.5
+   Compiling hashlink v0.9.1
+   Compiling rusqlite v0.32.1
+   Compiling ephem-attestation v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-attestation)
+   Compiling ephem-stateful v0.1.0 (/home/felix.guest/ephem-work/crates/ephem-stateful)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.23s
+     Running unittests src/lib.rs (target/debug/deps/ephem_attestation-2de1fa227bde6843)
+
+running 13 tests
+test transaction_gate::tests::backend_commit_error_burns_and_replaces_stdout ... ok
+test transaction_gate::tests::backend_failure_rolls_back_prior_mutation ... ok
+test transaction_gate::tests::clean_commit_has_read_your_writes_and_quarantined_output ... ok
+test transaction_gate::tests::http_rejects_smuggling_and_incomplete_responses ... ok
+test transaction_gate::tests::resp_rejects_truncation_overflow_and_pipelining ... ok
+test transaction_gate::tests::elapsed_deadline_burns_without_timing_flakiness ... ok
+test transaction_gate::tests::expired_key_increment_drops_old_expiry ... ok
+test transaction_gate::tests::response_missing_and_limit_failures_latch ... ok
+test transaction_gate::tests::stale_snapshot_conflict_does_not_lose_increment ... ok
+test transaction_gate::tests::seals_are_immutable_and_wrong_key_or_mac_burns ... ok
+test transaction_gate::tests::whitelist_failure_cannot_be_caught_and_ignored ... ok
+test transaction_gate::tests::every_untrusted_completion_path_burns ... ok
+test transaction_gate::tests::wrong_generation_or_missing_binding_burns ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/ephem_gate-9d7de044530dee39)
+
+running 2 tests
+test tests::cgi_preserves_binary_body_and_status ... ok
+test tests::cgi_rejects_unapproved_and_ambiguous_headers ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/ephem_stateful-06b2db211faab3e7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (target/debug/deps/ephem_warm_pool-b00e7dbe5e269e28)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/ephem_warm_pool-2b80da82e73815ee)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ephem_attestation
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests ephem_warm_pool
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

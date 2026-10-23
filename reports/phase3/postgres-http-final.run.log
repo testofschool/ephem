@@ -1,0 +1,1 @@
+{"functional_status": "PASS", "consecutive_clean_requests": 100, "unique_worker_pids": 113, "final_committed_keys": 212, "corrupted_committed_keys": 0, "private_cluster_cleanup": {"postmaster_pid": 23739, "data": "/tmp/ephem-pg-phase3.fDtz9o/data", "owner_uid": 501, "status": "PASS", "returncode": 0, "output": "waiting for server to shut down.... done\nserver stopped\n"}}

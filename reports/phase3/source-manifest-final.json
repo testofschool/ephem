@@ -1,0 +1,113 @@
+{
+  "schema": "ephem.phase3.source-manifest.v1",
+  "source_files": {
+    "Cargo.lock": {
+      "sha256": "5f6eca97b4cd7f3f780d6e4ee94b62145ed351b90bb79e53f86021a3e71a4f3c",
+      "bytes": 31372
+    },
+    "Cargo.toml": {
+      "sha256": "18876d385d21bebe9d9eb3fb5039fbff1aa1102c307475a47e20e7f51f56f09f",
+      "bytes": 199
+    },
+    "bpf/build-warm-containment.sh": {
+      "sha256": "923d7ffcfee41daee177e7d021af310eda2a78f60f7e4b0a9c0523ccbcee0034",
+      "bytes": 1162
+    },
+    "bpf/warm_containment.bpf.c": {
+      "sha256": "330a6ab9ab429f831cdba3a83680b0586a6ee84b7643285bb9feeaf9f9ebf3e0",
+      "bytes": 6346
+    },
+    "bpf/warm_containment.h": {
+      "sha256": "24e3c034df9b2d188e270fd72324454f3dbff432ce1f7ed803253e2c6ad3e847",
+      "bytes": 602
+    },
+    "bpf/warm_containment_test.c": {
+      "sha256": "741503f58194ec9d6bb19251d3aa6999a421027f09e1e7488a5e830057b9673a",
+      "bytes": 8075
+    },
+    "crates/ephem-attestation/Cargo.toml": {
+      "sha256": "c64a32b383ebb6ad25f9d184ec1a81e6fcc2844464c7a8baebedcf12a7ef9f30",
+      "bytes": 293
+    },
+    "crates/ephem-attestation/src/lib.rs": {
+      "sha256": "30a1ffc7b4641e40c72fe6a024ee0ea508f9eb625043f4db7e738301c6e1a9e5",
+      "bytes": 774
+    },
+    "crates/ephem-attestation/src/postgres_backend.rs": {
+      "sha256": "5655928f61221845bced47532833a2841ed53e48047031e977b6cd68a81e0006",
+      "bytes": 17512
+    },
+    "crates/ephem-attestation/src/transaction_gate.rs": {
+      "sha256": "c39f7630160061126eebc3fdb1963c76e8096a1bfdb0d15313561e8d509ddf47",
+      "bytes": 49552
+    },
+    "crates/ephem-attestation/tests/postgres.rs": {
+      "sha256": "3fac89e412324ea8fc486925c376353fac82ab86c3913165c127422279b052cf",
+      "bytes": 6748
+    },
+    "crates/ephem-stateful/Cargo.toml": {
+      "sha256": "28338670fd21b5ae99a567f49dd6f76ff81f6ef266fee3aa7d3f959e444a6635",
+      "bytes": 395
+    },
+    "crates/ephem-stateful/src/main.rs": {
+      "sha256": "2c5268d1949f2019c02a226e3c6a79baa82499034e089ff06a918729392f392e",
+      "bytes": 17912
+    },
+    "crates/ephem-warm-pool/Cargo.toml": {
+      "sha256": "d93a79d9ea23ab1e91a225161485c455af699034f2449e6645009d950cfa88b4",
+      "bytes": 363
+    },
+    "crates/ephem-warm-pool/src/lib.rs": {
+      "sha256": "6c950f90dd0d181ae4e9cf577b2b1c5f3051333b24e86afb70ca78b92fe9e35b",
+      "bytes": 46486
+    },
+    "crates/ephem-warm-pool/src/main.rs": {
+      "sha256": "0e4842dfd5deef7f222dc18181f597504e428c9ee445b9cdd4b95140373c5557",
+      "bytes": 11832
+    },
+    "runtime/phase3/baseline.py": {
+      "sha256": "28feb1de9dc03d5056291b20d53c3341597f30d8c953324914cef6bae77fe385",
+      "bytes": 21415
+    },
+    "runtime/phase3/bootstrap.php": {
+      "sha256": "5d88ed901c0524a75af993d54307eae01070ae9ba5c8b47290ea912644712a7f",
+      "bytes": 2921
+    },
+    "runtime/phase3/build-php-adapter.sh": {
+      "sha256": "4a85e92477f981bc14d3770fe2d95b1950ee1c462b28e66bbc482b59cf260bff",
+      "bytes": 307
+    },
+    "runtime/phase3/embed.c": {
+      "sha256": "7f76cc7d241fb3df0f5daba3c2f33054c43ba13b5d9b22f0afe9895e65c91cec",
+      "bytes": 6343
+    },
+    "tests/fixtures/phase3/application.php": {
+      "sha256": "ec0856ce18d353ae6c91ee9cf3255d2c363fcd01e1c9314e97400a9a739af7c9",
+      "bytes": 1325
+    },
+    "tests/test_phase3_postgres_http.py": {
+      "sha256": "284894f729290edd2a2d2c7987ff01ecb1f7de63ed1922ec9eac3722e8417028",
+      "bytes": 18211
+    },
+    "tests/test_stateful_isolation.py": {
+      "sha256": "43691a2351a8a2c281a5231dbc08346a14f7d9bb584c40aef986658b11d9d093",
+      "bytes": 14268
+    },
+    "README.md": {
+      "sha256": "41d33193ebd6eddfc71080c628ca4e25cb2134c1392b0a0410b78db8260f387e",
+      "bytes": 15591
+    },
+    "docs/EPHEM_PHASE3.md": {
+      "sha256": "7e317d35333a134eef4cd39a8cf7e03982e320fd62556fbe31dda55ee0ce62e8",
+      "bytes": 16615
+    },
+    "bpf/WARM_CONTAINMENT.md": {
+      "sha256": "c4e3dc34e42a4c77b5fbd69d295ca7cd001182eb19a676fd4c65aa6ea7ba2b6b",
+      "bytes": 4075
+    },
+    "artifacts/ephem-phase3-linux-arm64/README.md": {
+      "sha256": "fcf64e2b9261de2d5a5c469270c9bfac31f277f99ae0200ba37c9f5558220097",
+      "bytes": 746
+    }
+  }
+}

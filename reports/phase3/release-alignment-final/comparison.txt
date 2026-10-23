@@ -1,0 +1,8 @@
+[EPHEM VERIFICATION COMPLETED]
+- Native Lifecycle p95: 0.520076ms (PASS: <2.0ms gate; recorded 0.684507ms)
+- Contained PHP HTTP p95: 3.316038ms (recorded 2.739029ms)
+- Bounded paired PHP delta p95: -0.350578ms (PASS: <2.0ms; confounded baseline)
+- Fault Injections: 5/5 PHP cases burned with recovery; native lifecycle checks PASS
+- Corrupted Committed Keys: 0 (SQLite fixture)
+- PostgreSQL live/paused backend and BPF LSM: UNRUN by this script; see retained validation
+- Production Status: HOLD (integration, response disclosure, silent corruption and commit ambiguity boundaries)

@@ -1,0 +1,131 @@
+{
+  "schema": "ephem.phase3.release-alignment.v1",
+  "date_kst": "2026-10-23",
+  "production_status": "HOLD",
+  "workspace": "/Users/felix/Desktop/php2shell",
+  "git_context": "Phase 3 workspace root has no .git metadata; nested ephem-release repository was left untouched. No commit, push, release or issue publication performed.",
+  "changes": {
+    "README.md": {
+      "sha256": "99b5dba3f21795fb316945e4a3d29bcb7a58eb6e74273911f871d3f2f2d357ba",
+      "mode": "0o644"
+    },
+    "README.phase1-2.md": {
+      "sha256": "41d33193ebd6eddfc71080c628ca4e25cb2134c1392b0a0410b78db8260f387e",
+      "mode": "0o644"
+    },
+    "scripts/reproduce_phase3.sh": {
+      "sha256": "a6228d96f46edf56cfb8e06bcdd1951efc59a1915ae496f569d8f94c980b0a19",
+      "mode": "0o755"
+    },
+    "scripts/verify_phase3_run.py": {
+      "sha256": "d837f416dcc138fa678ba4f64395dd4b81d9f40e9ff926ba22056fa1d475975e",
+      "mode": "0o755"
+    },
+    "scripts/bundle_release.sh": {
+      "sha256": "a399726be8d80a81f343163ef70e671ac3508e970bb43faa0612cbcb0c5e39fb",
+      "mode": "0o755"
+    },
+    "scripts/seed_issues.sh": {
+      "sha256": "34853626e57050be84f3d679bec6e11f95c891d26f59e90262cf08847cc9b6d1",
+      "mode": "0o755"
+    },
+    "tests/test_phase3_reproduction.py": {
+      "sha256": "7113c3bf95a666f3983110185358bcf7c47626b2237ead0eb4ada8b461ac91cb",
+      "mode": "0o644"
+    },
+    ".github/ISSUE_SEEDS/issue_1_bpf_lsm.md": {
+      "sha256": "977891bc2d215b0f01df17e6133b2e0c953ca3e0c0b58dde4106612d78ad04c2",
+      "mode": "0o644"
+    },
+    ".github/ISSUE_SEEDS/issue_2_hybrid_atomicity.md": {
+      "sha256": "a2d0bd7ed3df2bf23328bce72af755a871271894efad391a14787514500e3ecd",
+      "mode": "0o644"
+    },
+    ".github/ISSUE_SEEDS/issue_3_x86_parity.md": {
+      "sha256": "6d49bb1d5060899ff459df4f0e10b34e6e405d8d2e52b738057124f16dd01b05",
+      "mode": "0o644"
+    }
+  },
+  "verification": {
+    "platform": {
+      "kernel": "6.8.0-146-generic",
+      "machine": "aarch64",
+      "rustc": "1.99.1"
+    },
+    "final_end_to_end_script_exit": 0,
+    "workspace_tests": {
+      "passed": 18,
+      "failed": 0,
+      "ignored": 1,
+      "evidence": "release-alignment-final/cargo-test.log"
+    },
+    "checker_regression_tests": {
+      "passed": 12,
+      "failed": 0,
+      "evidence": "release-alignment-unit-tests.log"
+    },
+    "shell_syntax": "PASS",
+    "permissions": "PASS",
+    "readme_local_links": "PASS",
+    "recorded_runtime_sources_unchanged": 23,
+    "recorded_evidence_files_unchanged": 35,
+    "new_build_binary_hashes_match_recorded": true,
+    "release_checksum_layers": "PASS: repository, staged assets and internal archive",
+    "native_latency_ms": {
+      "p50_ms": 0.408537,
+      "p95_ms": 0.520076,
+      "p99_ms": 0.5900340000000001,
+      "max_ms": 0.9285720000000001
+    },
+    "native_samples": 1000,
+    "native_warmup": 100,
+    "php_http_ms": {
+      "p50": 2.076555,
+      "p95": 3.316038,
+      "p99": 3.658867,
+      "max": 3.750616
+    },
+    "paired_delta_ms": {
+      "p50": -1.5104379999999997,
+      "p95": -0.3505780000000005,
+      "p99": 0.543993,
+      "max": 0.6013660000000001
+    },
+    "php_fault_cases_passed": 5,
+    "corrupted_committed_keys": 0,
+    "postgres_live_and_paused_backend": "UNRUN in this invocation; retained prior evidence unchanged",
+    "bpf_lsm": "UNRUN in this invocation; retained kernel enforcement exit77 unchanged",
+    "x86_64": "UNRUN",
+    "rust_fmt_clippy": "Not rerun: no Rust source changes",
+    "macos_prerequisite_exit": 77,
+    "bundle_fifo_rejection": "PASS: bounded regular-file guard rejects FIFO without blocking"
+  },
+  "attempts": [
+    {
+      "path": "release-alignment-run1/driver.log",
+      "exit": 1,
+      "reason": "Guest checkout lacked reports/phase3/VALIDATION.json; runtime checks completed but final comparison failed. Preserved; prerequisite file check added."
+    },
+    {
+      "path": "release-alignment-run2.failed.log",
+      "exit": 1,
+      "reason": "New incomplete-checkout guard rejected the still-missing reference before runtime execution; guest reference copied with correct permissions."
+    },
+    {
+      "path": "release-alignment-run3/driver.log",
+      "exit": 0,
+      "reason": "End-to-end pass before additional raw-receipt consistency checks."
+    },
+    {
+      "path": "release-alignment-final/driver.log",
+      "exit": 0,
+      "reason": "Final script and stronger verifier; complete end-to-end pass."
+    }
+  ],
+  "release_stage": "artifacts/release-phase3/v0.3.0-stateful-alpha",
+  "published": false,
+  "cleanup": {
+    "runtime_worker_processes_after_tests": 0,
+    "dedicated_vm": "Stopped; graceful shutdown completed"
+  }
+}

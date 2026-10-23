@@ -1,0 +1,8 @@
+[workspace]
+members = ["crates/ephem-gate", "crates/ephem-warm-pool", "crates/ephem-attestation", "crates/ephem-stateful"]
+resolver = "2"
+
+[profile.release]
+panic = "abort"
+lto = "thin"
+strip = true

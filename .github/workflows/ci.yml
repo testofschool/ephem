@@ -20,6 +20,15 @@ jobs:
           cargo test --locked --workspace
           cargo build --locked --release
           sh packaging/build-jail.sh
+      - name: Phase 3 evidence and release automation checks
+        run: |
+          set -euo pipefail
+          bash -n scripts/reproduce_phase3.sh scripts/bundle_release.sh scripts/seed_issues.sh
+          python3 -m unittest discover -s tests -p test_phase3_reproduction.py -v
+          python3 -m unittest discover -s tests -p test_issue_seeding.py -v
+          python3 -m unittest discover -s tests -p test_phase3_release_bundle.py -v
+          ./scripts/seed_issues.sh --dry-run
+          ./scripts/bundle_release.sh --output artifacts/release-phase3/ci
       - name: Real Linux integration on the disposable runner
         run: |
           sudo bash -c '

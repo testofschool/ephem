@@ -7,3 +7,8 @@
 *.sock
 /evidence/local-*/
 /dist/
+
+# Generated local build and release staging state
+*.tmp
+/artifacts/release-phase3/.bundle-*
+/artifacts/release-phase3/.bundle.lock/

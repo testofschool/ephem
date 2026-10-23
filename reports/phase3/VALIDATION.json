@@ -1,0 +1,158 @@
+{
+  "schema": "ephem.phase3.validation.v1",
+  "date_kst": "2026-10-23",
+  "implementation_status": "BOUNDED_IMPLEMENTATION_VERIFIED",
+  "production_status": "HOLD",
+  "original_universal_contract": "NOT_ACHIEVED",
+  "scope": "Single execution lane, warmed NTS PHP embed, JSON-to-POST deployment adapter, bounded RESP2 subset, one SQLite/PostgreSQL versioned KV table",
+  "checks": {
+    "linux_arm64_release_workspace_build": "PASS",
+    "tested_deliverable_release_build": "PASS",
+    "rust_new_crate_format": "PASS",
+    "rust_new_crate_clippy_warnings_denied": "PASS",
+    "workspace_unit_tests": {
+      "passed": 18,
+      "failed": 0,
+      "ignored_real_pg_by_default": 1
+    },
+    "actual_postgres_adapter_fixture": {
+      "passed": 1,
+      "failed": 0,
+      "evidence": "postgres-unit-final.log"
+    },
+    "php_embed_c_build": "PASS -Wall -Wextra -Werror",
+    "source_host_linux_hash_parity": {
+      "status": "PASS",
+      "files": 23
+    },
+    "sqlite_http": {
+      "functional_status": "PASS",
+      "consecutive_clean_requests": 100,
+      "clean_committed_keys": 200,
+      "corrupted_committed_keys": 0,
+      "unique_worker_pids": 232,
+      "final_committed_keys": 454,
+      "admission_disconnect": "PASS",
+      "absolute_admission_deadline": "PASS"
+    },
+    "postgres_http": {
+      "functional_status": "PASS",
+      "consecutive_clean_requests": 100,
+      "clean_committed_keys": 200,
+      "corrupted_committed_keys": 0,
+      "unique_worker_pids": 113,
+      "final_committed_keys": 212
+    },
+    "faults_executed": [
+      "real SIGSEGV",
+      "seccomp SIGSYS on AF_INET creation",
+      "nonzero exit",
+      "worker deadline",
+      "verifier rejection",
+      "incomplete state IPC (native)",
+      "execve/execveat (native)",
+      "broker signal/fcntl attempts (native)",
+      "actual stopped PostgreSQL backend read",
+      "quarantined PostgreSQL adapter",
+      "explicit daemon restart after quarantine"
+    ],
+    "bpf_lsm": {
+      "compilation": "PASS",
+      "kernel_load_and_enforcement": "UNRUN",
+      "exit_code": 77,
+      "reason": "bpf absent from active kernel LSM list",
+      "runtime_actual_policy": "mandatory namespace + classic seccomp"
+    },
+    "live_runtime_processes_after_tests": 0,
+    "owned_private_postgres_clusters": "STOPPED"
+  },
+  "latency": {
+    "native_lifecycle_ms": {
+      "iterations": 1000,
+      "warmup": 100,
+      "p50_ms": 0.448963,
+      "p95_ms": 0.684507,
+      "p99_ms": 0.916343,
+      "max_ms": 1.383182
+    },
+    "native_evidence": "warm-native-deliverable-final.json",
+    "php_http_ms": {
+      "pairs": 100,
+      "warmup_pairs_excluded": 20,
+      "baseline_ms": {
+        "p50": 3.915,
+        "p95": 5.130096,
+        "p99": 5.421015,
+        "max": 5.84402
+      },
+      "isolated_ms": {
+        "p50": 2.20519,
+        "p95": 2.739029,
+        "p99": 3.486328,
+        "max": 3.822082
+      },
+      "paired_delta_ms": {
+        "p50": -1.7038090000000001,
+        "p95": -0.9410940000000001,
+        "p99": -0.652507,
+        "max": 0.12550099999999986
+      },
+      "p95_under_2ms": true,
+      "baseline_limit": "uncontained Python supervisor opens SQLite connection per request; Rust gate retains its connection; not stock PHP-FPM"
+    },
+    "universal_less_than_2ms_overhead": "UNVERIFIED; confounded baseline, no stock PHP-FPM/Node/WSGI comparison",
+    "throughput_and_production_tails": "UNMEASURED"
+  },
+  "unmet_requirements": [
+    "Universal S_in=0 is not achieved; the compatible fixture is unchanged but requires a deployment adapter/protocol/schema",
+    "No detection of silent memory corruption that emits allowed commands and exits 0",
+    "No transparent arbitrary SQL, MySQL or native Redis backend; no cross-store SQL/Redis atomic commit",
+    "No FastCGI ingress, Node.js or WSGI runtime adapter",
+    "BPF LSM enrollment/loading not integrated or executed on this VM",
+    "No production readiness, formal security proof, x86_64 execution or load/throughput qualification"
+  ],
+  "commit_ambiguity": "Lost or timed-out COMMIT acknowledgment is indeterminate, mutation count null, HTTP500; no retry. Actual delayed-wait failure retained; real network lost-ACK injection UNRUN.",
+  "deadline_policy": "Absolute admission/worker deadline plus bounded parent DB actor: read100ms, commit500ms, init2s. In-flight durable commits cannot be retroactively burned.",
+  "retained_failures": [
+    "cargo-tests-first-failure.log",
+    "stateful-isolation-first-failure.json",
+    "postgres-http-attempt1.failed.json",
+    "postgres-unit-attempt1.failed.log"
+  ],
+  "tested_binaries": {
+    "target/release/ephem-stateful": {
+      "sha256": "230c55de2a15f3220368075ddc2b75d8f6495a2402dd5fb8b4a5c00625b51876",
+      "bytes": 3886960
+    },
+    "target/release/ephem-warm-pool": {
+      "sha256": "7db1a82250d3e2aaf628de7c40a3afc11118387ed9f97e1c8f099e8249cb3cdc",
+      "bytes": 857000
+    },
+    "target/phase3/libephem_php.so": {
+      "sha256": "7fbefe136dec8f814e380c5be8467956375ab308f7fa82939de7b6fc33b6c11a",
+      "bytes": 71824
+    },
+    "target/phase3/warm-bpf/warm_containment.bpf.o": {
+      "sha256": "7ffab15977cb95404df37e7b01fe3d029f6bff576b8e8e67ffc86ee93603c49c",
+      "bytes": 27912
+    },
+    "target/phase3/warm-bpf/warm-containment-test": {
+      "sha256": "7ed073eed9ff41dfdb5cadd8269311f135cf22a1fabd64faf54a8ad87726ce94",
+      "bytes": 91248
+    }
+  },
+  "reports": [
+    "stateful-isolation-final.json",
+    "postgres-http-final.json",
+    "warm-native-deliverable-final.json",
+    "provenance-final.json"
+  ],
+  "lab_cleanup": {
+    "status": "PASS",
+    "workload_processes": "none observed before shutdown",
+    "private_postgres_clusters": "cleanly stopped",
+    "vm_status": "Stopped",
+    "shutdown_method": "graceful hostagent stop stalled; targeted force-stop after workload teardown",
+    "stale_stop_cli": "terminated owned PID78504 after matching start09:05:48 and exact command; VM already confirmed Stopped"
+  }
+}

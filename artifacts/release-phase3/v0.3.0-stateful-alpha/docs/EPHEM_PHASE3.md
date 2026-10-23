@@ -91,6 +91,25 @@ that package-version metadata. The existing public gate source is preserved;
 the recorded Phase 3 runtime measurements are tied to their retained evidence,
 and any subsequent integrated-tree validation is a separate invocation.
 
+## Verify downloaded release assets
+
+GitHub release downloads flatten asset names. After downloading all assets
+from `v0.3.0-stateful-alpha` into one empty directory, run:
+
+```sh
+sha256sum -c DOWNLOAD_SHA256SUMS.txt
+mkdir payload
+tar -xzf ephem-phase3-linux-arm64.tar.gz -C payload
+(cd payload && sha256sum -c SHA256SUMS.txt)
+```
+
+`DOWNLOAD_SHA256SUMS.txt` covers the uploaded archive, both JSON reports and
+uploaded staging checksum file by their downloaded basenames. The uploaded
+`SHA256SUMS.txt` describes repository staging paths, including the release
+notes; the archive's own checksum file covers its extracted original paths.
+The historical `RELEASE_ALIGNMENT.json` retains its earlier local-only
+publication state. Current publication is evidenced by the Git tag and release.
+
 ## Executable architecture
 
 `ephem-stateful` first re-executes with an empty environment. Clearing environ

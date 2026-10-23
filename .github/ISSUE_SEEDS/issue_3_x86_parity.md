@@ -6,25 +6,25 @@ The retained Phase 3 execution evidence is Linux **aarch64**, kernel
 Intel/AMD server profiles, reporting architecture compatibility separately
 from latency and production qualification.
 
-The latest retained reproduction reports native lifecycle p95 **0.520076ms**
+The retained release-alignment reproduction reports native lifecycle p95 **0.520076ms**
 (about **0.52ms**), with all five PHP fatal-fault fixtures burned and recovered
 and **zero corrupted keys committed** in the SQLite fixture. PostgreSQL and BPF
 LSM were **UNRUN in that reproduction**; earlier retained PostgreSQL evidence
 is separate. These are observed ARM64 results, not required outcomes for a new
 host or evidence of x86_64 parity.
 
-The latest and historical ARM64 observations are retained together:
+The release-alignment and earlier ARM64 observations are retained together:
 
 | Measured event | p50 ms | p95 ms | p99 ms |
 | --- | ---: | ---: | ---: |
-| Latest native warm lifecycle, 1000 samples after 100 warmups | 0.408537 | 0.520076 | 0.590034 |
+| Release-alignment native warm lifecycle, 1000 samples after 100 warmups | 0.408537 | 0.520076 | 0.590034 |
 | Historical native warm lifecycle, same sample counts | 0.448963 | 0.684507 | 0.916343 |
 | Historical uncontained Python/PHP baseline, 100 samples | 3.915000 | 5.130096 | 5.421015 |
 | Historical complete contained PHP HTTP, 100 samples | 2.205190 | 2.739029 | 3.486328 |
 | Historical signed matched PHP delta, isolated minus baseline | -1.703809 | -0.941094 | -0.652507 |
 
-The latest complete PHP HTTP p95 is **3.316038ms** and its signed matched delta
-p95 is **-0.350578ms**. The raw latest reports live under
+The release-alignment complete PHP HTTP p95 is **3.316038ms** and its signed matched delta
+p95 is **-0.350578ms**. The raw release-alignment reports live under
 [`reports/phase3/release-alignment-final/`](https://github.com/testofschool/ephem/tree/main/reports/phase3/release-alignment-final).
 The historical **0.684507ms** native result remains published; the later
 **0.520076ms** observation is a reproduction at a different time, not a
@@ -85,8 +85,8 @@ fatal fault types and zero corrupted committed keys. Explain failures rather
 than dropping them from parity evidence. Optional BPF LSM enforcement requires
 its own active-kernel test; successful classic seccomp runs do not imply it.
 
-Sources: [latest raw native samples](https://github.com/testofschool/ephem/blob/main/reports/phase3/release-alignment-final/warm-native.json),
-[latest PHP paired and fault report](https://github.com/testofschool/ephem/blob/main/reports/phase3/release-alignment-final/stateful-verification.json),
+Sources: [release-alignment raw native samples](https://github.com/testofschool/ephem/blob/main/reports/phase3/release-alignment-final/warm-native.json),
+[release-alignment PHP paired and fault report](https://github.com/testofschool/ephem/blob/main/reports/phase3/release-alignment-final/stateful-verification.json),
 [Phase 3 measurement definitions and retained failures](https://github.com/testofschool/ephem/blob/main/docs/EPHEM_PHASE3.md),
 [validation verdict](https://github.com/testofschool/ephem/blob/main/reports/phase3/VALIDATION.json),
 [native harness](https://github.com/testofschool/ephem/blob/main/crates/ephem-warm-pool/src/main.rs),

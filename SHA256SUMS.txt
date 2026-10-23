@@ -1,5 +1,6 @@
+764d69cb007d6efc00b7f86a82a25321557fcc7ad81b3916c518125098a94cb3  artifacts/release-phase3/v0.3.0-stateful-alpha/DOWNLOAD_SHA256SUMS.txt
 801060f6eef5ab013b31f480a197b208e8695bcba2936ca21d2a7d215913fc10  artifacts/release-phase3/v0.3.0-stateful-alpha/RELEASE_ALIGNMENT.json
 adcc3da82b0d51e39c1c4e4d0906acf4b35082d15085a9af26ee2e0ff3e45b8e  artifacts/release-phase3/v0.3.0-stateful-alpha/REMOTE_SYNC_PRECHECK.json
-16af684babfbf158251c28a05b65dbcb64543f7face8688614eefc25e955c0a8  artifacts/release-phase3/v0.3.0-stateful-alpha/SHA256SUMS.txt
-b2f05a5a0b6d1e76a200901113883fceb40218480559a18517852814b09ab5ca  artifacts/release-phase3/v0.3.0-stateful-alpha/artifacts/ephem-phase3-linux-arm64.tar.gz
-4061cdc03380179790f3be6efb18b09e1bbfcbd774ff9ab76b075cf502ceb313  artifacts/release-phase3/v0.3.0-stateful-alpha/docs/EPHEM_PHASE3.md
+50b66343dae81dcf19f394dd0e655797368d7a758bdab5f7d1885be445fa7b92  artifacts/release-phase3/v0.3.0-stateful-alpha/SHA256SUMS.txt
+d8edad0b10ed8dbcf59a23787f1439649a842bff0c2a6b3ba6c5a2be03a09dca  artifacts/release-phase3/v0.3.0-stateful-alpha/artifacts/ephem-phase3-linux-arm64.tar.gz
+83231e4fd121570e08479384be7dd011746bf6c8ccdd2d0a5444e21b3f3599c0  artifacts/release-phase3/v0.3.0-stateful-alpha/docs/EPHEM_PHASE3.md

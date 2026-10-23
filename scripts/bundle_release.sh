@@ -54,6 +54,12 @@ BINARIES = {
     "ephem-warm-pool": "target/release/ephem-warm-pool",
     "libephem_php.so": "target/phase3/libephem_php.so",
 }
+DOWNLOAD_ASSETS = (
+    "artifacts/ephem-phase3-linux-arm64.tar.gz",
+    "SHA256SUMS.txt",
+    "RELEASE_ALIGNMENT.json",
+    "REMOTE_SYNC_PRECHECK.json",
+)
 
 
 def fail(message):
@@ -459,6 +465,13 @@ def main():
         write_bytes(stage / "REMOTE_SYNC_PRECHECK.json", (payload / PRECHECK).read_bytes())
         (stage / "docs").chmod(0o755)
         write_bytes(stage / "SHA256SUMS.txt", checksum_bytes(stage))
+        # GitHub flattens uploaded asset paths. Keep the stage/archive manifests
+        # intact and add a separate manifest for the exact flat download layout.
+        # It excludes itself to avoid a checksum cycle; repository sums cover it.
+        download_checksums = "".join(
+            f"{file_digest(stage / name)}  {PurePosixPath(name).name}\n"
+            for name in DOWNLOAD_ASSETS).encode()
+        write_bytes(stage / "DOWNLOAD_SHA256SUMS.txt", download_checksums)
         output_dir = ROOT / str(output_relative)
         if output_dir.exists() or output_dir.is_symlink():
             if not same_tree(stage, output_dir):
@@ -488,6 +501,7 @@ def main():
               f"{len(source_exceptions)} explicit version-only source exception(s), "
               f"{len(manifest)} gathered files")
         print("Checksums: SHA256SUMS.txt (repository); SHA256SUMS.txt (stage and archive)")
+        print("Flat GitHub downloads: DOWNLOAD_SHA256SUMS.txt (four uploaded assets)")
         print("Production: HOLD. Packaging only; no tests rerun and nothing published.")
         print("New integrated PHP paired latency gate: FAIL; raw evidence included, no benchmark retry.")
         print("\nReview the bundle, then run this command only after publication approval:\n")
@@ -497,7 +511,7 @@ def main():
         print(f"  --title {shlex.quote(TITLE)} \\")
         print("  --notes-file docs/EPHEM_PHASE3.md \\")
         print("  artifacts/ephem-phase3-linux-arm64.tar.gz SHA256SUMS.txt \\")
-        print("  RELEASE_ALIGNMENT.json REMOTE_SYNC_PRECHECK.json")
+        print("  RELEASE_ALIGNMENT.json REMOTE_SYNC_PRECHECK.json DOWNLOAD_SHA256SUMS.txt")
     finally:
         if scratch is not None:
             shutil.rmtree(scratch)

@@ -81,7 +81,24 @@ class Phase3ReleaseBundleTests(unittest.TestCase):
             'artifacts/ephem-phase3-linux-arm64.tar.gz', 'docs/EPHEM_PHASE3.md',
             'RELEASE_ALIGNMENT.json', 'REMOTE_SYNC_PRECHECK.json',
         })
-        self.assertEqual(len(root_names), 5)
+        self.assertEqual(len(root_names), 6)
+        flat = self.root / 'flat-download'
+        flat.mkdir()
+        for name in (
+                'artifacts/ephem-phase3-linux-arm64.tar.gz', 'SHA256SUMS.txt',
+                'RELEASE_ALIGNMENT.json', 'REMOTE_SYNC_PRECHECK.json',
+                'DOWNLOAD_SHA256SUMS.txt'):
+            shutil.copy2(stage / name, flat / Path(name).name)
+        download_names = self.assert_checksums(
+            (flat / 'DOWNLOAD_SHA256SUMS.txt').read_bytes(),
+            lambda name: (flat / name).read_bytes(),
+        )
+        self.assertEqual(download_names, {
+            'ephem-phase3-linux-arm64.tar.gz', 'SHA256SUMS.txt',
+            'RELEASE_ALIGNMENT.json', 'REMOTE_SYNC_PRECHECK.json',
+        })
+        self.assertTrue(all('/' not in name for name in download_names))
+        self.assertNotIn('DOWNLOAD_SHA256SUMS.txt', stage_names)
         self.assertEqual((stage / 'RELEASE_ALIGNMENT.json').read_bytes(), self.frozen[FROZEN[3]])
         self.assertEqual((stage / 'REMOTE_SYNC_PRECHECK.json').read_bytes(), self.precheck)
         self.assertIn('latency gate: FAIL', result.stdout)

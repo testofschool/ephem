@@ -1,0 +1,99 @@
+{
+ "run_start": "2026-10-27T07:50:05Z",
+ "P": [
+  {
+   "id": "P1",
+   "item": "HEAD after checkout",
+   "expected": "380849c6\u2026377b852a",
+   "observed": "380849c6a1686772f1134da52336330c377b852a",
+   "match": "\u2705"
+  },
+  {
+   "id": "P2",
+   "item": "v0.3.0-stateful-alpha",
+   "expected": "1320713d\u2026af6d",
+   "observed": "1320713d065f04ae701026e14edf46226e71af6d",
+   "match": "\u2705"
+  },
+  {
+   "id": "P3",
+   "item": "sha256 gen_corpus.py",
+   "expected": "087f1233\u20265f72",
+   "observed": "087f123348af3964e6d38006fae1e95059065004fd889e46c1e2cea5383c5f72",
+   "match": "\u2705"
+  },
+  {
+   "id": "P4",
+   "item": "corpus MANIFEST sha256",
+   "expected": "616d20d5\u20263e64",
+   "observed": "616d20d5ad078e9f65c16adf9531672508fe60c121b5df5d2ced56324f043e64",
+   "match": "\u2705"
+  },
+  {
+   "id": "P5",
+   "item": "corpus count",
+   "expected": "50 PDF + 1 manifest",
+   "observed": "50 + 1",
+   "match": "\u2705"
+  },
+  {
+   "id": "P6",
+   "item": "positive control present (raw, shared /tmp)",
+   "expected": "> 0",
+   "observed": "100/100",
+   "match": "\u2705 (test valid)"
+  },
+  {
+   "id": "P7",
+   "item": "sandboxed present, seq + concurrent",
+   "expected": "0",
+   "observed": "0 in all 8 cells (bwrap, nsjail, ephem, gvisor \u00d7 2 modes)",
+   "match": "\u2705"
+  },
+  {
+   "id": "P8",
+   "item": "output equality vs raw",
+   "expected": "50/50 per arm",
+   "observed": "50/50 in all 5 arms; 0 of 5,000 timed runs differed",
+   "match": "\u2705"
+  },
+  {
+   "id": "P9",
+   "item": "jail smoke DIRTY/CLEAN",
+   "expected": "written / absent, rc 0",
+   "observed": "written / absent, rc 0, exit_code 0",
+   "match": "\u2705"
+  },
+  {
+   "id": "P10",
+   "item": "raw doc00 sha256 (pdftotext 24.02.0)",
+   "expected": "8b31b66f\u20263712",
+   "observed": "8b31b66f26100224fceb735076e4c6e46eed33f9b6640f69e48f025008453712",
+   "match": "\u2705"
+  },
+  {
+   "id": "P11",
+   "item": "jail with rootfs under /tmp",
+   "expected": "rc 125, trusted root-owned path",
+   "observed": "rc 125, 'requires a trusted root-owned rootfs path'",
+   "match": "\u2705"
+  }
+ ],
+ "unrun_fallbacks": [
+  "None UNRUN. All five arms (raw, bwrap, nsjail, EPHEM, gVisor) ran both tracks.",
+  "nsjail: apt package unavailable -> built from source (google/nsjail 4ff54a6e).",
+  "gVisor: release URL 404 -> gVisor apt repo (runsc release-20261019.0).",
+  "Rust 1.99.1 not installed: no arm uses ephem-gate; host rustc 1.97.0 recorded, unused.",
+  "Parity flags added beyond v2 \u00a75 examples: bwrap --uid/--gid 65534 and nsjail -u/-g 65534 --disable_proc, so every sandboxed worker runs as uid 65534 (measured with fixture ID). Recorded in commands.txt."
+ ],
+ "build_changes": [
+  "none \u2014 EPHEM source unchanged; ephem-jail built with packaging/build-jail.sh as shipped (sha256 9c53bd1f\u2026)."
+ ],
+ "limits": [
+  "2 vCPU cloud VM (kernel 6.18.44-fc-v165; the hypervisor type is not verified); absolute ms are host-specific. Arms ran one after another, not interleaved, so slow drift between arms is not excluded.",
+  "Latency is whole-process wall time (spawn\u2192EOF\u2192reap) dominated by pdftotext itself (~7 ms raw p50); sandbox overhead is the difference, not the headline number.",
+  "Concurrent residue: 100 pairs, 8 workers; a separate check measured 8 pairs actually in flight at peak (EPHEM, gVisor), 0 present.",
+  "Residue covers one channel only: a file in /tmp. Other channels (env, IPC, kernel state) were not tested.",
+  "Corpus is 50 tiny synthetic one-line PDFs; real-world documents are untested."
+ ]
+}

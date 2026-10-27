@@ -1,0 +1,5 @@
+raw {"equal": 50, "timed_runs": 1000, "ms": {"p50": 7.14, "p95": 9.568, "p99": 11.185, "max": 16.862}, "latency_reported": true}
+bwrap {"equal": 50, "timed_runs": 1000, "ms": {"p50": 9.62, "p95": 13.065, "p99": 14.488, "max": 17.998}, "latency_reported": true}
+nsjail {"equal": 50, "timed_runs": 1000, "ms": {"p50": 10.64, "p95": 14.403, "p99": 17.415, "max": 26.939}, "latency_reported": true}
+ephem {"equal": 50, "timed_runs": 1000, "ms": {"p50": 9.093, "p95": 12.143, "p99": 13.465, "max": 18.474}, "latency_reported": true}
+gvisor {"equal": 50, "timed_runs": 1000, "ms": {"p50": 106.98, "p95": 134.488, "p99": 151.578, "max": 174.089}, "latency_reported": true}

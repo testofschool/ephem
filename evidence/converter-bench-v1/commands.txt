@@ -1,0 +1,14 @@
+# Track A (doc00 shown; docNN substituted per file). stdin = empty pipe for every arm.
+raw /usr/bin/pdftotext /root/ephem-bench/corpus/doc00.pdf -
+bwrap bwrap --unshare-all --uid 65534 --gid 65534 --ro-bind /opt/ephem-bench/pdf-root / --tmpfs /tmp --die-with-parent /usr/bin/pdftotext /in/doc00.pdf -
+nsjail /root/ephem-bench/nsjail-src/nsjail -Mo --chroot /opt/ephem-bench/pdf-root -T /tmp -u 65534 -g 65534 --disable_proc --quiet -- /usr/bin/pdftotext /in/doc00.pdf -
+ephem /root/ephem-bench/ephem/target/ephem-jail --root /opt/ephem-bench/pdf-root --worker /usr/bin/pdftotext -- /in/doc00.pdf -
+gvisor runsc --network=none --ignore-cgroups run --bundle /root/ephem-bench/gv/bundles/pdf-root-doc00.pdf eb1636-88608-1
+# ephem env: PATH=/usr/bin:/bin EPHEM_GATE_PID=<harness pid>
+# gvisor bundle: OCI spec from `runsc spec`, root=<rootfs> readonly, uid/gid 65534, tmpfs /tmp, /proc+/dev only, network ns; container id unique per run
+# Track B (stdin = DIRTY or CLEAN)
+raw /root/ephem-bench/fixture-host
+bwrap bwrap --unshare-all --uid 65534 --gid 65534 --ro-bind /opt/ephem-bench/fixture-root / --tmpfs /tmp --die-with-parent /worker
+nsjail /root/ephem-bench/nsjail-src/nsjail -Mo --chroot /opt/ephem-bench/fixture-root -T /tmp -u 65534 -g 65534 --disable_proc --quiet -- /worker
+ephem /root/ephem-bench/ephem/target/ephem-jail --root /opt/ephem-bench/fixture-root --worker /worker
+gvisor runsc --network=none --ignore-cgroups run --bundle /root/ephem-bench/gv/bundles/fixture-root-worker eb1636-88608-2

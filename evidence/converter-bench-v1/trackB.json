@@ -1,0 +1,75 @@
+{
+ "raw": {
+  "sequential": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 100,
+   "clean_absent": 0,
+   "nonzero_rc": 0
+  }
+ },
+ "bwrap": {
+  "sequential": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  },
+  "concurrent8": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  }
+ },
+ "nsjail": {
+  "sequential": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  },
+  "concurrent8": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  }
+ },
+ "ephem": {
+  "sequential": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  },
+  "concurrent8": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  }
+ },
+ "gvisor": {
+  "sequential": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  },
+  "concurrent8": {
+   "pairs": 100,
+   "dirty_written": 100,
+   "clean_present": 0,
+   "clean_absent": 100,
+   "nonzero_rc": 0
+  }
+ }
+}

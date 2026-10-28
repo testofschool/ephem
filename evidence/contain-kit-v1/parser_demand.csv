@@ -1,0 +1,21 @@
+issue_url,state_at_collection,created_at,parser_named
+https://github.com/zeroclaw-labs/zeroclaw/issues/11235,open,2026-09-29T06:34:58Z,Poppler pdftotext/pdftoppm; Tesseract OCR
+https://github.com/maziyarpanahi/openmed/issues/3206,open,2026-09-14T19:13:52Z,PDF native decoder (backend unspecified); multimodal decoders
+https://github.com/pwmt/zathura/issues/839,open,2025-12-03T20:53:26Z,Poppler; Cairo
+https://github.com/lgse/strata/issues/936,open,2026-09-13T06:25:20Z,Poppler / PDF preview helpers
+https://github.com/colophon-group/jobseek/issues/7958,open,2026-08-25T08:25:24Z,PDF/document extraction; OCR (engine unspecified)
+https://github.com/theimaginaryfoundation/what-iff/issues/296,open,2026-10-07T12:18:19Z,headless LibreOffice / Gotenberg sidecar
+https://github.com/autobutler-org/quark/issues/2986,open,2026-10-09T17:16:46Z,EPUB/MOBI/AZW3/comic archive and XML parsers (engine undecided)
+https://github.com/dzhioev/bro/issues/1047,open,2026-10-25T03:29:22Z,PDFium (pypdfium2); Pillow
+https://github.com/dzhioev/bro/issues/1050,open,2026-10-25T03:32:40Z,PDFium/pypdfium2; pdfminer; pypdf; LibreOffice
+https://github.com/iamngoni/kanso/issues/43,open,2026-10-23T13:00:21Z,PDFium via pdfium-render
+https://github.com/AquilaXk/easyconvert/issues/761,open,2026-10-15T15:16:50Z,ImageMagick; LibreOffice / office converter; native upload decoders
+https://github.com/Gegcuk/QuizMaker/issues/733,open,2026-08-12T11:02:29Z,internal PDF/EPUB/text child-JVM document converter
+https://github.com/Juloc/Jularr/issues/819,open,2026-10-04T05:52:38Z,PDF parser/OCR; pdf.js named in linked implemented reader slice
+https://github.com/RyderFreeman4Logos/verbatim/issues/318,open,2026-07-16T04:33:47Z,OCR tools; PDF/document converters (engine unspecified)
+https://github.com/superuserkalo/openBGremover/issues/2,open,2026-10-16T19:16:29Z,qpdf/pikepdf; PDFium; Ghostscript; LibreOffice
+https://github.com/hjosugi/iroha-pdf/issues/57,open,2026-07-11T23:48:53Z,PDFium (bundled wasm; named in owner comments)
+https://github.com/SimonLoir/vectorix/issues/19,open,2026-10-22T13:59:42Z,Poppler (pdfinfo; pdftotext)
+https://github.com/Stimurid/SESHAT/issues/70,open,2026-10-21T06:47:13Z,pypdf
+https://github.com/albertc71/MailBend/issues/94,open,2026-10-25T04:32:07Z,pdf-extract; lopdf; calamine
+https://github.com/AndreRobitaille/TwoRiversReporter/issues/144,open,2026-10-03T13:00:01Z,Poppler; Tesseract

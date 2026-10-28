@@ -1,0 +1,17 @@
+# canary file /opt/ephem-bench/canary.txt (mode 644, outside every bound path); read with /usr/bin/cat as uid 30033 (benchu); 2026-10-28T02:58:57+00:00
+## unconfined
+$ /usr/bin/cat /opt/ephem-bench/canary.txt
+canary-secret
+rc=0
+## bwrap
+$ bwrap --unshare-all --die-with-parent --new-session --clearenv --setenv PATH /usr/bin:/bin --ro-bind /usr /usr --symlink usr/bin /bin --symlink usr/lib /lib --symlink usr/lib64 /lib64 --ro-bind /etc /etc --ro-bind /var/cache/fontconfig /var/cache/fontconfig --ro-bind /opt/ephem-bench/kit/in /opt/ephem-bench/kit/in --tmpfs /tmp --proc /proc --dev /dev -- /usr/bin/cat /opt/ephem-bench/canary.txt
+/usr/bin/cat: /opt/ephem-bench/canary.txt: No such file or directory
+rc=1
+## nsjail
+$ /root/ephem-bench/nsjail-src/nsjail -Mo --quiet -R /usr -s usr/bin:/bin -s usr/lib:/lib -s usr/lib64:/lib64 -R /etc -R /var/cache/fontconfig -R /dev/null -R /dev/urandom -R /opt/ephem-bench/kit/in -T /tmp -E PATH=/usr/bin:/bin -- /usr/bin/cat /opt/ephem-bench/canary.txt
+/usr/bin/cat: /opt/ephem-bench/canary.txt: No such file or directory
+rc=1
+## gvisor
+$ runsc --rootless --root=/tmp/gvc --network=none --ignore-cgroups --overlay2=root:memory run --bundle /opt/ephem-bench/kit/gvtest canary6
+/usr/bin/cat: /opt/ephem-bench/canary.txt: No such file or directory
+rc=1

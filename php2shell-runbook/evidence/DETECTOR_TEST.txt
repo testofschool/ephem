@@ -1,0 +1,26 @@
+# diagnose.sh detector test — 2026-10-28T04:40:17Z
+host php: 8.3.6  upload_progress default: 1
+
+## positive fixture (uses the feature)
+== PHP2Shell read-only self-diagnosis ==
+date: 2026-10-28T04:40:17Z   code_dir: fixtures/pos
+php_version: 8.3.6
+branch_status: supported — official fix exists; update to the latest patch release.
+session.upload_progress.enabled: 1 (ON — default). KISA/PHP suggest setting it to 0 in php.ini or the FPM pool if the feature is unused, then restarting PHP workers.
+-- code use of session upload progress (so you know what disabling it affects) --
+status: USED — disabling the feature will affect these files; review before you turn it off:
+  fixtures/pos/upload.php
+== end. This report changed nothing. Apply fixes yourself after review. ==
+
+## negative fixture (does not)
+== PHP2Shell read-only self-diagnosis ==
+date: 2026-10-28T04:40:17Z   code_dir: fixtures/neg
+php_version: 8.3.6
+branch_status: supported — official fix exists; update to the latest patch release.
+session.upload_progress.enabled: 1 (ON — default). KISA/PHP suggest setting it to 0 in php.ini or the FPM pool if the feature is unused, then restarting PHP workers.
+-- code use of session upload progress (so you know what disabling it affects) --
+status: not referenced in fixtures/neg — disabling it is unlikely to change your app's behaviour (still verify any framework/plugin code outside this dir).
+== end. This report changed nothing. Apply fixes yourself after review. ==
+
+## EOL 7.4 branch probe
+branch_status: END-OF-LIFE — PHP.net ships NO official build for this branch. A distro backport, a paid LTS, or migration is required.
